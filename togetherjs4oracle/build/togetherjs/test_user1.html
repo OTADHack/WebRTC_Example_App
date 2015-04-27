@@ -1,0 +1,33 @@
+<!doctype html>
+
+<html>
+
+  <head>
+    <title>Testing togetherjs on your host - user1</title>
+    <meta charset="utf-8" />
+	<script src="http://localhost:8080/togetherjs.js"></script>
+    <script src="http://ocwsc71se.optaresolutions.com:7001/api/wsc.js" type="text/javascript"></script>  
+ </head>
+
+  <body>
+	<button onclick="loginToWsc();">Login to Oracle Communications WebRTC platform for TADHack 2014</button><br>
+	<button onclick="TogetherJS(this); return false;">Start TogetherJS</button><br>
+	
+	<input type="hidden" name="formCallerName" id="formCallerName" value="user1">
+	<input type="hidden" name="formCalleeName" id="formCalleeName" value="user2">
+
+	<div id="controls"></div>
+	
+	<audio id="selfAudio" autoplay muted="true"></audio>
+    <audio id="remoteAudio" autoplay></audio>
+	
+	<script type="text/javascript">	
+    // Allow the login to the Weblogic (if not you will receive a PermissionDeniedError in the local stream)
+	function loginToWsc() {
+		window.location.href = "http://ocwsc71se.optaresolutions.com:7001/login?wsc_app_uri=/ws/webrtc/guest&redirect_uri=" + window.location;
+    }
+
+	</script>
+	</body>
+
+</html>
