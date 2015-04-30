@@ -678,7 +678,7 @@ define('jqueryPlugins',["jquery"], function ($) {
     var margin = parseInt(this.css("marginLeft"), 10);
 
     //then animate avatar to shrink to nothing, and reset the values again
-    // FIXME this needs to animate from the CENTER
+    // TODO this needs to animate from the CENTER
     this.animate({
       marginLeft: margin + width/2,
       height: 0,
@@ -725,19 +725,19 @@ define('jqueryPlugins',["jquery"], function ($) {
     this.data("animateKeyboard", null);
   };
 
-  // FIXME: not sure if this is legit, but at least the modern mobile devices we
+  //TODO: not sure if this is legit, but at least the modern mobile devices we
   // care about should have this defined:
   if (! $.browser) {
     $.browser = {};
   }
   $.browser.mobile = window.orientation !== undefined;
   if (navigator.userAgent.search(/mobile/i) != -1) {
-    // FIXME: At least on the Firefox OS simulator I need this
+    //TODO: At least on the Firefox OS simulator I need this
     $.browser.mobile = true;
   }
 
   if ($.browser.mobile && window.matchMedia && ! window.matchMedia("screen and (max-screen-width: 480px)").matches) {
-    // FIXME: for Firefox OS simulator really:
+    //TODO: for Firefox OS simulator really:
     document.body.className += " togetherjs-mobile-browser";
   }
 
@@ -952,7 +952,7 @@ define('util',["jquery", "jqueryPlugins"], function ($) {
         }, function () {
           deferred.rejectWith(this, arguments);
         });
-        // FIXME: doesn't pass progress through
+        //TODO: doesn't pass progress through
       } else if (result === undefined) {
         deferred.resolve();
       } else {
@@ -988,7 +988,7 @@ define('util',["jquery", "jqueryPlugins"], function ($) {
      Returns a promise that will resolve with the results of all the
      promises.  If any promise fails then the returned promise fails.
 
-     FIXME: if a promise has more than one return value (like with
+     TODO: if a promise has more than one return value (like with
      promise.resolve(a, b)) then the latter arguments will be lost.
      */
   util.resolveMany = function () {
@@ -1277,7 +1277,7 @@ channels.WebSocketChannel = util.Class(AbstractChannel, {
       this.socket = null;
       var method = "error";
       if (event.wasClean) {
-        // FIXME: should I even log clean closes?
+        //TODO: should I even log clean closes?
         method = "log";
       }
       console[method]('WebSocket close', event.wasClean ? 'clean' : 'unclean',
@@ -1346,7 +1346,7 @@ channels.PostMessageChannel = util.Class(AbstractChannel, {
       win = win.contentWindow;
     }
     this.window = win;
-    // FIXME: The distinction between this.window and window seems unimportant
+    //TODO: The distinction between this.window and window seems unimportant
     // in the case of postMessage
     var w = this.window;
     // In a Content context we add the listener to the local window
@@ -1456,7 +1456,7 @@ channels.PostMessageIncomingChannel = util.Class(AbstractChannel, {
   _receiveMessage: function (event) {
     if (this.expectedOrigin && this.expectedOrigin != "*" &&
         event.origin != this.expectedOrigin) {
-      // FIXME: Maybe not worth mentioning?
+      //TODO: Maybe not worth mentioning?
       console.info("Expected message from", this.expectedOrigin,
                    "but got message from", event.origin);
       return;
@@ -1659,7 +1659,7 @@ define('storage',["util"], function (util) {
       return Deferred((function (def) {
         this.keys().then(function (keys) {
           keys.forEach(function (key) {
-            // FIXME: technically we're ignoring the promise returned by all
+            //TODO: technically we're ignoring the promise returned by all
             // these sets:
             promises.push(self.set(key, undefined));
           });
@@ -1936,7 +1936,7 @@ define('session',["require", "util", "channels", "jquery", "storage"], function 
       color: peers.Self.color,
       url: session.currentUrl(),
       urlHash: location.hash,
-      // FIXME: titles update, we should track those changes:
+      //TODO: titles update, we should track those changes:
       title: document.title,
       rtcSupported: session.RTCSupported,
       isClient: session.isClient
@@ -2012,7 +2012,7 @@ define('session',["require", "util", "channels", "jquery", "storage"], function 
         }
       }
       if (! shareId) {
-        // FIXME: I'm not sure if this will ever happen, because togetherjs.js should
+        //TODO: I'm not sure if this will ever happen, because togetherjs.js should
         // handle it
         var m = /&?togetherjs=([^&]*)/.exec(hash);
         if (m) {
@@ -2043,7 +2043,7 @@ define('session',["require", "util", "channels", "jquery", "storage"], function 
             console.warn("Bad value for findRoom.prefix:", JSON.stringify(findRoom.prefix));
           }
           getRoomName(findRoom.prefix, findRoom.max).then(function (shareId) {
-            // FIXME: duplicates code below:
+            //TODO: duplicates code below:
             session.clientId = session.identityId + "." + sessionId;
             storage.tab.set("status", {reason: "joined", shareId: shareId, running: true, date: Date.now(), sessionId: sessionId});
             session.isClient = true;
@@ -2211,7 +2211,7 @@ define('session',["require", "util", "channels", "jquery", "storage"], function 
  * License, v. 2.0. If a copy of the MPL was not distributed with this file,
  * You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// FIXME: maybe it would be better to dynamically assemble the first
+//TODO: maybe it would be better to dynamically assemble the first
 // argument to define() here to include the localized module:
 define('templates',["util", "require"], function (util, require) {
   var assert = util.assert;
@@ -2395,7 +2395,7 @@ define('peers',["util", "session", "storage", "require", "templates"], function 
       if (identityUpdated) {
         peers.emit("identity-updated", this);
       }
-      // FIXME: I can't decide if this is the only time we need to emit
+      //TODO: I can't decide if this is the only time we need to emit
       // this message (and not .update() or other methods)
       if (this.following) {
         session.emit("follow-peer", this);
@@ -2403,7 +2403,7 @@ define('peers',["util", "session", "storage", "require", "templates"], function 
     },
 
     update: function (attrs) {
-      // FIXME: should probably test that only a couple attributes are settable
+      //TODO: should probably test that only a couple attributes are settable
       // particularly status and idle
       if (attrs.idle) {
         this.idle = attrs.idle;
@@ -2467,7 +2467,7 @@ define('peers',["util", "session", "storage", "require", "templates"], function 
 
   });
 
-  // FIXME: I can't decide where this should actually go, seems weird
+  //TODO: I can't decide where this should actually go, seems weird
   // that it is emitted and handled in the same module
   session.on("follow-peer", function (peer) {
     if (peer.url != session.currentUrl()) {
@@ -2599,11 +2599,11 @@ define('peers',["util", "session", "storage", "require", "templates"], function 
               fromLoad: true
             });
             peers._SelfLoaded.resolve();
-          }).bind(this)); // FIXME: ignoring error
+          }).bind(this)); //TODO: ignoring error
       },
 
       _loadFromApp: function () {
-        // FIXME: I wonder if these should be optionally functions?
+        //TODO: I wonder if these should be optionally functions?
         // We could test typeof==function to distinguish between a getter and a concrete value
         var getUserName = TogetherJS.config.get("getUserName");
         var getUserColor = TogetherJS.config.get("getUserColor");
@@ -2616,7 +2616,7 @@ define('peers',["util", "session", "storage", "require", "templates"], function 
             name = getUserName();
           }
           if (name && typeof name != "string") {
-            // FIXME: test for HTML safe?  Not that we require it, but
+            //TODO: test for HTML safe?  Not that we require it, but
             // <>'s are probably a sign something is wrong.
             console.warn("Error in getUserName(): should return a string (got", name, ")");
             name = null;
@@ -2629,7 +2629,7 @@ define('peers',["util", "session", "storage", "require", "templates"], function 
             color = getUserColor();
           }
           if (color && typeof color != "string") {
-            // FIXME: would be nice to test for color-ness here.
+            //TODO: would be nice to test for color-ness here.
             console.warn("Error in getUserColor(): should return a string (got", color, ")");
             color = null;
           }
@@ -2804,7 +2804,7 @@ define('peers',["util", "session", "storage", "require", "templates"], function 
   });
 
   window.addEventListener("pagehide", function () {
-    // FIXME: not certain if this should be tab local or not:
+    //TODO: not certain if this should be tab local or not:
     storeSerialization();
   }, false);
 
@@ -2892,7 +2892,7 @@ define('windowing',["jquery", "util", "peers", "session"], function ($, util, pe
     }
     win = $(win);
     assert(bound.length, "Cannot find binding:", bound.selector, "from:", win.selector);
-    // FIXME: hardcoding
+    //TODO: hardcoding
     var ifacePos = "right";
     //var ifacePos = panelPosition();
     var boundPos = bound.offset();
@@ -2901,7 +2901,7 @@ define('windowing',["jquery", "util", "peers", "session"], function ($, util, pe
     var windowHeight = $window.height();
     boundPos.top -= $window.scrollTop();
     boundPos.left -= $window.scrollLeft();
-    // FIXME: I appear to have to add the padding to the width to get a "true"
+    //TODO: I appear to have to add the padding to the width to get a "true"
     // width.  But it's still not entirely consistent.
     var height = win.height() + 5;
     var width = win.width() + 20;
@@ -2957,7 +2957,7 @@ define('windowing',["jquery", "util", "peers", "session"], function ($, util, pe
   });
 
   windowing.hide = function (els) {
-    // FIXME: also hide modals?
+    //TODO: also hide modals?
     els = els || ".togetherjs-window, .togetherjs-modal, .togetherjs-notification";
     els = $(els);
     els = els.filter(":visible");
@@ -3069,7 +3069,7 @@ define('templating',["jquery", "util", "peers", "windowing", "session"], functio
     assert(template.length, "No template found with id:", templateId);
     template = template.clone();
     template.attr("id", null);
-    // FIXME: if called directly, doesn't emit new-element event:
+    //TODO: if called directly, doesn't emit new-element event:
     return template;
   };
 
@@ -3077,7 +3077,7 @@ define('templating',["jquery", "util", "peers", "windowing", "session"], functio
     var template = templating.clone(templateId);
     variables = variables || {};
     util.forEachAttr(variables, function (value, attr) {
-      // FIXME: do the substitution... somehow?
+      //TODO: do the substitution... somehow?
       var subs = template.find(".togetherjs-sub-" + attr).removeClass("togetherjs-sub-" + attr);
       if (subs.length) {
         if (typeof value == "string") {
@@ -3130,7 +3130,7 @@ define('templating',["jquery", "util", "peers", "windowing", "session"], functio
       template.find(".togetherjs-ampm").text(ampm);
     }
 
-    // FIXME: silly this is on session:
+    //TODO: silly this is on session:
     session.emit("new-element", template);
     return template;
   };
@@ -3139,7 +3139,7 @@ define('templating',["jquery", "util", "peers", "windowing", "session"], functio
 });
 
 define('linkify',[], function () {
-  // FIXME: this could be moved to a different module, it's pretty stand-alone
+  //TODO: this could be moved to a different module, it's pretty stand-alone
   /* Finds any links in the text of an element (or its children) and turns them
      into anchors (with target=_blank) */
   function linkify(el) {
@@ -4153,7 +4153,7 @@ define('elementFinder',["util", "jquery"], function (util, $) {
   });
 
   elementFinder.findElement = function findElement(loc, container) {
-    // FIXME: should this all just be done with document.querySelector()?
+    //TODO: should this all just be done with document.querySelector()?
     // But no!  We can't ignore togetherjs elements with querySelector.
     // But maybe!  We *could* make togetherjs elements less obtrusive?
     container = container || document;
@@ -4306,7 +4306,7 @@ define('elementFinder',["util", "jquery"], function (util, $) {
       throw e;
     }
     var top = $(el).offset().top;
-    // FIXME: maybe here we should test for sanity, like if an element is
+    //TODO: maybe here we should test for sanity, like if an element is
     // hidden.  We can use position.absoluteTop to get a sense of where the
     // element roughly should be.  If the sanity check failed we'd use
     // absoluteTop
@@ -4454,7 +4454,7 @@ define('ui',["require", "jquery", "util", "session", "templates", "templating", 
 
   // This is called before activateUI; it doesn't bind anything, but does display
   // the dock
-  // FIXME: because this module has lots of requirements we can't do
+  //TODO: because this module has lots of requirements we can't do
   // this before those requirements are loaded.  Maybe worth splitting
   // this out?  OTOH, in production we should have all the files
   // combined so there's not much problem loading those modules.
@@ -4631,15 +4631,15 @@ define('ui',["require", "jquery", "util", "session", "templates", "templating", 
     util.testExpose({submitChat: submitChat});
 
     // Moving the window:
-    // FIXME: this should probably be stickier, and not just move the window around
+    //TODO: this should probably be stickier, and not just move the window around
     // so abruptly
     var anchor = container.find("#togetherjs-dock-anchor");
     assert(anchor.length);
-    // FIXME: This is in place to temporarily disable dock dragging:
+    //TODO: This is in place to temporarily disable dock dragging:
     anchor = container.find("#togetherjs-dock-anchor-disabled");
     anchor.mousedown(function (event) {
       var iface = $("#togetherjs-dock");
-      // FIXME: switch to .offset() and pageX/Y
+      //TODO: switch to .offset() and pageX/Y
       var startPos = panelPosition();
       function selectoff() {
         return false;
@@ -4648,7 +4648,7 @@ define('ui',["require", "jquery", "util", "session", "templates", "templating", 
         var fromRight = $window.width() + window.pageXOffset - event2.pageX;
         var fromLeft = event2.pageX - window.pageXOffset;
         var fromBottom = $window.height() + window.pageYOffset - event2.pageY;
-        // FIXME: this is to temporarily disable the bottom view:
+        //TODO: this is to temporarily disable the bottom view:
         fromBottom = 10000;
 
         var pos;
@@ -4672,7 +4672,7 @@ define('ui',["require", "jquery", "util", "session", "templates", "templating", 
       // If you don't turn selection off it will still select text, and show a
       // text selection cursor:
       $(document).bind("selectstart", selectoff);
-      // FIXME: it seems like sometimes we lose the mouseup event, and it's as though
+      //TODO: it seems like sometimes we lose the mouseup event, and it's as though
       // the mouse is stuck down:
       $(document).one("mouseup", function () {
         $(document).unbind("mousemove", mousemove);
@@ -4925,7 +4925,7 @@ define('ui',["require", "jquery", "util", "session", "templates", "templating", 
       windowing.show("#togetherjs-chat");
     });
 
-    // FIXME: Don't think this makes sense
+    //TODO: Don't think this makes sense
     $(".togetherjs header.togetherjs-title").each(function (index, item) {
       var button = $('<button class="togetherjs-minimize"></button>');
       button.click(function (event) {
@@ -5063,7 +5063,7 @@ define('ui',["require", "jquery", "util", "session", "templates", "templating", 
       updateShareLink();
     });
     container.find("a.togetherjs-share-link").click(function () {
-      // FIXME: this is currently opening up Bluetooth, not sharing a link
+      //TODO: this is currently opening up Bluetooth, not sharing a link
       if (false && window.MozActivity) {
         var activity = new MozActivity({
           name: "share",
@@ -5073,7 +5073,7 @@ define('ui',["require", "jquery", "util", "session", "templates", "templating", 
           }
         });
       }
-      // FIXME: should show some help if you actually try to follow the link
+      //TODO: should show some help if you actually try to follow the link
       // like this, instead of simply suppressing it
       return false;
     });
@@ -5257,7 +5257,7 @@ define('ui',["require", "jquery", "util", "session", "templates", "templating", 
         peer: attrs.peer,
         date: date
       });
-      // FIXME: should bind the notification to the dock location
+      //TODO: should bind the notification to the dock location
       ui.chat.add(el, attrs.peer.className("join-message-"), 4000);
     },
 
@@ -5269,7 +5269,7 @@ define('ui',["require", "jquery", "util", "session", "templates", "templating", 
         date: date,
         declinedJoin: attrs.declinedJoin
       });
-      // FIXME: should bind the notification to the dock location
+      //TODO: should bind the notification to the dock location
       ui.chat.add(el, attrs.peer.className("join-message-"), 4000);
     },
 
@@ -5294,14 +5294,14 @@ define('ui',["require", "jquery", "util", "session", "templates", "templating", 
       assert(typeof attrs.url == "string");
       assert(typeof attrs.sameUrl == "boolean");
       var messageId = attrs.peer.className("url-change-");
-      // FIXME: duplicating functionality in .add():
+      //TODO: duplicating functionality in .add():
       var realId = "togetherjs-chat-" + messageId;
       var date = attrs.date || Date.now();
       var title;
-      // FIXME: strip off common domain from msg.url?  E.g., if I'm on
+      //TODO: strip off common domain from msg.url?  E.g., if I'm on
       // http://example.com/foobar, and someone goes to http://example.com/baz then
       // show only /baz
-      // FIXME: truncate long titles
+      //TODO: truncate long titles
       if (attrs.title) {
         title = attrs.title + " (" + attrs.url + ")";
       } else {
@@ -5349,7 +5349,7 @@ define('ui',["require", "jquery", "util", "session", "templates", "templating", 
       });
       if (attrs.forEveryone) {
         el.find("a").click(function () {
-          // FIXME: hacky way to do this:
+          //TODO: hacky way to do this:
           chat.submit("Followed link to " + attrs.url);
         });
       }
@@ -5504,11 +5504,11 @@ define('ui',["require", "jquery", "util", "session", "templates", "templating", 
       }
       container.find("." + this.peer.className("togetherjs-person-url-"))
         .attr("href", url);
-      // FIXME: should have richer status:
+      //TODO: should have richer status:
       container.find("." + this.peer.className("togetherjs-person-status-"))
         .text(this.peer.idle == "active" ? "Active" : "Inactive");
       if (this.peer.isSelf) {
-        // FIXME: these could also have consistent/reliable class names:
+        //TODO: these could also have consistent/reliable class names:
         var selfName = $(".togetherjs-self-name");
         selfName.each((function (index, el) {
           el = $(el);
@@ -5537,7 +5537,7 @@ define('ui',["require", "jquery", "util", "session", "templates", "templating", 
           this.followCheckbox.prop("checked", false);
         }
       }
-      // FIXME: add some style based on following?
+      //TODO: add some style based on following?
       updateChatParticipantList();
       this.updateFollow();
     }),
@@ -5570,7 +5570,7 @@ define('ui',["require", "jquery", "util", "session", "templates", "templating", 
     },
 
     urlNudge: function () {
-      // FIXME: do something more distinct here
+      //TODO: do something more distinct here
       this.updateUrlDisplay(true);
     },
 
@@ -5604,7 +5604,7 @@ define('ui',["require", "jquery", "util", "session", "templates", "templating", 
         });
       }
 
-      // FIXME: turned off for now
+      //TODO: turned off for now
       if( numberOfUsers >= 5 && false) {
         CollapsedDock();
       } else {
@@ -5641,7 +5641,7 @@ define('ui',["require", "jquery", "util", "session", "templates", "templating", 
           this.peer.unfollow();
         }
         // Following doesn't happen until the window is closed
-        // FIXME: should we tell the user this?
+        //TODO: should we tell the user this?
       });
       this.maybeHideDetailWindow = this.maybeHideDetailWindow.bind(this);
       session.on("hide-window", this.maybeHideDetailWindow);
@@ -5721,7 +5721,7 @@ define('ui',["require", "jquery", "util", "session", "templates", "templating", 
     },
 
     dockClick: function () {
-      // FIXME: scroll to person
+      //TODO: scroll to person
     },
 
     cursor: function () {
@@ -5729,7 +5729,7 @@ define('ui',["require", "jquery", "util", "session", "templates", "templating", 
     },
 
     destroy: function () {
-      // FIXME: should I get rid of the dockElement?
+      //TODO: should I get rid of the dockElement?
       session.off("hide-window", this.maybeHideDetailWindow);
     }
   });
@@ -5824,7 +5824,7 @@ define('ui',["require", "jquery", "util", "session", "templates", "templating", 
 
   function invite(clientId) {
     require(["who"], function (who) {
-      // FIXME: use the return value of this to give a signal that
+      //TODO: use the return value of this to give a signal that
       // the invite has been successfully sent:
       who.invite(inviteHubUrl(), clientId).then(function () {
         hideMenu();
@@ -6047,7 +6047,7 @@ define('playback',["jquery", "util", "session", "storage", "require"], function 
         storage.set("playback.logs", undefined);
         storage.set("playback.pos", undefined);
       }
-      // FIXME: should do a bye message here
+      //TODO: should do a bye message here
     }
 
   });
@@ -6082,7 +6082,7 @@ define('chat',["require", "jquery", "util", "session", "ui", "templates", "playb
     ui.chat.text({
       text: msg.text,
       peer: msg.peer,
-      // FIXME: a little unsure of trusting this (maybe I should prefix it?)
+      //TODO: a little unsure of trusting this (maybe I should prefix it?)
       messageId: msg.messageId,
       notify: true
     });
@@ -6094,7 +6094,7 @@ define('chat',["require", "jquery", "util", "session", "ui", "templates", "playb
     });
   });
 
-  // FIXME: this doesn't really belong in this module:
+  //TODO: this doesn't really belong in this module:
   session.hub.on("bye", function (msg) {
     ui.chat.leftSession({
       peer: msg.peer,
@@ -6482,7 +6482,7 @@ define('console',["util"], function (util) {
 
     levels: {
       debug: 1,
-      // FIXME: I'm considering *not* wrapping console.log, and strictly keeping
+      //TODO: I'm considering *not* wrapping console.log, and strictly keeping
       // it as a debugging tool; also line numbers would be preserved
       log: 2,
       info: 3,
@@ -6565,7 +6565,7 @@ define('console',["util"], function (util) {
       try {
         throw new Error();
       } catch (e) {
-        // FIXME: trim this frame
+        //TODO: trim this frame
         var stack = e.stack;
         stack = stack.replace(/^[^\n]*\n/, "");
         this[level](stack);
@@ -6576,13 +6576,13 @@ define('console',["util"], function (util) {
     },
 
     _browserInfo: function () {
-      // FIXME: add TogetherJS version and
+      //TODO: add TogetherJS version and
       return [
         "TogetherJS base URL: " + TogetherJS.baseUrl,
         "User Agent: " + navigator.userAgent,
         "Page loaded: " + this._formatDate(TogetherJS.pageLoaded),
         "Age: " + this._formatMinutes(Date.now() - TogetherJS.pageLoaded) + " minutes",
-        // FIXME: make this right:
+        //TODO: make this right:
         //"Window: height: " + window.screen.height + " width: " + window.screen.width
         "URL: " + location.href,
         "------+------+----------------------------------------------"
@@ -6615,7 +6615,7 @@ define('console',["util"], function (util) {
         }
       }
       if (item !== null && typeof item == "object") {
-        // FIXME: this can drop lots of kinds of values, like a function or undefined
+        //TODO: this can drop lots of kinds of values, like a function or undefined
         item = JSON.stringify(item);
       }
       return item.toString();
@@ -6668,7 +6668,7 @@ define('console',["util"], function (util) {
     },
 
     submit: function (options) {
-      // FIXME: friendpaste is broken for this
+      //TODO: friendpaste is broken for this
       // (and other pastebin sites aren't really Browser-accessible)
       return util.Deferred(function (def) {
         options = options || {};
@@ -6760,7 +6760,7 @@ define('eventMaker',["jquery", "util"], function ($, util) {
   var eventMaker = util.Module("eventMaker");
 
   eventMaker.performClick = function (target) {
-    // FIXME: should accept other parameters, like Ctrl/Alt/etc
+    //TODO: should accept other parameters, like Ctrl/Alt/etc
     var event = document.createEvent("MouseEvents");
     event.initMouseEvent(
       "click", // type
@@ -6779,7 +6779,7 @@ define('eventMaker',["jquery", "util"], function ($, util) {
       0, // button
       null // relatedTarget
     );
-    // FIXME: I'm not sure this custom attribute always propagates?
+    //TODO: I'm not sure this custom attribute always propagates?
     // seems okay in Firefox/Chrome, but I've had problems with
     // setting attributes on keyboard events in the past.
     event.togetherjsInternal = true;
@@ -6795,8 +6795,8 @@ define('eventMaker',["jquery", "util"], function ($, util) {
         return;
       }
     }
-    // FIXME: should do button clicks (like a form submit)
-    // FIXME: should run .onclick() as well
+    //TODO: should do button clicks (like a form submit)
+    //TODO: should run .onclick() as well
   };
 
   eventMaker.fireChange = function (target) {
@@ -6831,13 +6831,13 @@ define('cursor',["jquery", "ui", "util", "session", "elementFinder", "tinycolor"
     if (msg.sameUrl) {
       Cursor.getClient(msg.clientId).updatePosition(msg);
     } else {
-      // FIXME: This should be caught even before the cursor-update message,
+      //TODO: This should be caught even before the cursor-update message,
       // when the peer goes to another URL
       Cursor.getClient(msg.clientId).hideOtherUrl();
     }
   });
 
-  // FIXME: should check for a peer leaving and remove the cursor object
+  //TODO: should check for a peer leaving and remove the cursor object
   var Cursor = util.Class({
 
     constructor: function (clientId) {
@@ -6859,7 +6859,7 @@ define('cursor',["jquery", "ui", "util", "session", "elementFinder", "tinycolor"
     KEYDOWN_WAIT_TIME: 2000,
 
     updatePeer: function (peer) {
-      // FIXME: can I use peer.setElement()?
+      //TODO: can I use peer.setElement()?
       this.element.css({color: peer.color});
       var img = this.element.find("img.togetherjs-cursor-img");
       img.attr("src", makeCursor(peer.color));
@@ -6873,7 +6873,7 @@ define('cursor',["jquery", "ui", "util", "session", "elementFinder", "tinycolor"
       });
       var path = this.element.find("svg path");
       path.attr("fill", peer.color);
-      // FIXME: should I just remove the element?
+      //TODO: should I just remove the element?
       if (peer.status != "live") {
         //this.element.hide();
         this.element.find("svg").animate({
@@ -6934,11 +6934,11 @@ define('cursor',["jquery", "ui", "util", "session", "elementFinder", "tinycolor"
         return;
       }
       this.atOtherUrl = true;
-      // FIXME: should show away status better:
+      //TODO: should show away status better:
       this.element.hide();
     },
 
-    // place Cursor rotate function down here FIXME: this doesnt do anything anymore.  This is in the CSS as an animation
+    // place Cursor rotate function down here TODO: this doesnt do anything anymore.  This is in the CSS as an animation
     rotateCursorDown: function(){
       var e = $(this.element).find('svg');
         e.animate({borderSpacing: -150, opacity: 1}, {
@@ -6969,7 +6969,7 @@ define('cursor',["jquery", "ui", "util", "session", "elementFinder", "tinycolor"
       var height = $(window).height();
 
       if (top < wTop) {
-        // FIXME: this is a totally arbitrary number, but is meant to be big enough
+        //TODO: this is a totally arbitrary number, but is meant to be big enough
         // to keep the cursor name from being off the top of the screen.
         top = 25;
         this.setClass("togetherjs-scrolled-above");
@@ -7078,7 +7078,7 @@ define('cursor',["jquery", "ui", "util", "session", "elementFinder", "tinycolor"
     target = $(target);
     var offset = target.offset();
     if (! offset) {
-      // FIXME: this really is walkabout.js's problem to fire events on the
+      //TODO: this really is walkabout.js's problem to fire events on the
       // document instead of a specific element
       console.warn("Could not get offset of element:", target[0]);
       return;
@@ -7153,7 +7153,7 @@ define('cursor',["jquery", "ui", "util", "session", "elementFinder", "tinycolor"
     session.send(lastScrollMessage);
   }
 
-  // FIXME: do the same thing for cursor position?  And give up on the
+  //TODO: do the same thing for cursor position?  And give up on the
   // ad hoc update-on-hello?
   session.on("prepare-hello", function (helloMessage) {
     if (lastScrollMessage) {
@@ -7223,7 +7223,7 @@ define('cursor',["jquery", "ui", "util", "session", "elementFinder", "tinycolor"
       // This is an artificial internal event
       return;
     }
-    // FIXME: this might just be my imagination, but somehow I just
+    //TODO: this might just be my imagination, but somehow I just
     // really don't want to do anything at this stage of the event
     // handling (since I'm catching every click), and I'll just do
     // something real soon:
@@ -7279,7 +7279,7 @@ define('cursor',["jquery", "ui", "util", "session", "elementFinder", "tinycolor"
     // last cursor update was calculated, so we force the cursor to
     // the last location during a click:
     if (! pos.sameUrl) {
-      // FIXME: if we *could have* done a local click, but we follow along
+      //TODO: if we *could have* done a local click, but we follow along
       // later, we'll be in different states if that click was important.
       // Mostly click cloning just won't work.
       return;
@@ -7301,7 +7301,7 @@ define('cursor',["jquery", "ui", "util", "session", "elementFinder", "tinycolor"
   });
 
   function displayClick(pos, color) {
-    // FIXME: should we hide the local click if no one else is going to see it?
+    //TODO: should we hide the local click if no one else is going to see it?
     // That means tracking who might be able to see our screen.
     var element = templating.clone("click");
     $(document.body).append(element);
@@ -7328,7 +7328,7 @@ define('cursor',["jquery", "ui", "util", "session", "elementFinder", "tinycolor"
         return;
       }
       lastKeydown = now;
-      // FIXME: is event.target interesting here?  That is, *what* the
+      //TODO: is event.target interesting here?  That is, *what* the
       // user is typing into, not just that the user is typing?  Also
       // I'm assuming we don't care if the user it typing into a
       // togetherjs-related field, since chat activity is as interesting
@@ -7338,7 +7338,7 @@ define('cursor',["jquery", "ui", "util", "session", "elementFinder", "tinycolor"
   }
 
   session.hub.on("keydown", function (msg) {
-    // FIXME: when the cursor is hidden there's nothing to show with setKeydown().
+    //TODO: when the cursor is hidden there's nothing to show with setKeydown().
     var cursor = Cursor.getClient(msg.clientId);
     cursor.setKeydown();
   });
@@ -7832,7 +7832,7 @@ define('ot',["util"], function (util) {
         if (untilChange.isBefore(c)) {
           return false;
         }
-        // FIXME: not sure if this clientId check here is right.  Maybe
+        //TODO: not sure if this clientId check here is right.  Maybe
         // if untilChange.knowsAbout(c)?
         if (untilChange.knowsAboutChange(c)) {
           var result = c.delta.transpose(delta);
@@ -8281,7 +8281,7 @@ define('forms',["jquery", "util", "session", "elementFinder", "eventMaker", "tem
     },
 
     _change: function (e) {
-      // FIXME: I should have an internal .send() function that automatically
+      //TODO: I should have an internal .send() function that automatically
       // asserts !inRemoteUpdate, among other things
       if (inRemoteUpdate) {
         return;
@@ -8398,7 +8398,7 @@ define('forms',["jquery", "util", "session", "elementFinder", "eventMaker", "tem
       assert(CKEDITOR);
       assert(CKEDITOR.dom.element.get(this.element));
       this._change = this._change.bind(this);
-      // FIXME: change event is available since CKEditor 4.2
+      //TODO: change event is available since CKEditor 4.2
       this._editor().on("change", this._change);
     },
     tracked: function (el) {
@@ -8409,7 +8409,7 @@ define('forms',["jquery", "util", "session", "elementFinder", "eventMaker", "tem
     },
 
     update: function (msg) {
-      //FIXME: use setHtml instead of setData to avoid frame reloading overhead
+      //TODO: use setHtml instead of setData to avoid frame reloading overhead
       this._editor().editable().setHtml(msg.value);
     },
 
@@ -8596,7 +8596,7 @@ define('forms',["jquery", "util", "session", "elementFinder", "eventMaker", "tem
     for (var i=0; i<liveTrackers.length; i++) {
       var tracker = liveTrackers[i];
       if (tracker.tracked(el)) {
-        //FIXME: assert statement below throws an exception when data is submitted to the hub too fast
+        //TODO: assert statement below throws an exception when data is submitted to the hub too fast
         //in other words, name == tracker.trackerName instead of name == tracker when someone types too fast in the tracked editor
         //commenting out this assert statement solves the problem
         assert((! name) || name == tracker.trackerName, "Expected to map to a tracker type", name, "but got", tracker.trackerName);
@@ -8848,7 +8848,7 @@ define('forms',["jquery", "util", "session", "elementFinder", "eventMaker", "tem
         return;
       }
     }
-    // FIXME: need to figure out when to ignore inits
+    //TODO: need to figure out when to ignore inits
     msg.updates.forEach(function (update) {
       var el;
       try {
@@ -9120,7 +9120,7 @@ define('startup',["util", "require", "jquery", "windowing", "storage"], function
       }
       require(["windowing"], function (windowing) {
         windowing.show("#togetherjs-share");
-        // FIXME: no way to detect when the window is closed
+        //TODO: no way to detect when the window is closed
         // If there was a next() step then it would not work
       });
     }
@@ -9551,14 +9551,14 @@ define('webrtc',["require", "jquery", "util", "session", "ui", "peers", "storage
     $accept.click(function () {
       peers.Self.update({avatar:  avatarData});
       ui.displayToggle("#togetherjs-no-avatar-edit");
-      // FIXME: these probably shouldn't be two elements:
+      //TODO: these probably shouldn't be two elements:
       $("#togetherjs-participants-other").show();
       $accept.attr("disabled", "1");
     });
 
     $cancel.click(function () {
       ui.displayToggle("#togetherjs-no-avatar-edit");
-      // FIXME: like above:
+      //TODO: like above:
       $("#togetherjs-participants-other").show();
     });
 
@@ -9574,7 +9574,7 @@ define('webrtc',["require", "jquery", "util", "session", "ui", "peers", "storage
           $video[0].play();
         },
         function(err) {
-          // FIXME: should pop up help or something in the case of a user
+          //TODO: should pop up help or something in the case of a user
           // cancel
           console.error("getUserMedia error:", err);
         }
@@ -9601,7 +9601,7 @@ define('webrtc',["require", "jquery", "util", "session", "ui", "peers", "storage
     $upload.on("change", function () {
       var reader = new FileReader();
       reader.onload = function () {
-        // FIXME: I don't actually know it's JPEG, but it's probably a
+        //TODO: I don't actually know it's JPEG, but it's probably a
         // good enough guess:
         var url = "data:image/jpeg;base64," + util.blobToBase64(this.result);
         convertImage(url, function (result) {
@@ -9725,7 +9725,7 @@ define('webrtc',["require", "jquery", "util", "session", "ui", "peers", "storage
         }
       }
       audioButton("#togetherjs-audio-error");
-      // FIXME: this title doesn't seem to display?
+      //TODO: this title doesn't seem to display?
       $("#togetherjs-audio-error").attr("title", s);
     }
 
@@ -9743,7 +9743,7 @@ define('webrtc',["require", "jquery", "util", "session", "ui", "peers", "storage
           }
         },
         function (err) {
-          // FIXME: handle cancel case
+          //TODO: handle cancel case
           if (err && err.code == 1) {
             // User cancel
             return;
@@ -9782,7 +9782,7 @@ define('webrtc',["require", "jquery", "util", "session", "ui", "peers", "storage
         audioButton("#togetherjs-audio-active");
       };
       _connection.onstatechange = function () {
-        // FIXME: this doesn't seem to work:
+        //TODO: this doesn't seem to work:
         // Actually just doesn't work on Firefox
         console.log("state change", _connection.readyState);
         if (_connection.readyState == "closed") {
@@ -9854,7 +9854,7 @@ define('webrtc',["require", "jquery", "util", "session", "ui", "peers", "storage
           error("Error doing RTC createOffer:", err);
         });
       } else if (! (answerSent || answerReceived)) {
-        // FIXME: I might have only needed this due to my own bugs, this might
+        //TODO: I might have only needed this due to my own bugs, this might
         // not actually time out
         var timeout = setTimeout(function () {
           if (! answerSent) {
@@ -9886,9 +9886,9 @@ define('webrtc',["require", "jquery", "util", "session", "ui", "peers", "storage
     }
 
     function toggleMute() {
-      // FIXME: implement.  Actually, wait for this to be implementable - currently
+      //TODO: implement.  Actually, wait for this to be implementable - currently
       // muting of localStreams isn't possible
-      // FIXME: replace with hang-up?
+      //TODO: replace with hang-up?
     }
 
     session.hub.on("rtc-offer", function (msg) {
@@ -9943,7 +9943,7 @@ define('webrtc',["require", "jquery", "util", "session", "ui", "peers", "storage
         }),
         function () {
           answerDescription = true;
-          // FIXME: I don't think this connect is ever needed?
+          //TODO: I don't think this connect is ever needed?
           connect();
         },
         function (err) {
@@ -9974,7 +9974,7 @@ define('webrtc',["require", "jquery", "util", "session", "ui", "peers", "storage
     });
 
     session.hub.on("hello", function (msg) {
-      // FIXME: displayToggle should be set due to
+      //TODO: displayToggle should be set due to
       // _connection.onstatechange, but that's not working, so
       // instead:
       audioButton("#togetherjs-audio-ready");
@@ -10190,7 +10190,7 @@ function ($, util, session, elementFinder) {
       var iframes = $('iframe');
       iframes.each(function (i, iframe) {
         // if the iframe's unique id is already set, skip it
-        // FIXME: what if the user manually sets an iframe's id (i.e. "#my-youtube")?
+        //TODO: what if the user manually sets an iframe's id (i.e. "#my-youtube")?
         // maybe we should set iframes everytime togetherjs is reinitialized?
         if (($(iframe).attr("src") || "").indexOf("youtube") != -1 && !$(iframe).attr("id")) {
           $(iframe).attr("id", "youtube-player"+i);
@@ -10219,7 +10219,7 @@ function ($, util, session, elementFinder) {
   function publishPlayerStateChange(event) {
     var target = event.target; 
     var currentIframe = target.a;
-    // FIXME: player object retrieved from event.target has an incomplete set of essential functions
+    //TODO: player object retrieved from event.target has an incomplete set of essential functions
     // this is most likely due to a recently-introduced problem with current YouTube API as others have been reporting the same issue (12/18/`13)
     //var currentPlayer = target;
     //var currentTime = currentPlayer.getCurrentTime();
@@ -10394,7 +10394,7 @@ function ($, util, session, elementFinder) {
 
 define('templates-en-US',[], function () {
   return {
-    "interface": "<% /*\r\n   This is basically all the markup and interface for TogetherJS.\r\n   Note all links should be like http://localhost:8080/togetherjs/*\r\n   these links are rewritten with the location where TogetherJS was deployed.\r\n\r\n   This file is inlined into togetherjs/templates.js\r\n*/ %>\r\n<div id=\"togetherjs-container\" class=\"togetherjs\">\r\n\r\n  <!-- This is the main set of buttons: -->\r\n  <div id=\"togetherjs-dock\" class=\"togetherjs-dock-right\">\r\n    <div id=\"togetherjs-dock-anchor\" title=\"Move the dock\">\r\n      <span id=\"togetherjs-dock-anchor-horizontal\">\r\n        <img src=\"http://localhost:8080/togetherjs/images/icn-handle-circle@2x.png\" alt=\"drag\">\r\n      </span>\r\n      <span id=\"togetherjs-dock-anchor-vertical\">\r\n        <img src=\"http://localhost:8080/togetherjs/images/icn-handle-circle@2x.png\" alt=\"drag\">\r\n      </span>\r\n    </div>\r\n    <div id=\"togetherjs-buttons\">\r\n      <div style=\"display: none\">\r\n        <button id=\"togetherjs-template-dock-person\" class=\"togetherjs-button togetherjs-dock-person\">\r\n          <div class=\"togetherjs-tooltip togetherjs-dock-person-tooltip\">\r\n            <span class=\"togetherjs-person-name\"></span>\r\n            <span class=\"togetherjs-person-tooltip-arrow-r\"></span>\r\n          </div>\r\n          <div class=\"togetherjs-person togetherjs-person-status-overlay\"></div>\r\n        </button>\r\n      </div>\r\n      <button id=\"togetherjs-profile-button\" class=\"togetherjs-button\" title=\"This is you\">\r\n        <div class=\"togetherjs-person togetherjs-person-self\"></div>\r\n        <div id=\"togetherjs-profile-arrow\"></div>\r\n      </button>\r\n      <button id=\"togetherjs-share-button\" class=\"togetherjs-button\" title=\"Add a friend\"></button>\r\n      <button id=\"togetherjs-audio-button\" class=\"togetherjs-button\" title=\"Turn on microphone\">\r\n        <span id=\"togetherjs-audio-unavailable\" class=\"togetherjs-audio-set\" data-toggles=\".togetherjs-audio-set\">\r\n        </span>\r\n        <span id=\"togetherjs-audio-ready\" class=\"togetherjs-audio-set\" data-toggles=\".togetherjs-audio-set\" style=\"display: none\">\r\n        </span>\r\n        <span id=\"togetherjs-audio-outgoing\" class=\"togetherjs-audio-set\" data-toggles=\".togetherjs-audio-set\" style=\"display: none\">\r\n        </span>\r\n        <span id=\"togetherjs-audio-incoming\" class=\"togetherjs-audio-set\" data-toggles=\".togetherjs-audio-set\" style=\"display: none\">\r\n        </span>\r\n        <span id=\"togetherjs-audio-active\" class=\"togetherjs-audio-set\" data-toggles=\".togetherjs-audio-set\" style=\"display: none\">\r\n        </span>\r\n        <span id=\"togetherjs-audio-muted\" class=\"togetherjs-audio-set\" data-toggles=\".togetherjs-audio-set\" style=\"display: none\">\r\n        </span>\r\n        <span id=\"togetherjs-audio-error\" class=\"togetherjs-audio-set\" data-toggles=\".togetherjs-audio-set\" style=\"display: none\">\r\n        </span>\r\n      </button>\r\n      <button id=\"togetherjs-chat-button\" class=\"togetherjs-button\" title=\"Chat\"></button>\r\n      <div id=\"togetherjs-dock-participants\"></div>\r\n    </div>\r\n  </div>\r\n\r\n  <!-- The window for editing the avatar: -->\r\n  <div id=\"togetherjs-avatar-edit\" class=\"togetherjs-modal\"\r\n       style=\"display: none\">\r\n    <header> Update avatar </header>\r\n    <section>\r\n      <div class=\"togetherjs-avatar-preview togetherjs-person togetherjs-person-self\"></div>\r\n      <div id=\"togetherjs-avatar-buttons\">\r\n        <input type=\"file\" class=\"togetherjs-upload-avatar\">\r\n        <!--<button id=\"togetherjs-upload-avatar\" class=\"togetherjs-primary\">Upload a picture</button>-->\r\n        <!--<button id=\"togetherjs-camera-avatar\" class=\"togetherjs-default\">Take a picture</button>-->\r\n      </div>\r\n    </section>\r\n    <section class=\"togetherjs-buttons\">\r\n      <button class=\"togetherjs-cancel togetherjs-dismiss\">Cancel</button>\r\n      <span class=\"togetherjs-alt-text\">or</span>\r\n      <button class=\"togetherjs-avatar-save togetherjs-primary\">Save</button>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- The window for sharing the link: -->\r\n  <div id=\"togetherjs-share\" class=\"togetherjs-window\"\r\n       data-bind-to=\"#togetherjs-share-button\" style=\"display: none\">\r\n    <header> Invite a friend </header>\r\n    <section>\r\n      <div class=\"togetherjs-not-mobile\">\r\n        <p>Copy and paste this link over IM or email:</p>\r\n        <input type=\"text\" class=\"togetherjs-share-link\">\r\n      </div>\r\n      <div class=\"togetherjs-only-mobile\">\r\n        <p>Copy and paste this link over IM or email:</p>\r\n        <input type=\"text\" class=\"togetherjs-share-link\">\r\n        <!-- <a class=\"togetherjs-share-link\" href=\"#\">Press your thumb here.</a> -->\r\n      </div>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- Participant Full List view template: -->\r\n  <div id=\"togetherjs-participantlist\" class=\"togetherjs-window\"\r\n       data-bind-to=\"#togetherjs-participantlist-button\" style=\"display: none\">\r\n    <header> Participants </header>\r\n    <section>\r\n      <div class=\"togetherjs-not-mobile\">\r\n        <ul>\r\n          <li id=\"togetherjs-participant-item\">\r\n            <img class=\"togetherjs-person togetherjs-person-small\" src=\"http://localhost:8080/togetherjs/images/btn-menu-change-avatar.png\">\r\n            <span class=\"tj-name togetherjs-person-name\">NAME</span>\r\n            <span class=\"tj-status\">&#9679;</span>\r\n            <p class=\"tj-urllocation\">Currently at: <a class=\"togetherjs-person-url togetherjs-person-url-title\" href=\"\">http://www.location.comwww.location.comwww.location.comasdfsafd</a></p>\r\n            <p class=\"tj-follow\">Follow:\r\n              <label class=\"togetherjs-follow-question\" for=\"togetherjs-person-status-follow\">\r\n                <input type=\"checkbox\" id=\"togetherjs-person-status-follow\">\r\n              </label>\r\n            </p>\r\n            <section class=\"togetherjs-buttons\">\r\n              <!-- Displayed when the peer is at a different URL: -->\r\n              <div class=\"togetherjs-different-url\">\r\n                <a class=\"togetherjs-nudge togetherjs-default tj-btn-sm\">Nudge them</a>\r\n                <a href=\"#\" class=\"togetherjs-follow togetherjs-person-url togetherjs-primary tj-btn-sm\">Join them</a>\r\n              </div>\r\n              <!-- Displayed when the peer is at your same URL: -->\r\n              <div class=\"togetherjs-same-url\" style=\"display: none\">\r\n                <span class=\"togetherjs-person-name\"></span> is on the same page as you.\r\n              </div>\r\n            </section>\r\n          </li>\r\n        </ul>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- Participant detail template: -->\r\n  <div id=\"togetherjs-template-participant-window\" class=\"togetherjs-window\" style=\"display: none\">\r\n    <header><div class=\"togetherjs-person togetherjs-person-small\"></div><span class=\"togetherjs-person-name\"></span></header>\r\n\r\n    <section class=\"togetherjs-participant-window-main\">\r\n      <p class=\"togetherjs-participant-window-row\"><strong>Role:</strong>\r\n        <span class=\"togetherjs-person-role\"></span>\r\n      </p>\r\n\r\n      <p class=\"togetherjs-participant-window-row\"><strong>Currently at:</strong>\r\n        <a class=\"togetherjs-person-url togetherjs-person-url-title\"></a>\r\n      </p>\r\n\r\n      <p class=\"togetherjs-participant-window-row\"><strong>Status:</strong>\r\n        <span class=\"togetherjs-person-status\"></span>\r\n      </p>\r\n\r\n      <p class=\"togetherjs-participant-window-row\"><strong class=\"togetherjs-float-left\">Follow this participant:</strong>\r\n        <label class=\"togetherjs-follow-question togetherjs-float-left\" for=\"togetherjs-person-status-follow\">\r\n          <input type=\"checkbox\" id=\"togetherjs-person-status-follow\">\r\n        </label>\r\n        <span class=\"togetherjs-clear\"></span>\r\n      </p>\r\n\r\n    </section>\r\n\r\n    <section class=\"togetherjs-buttons\">\r\n      <!-- Displayed when the peer is at a different URL: -->\r\n      <div class=\"togetherjs-different-url\">\r\n        <a class=\"togetherjs-nudge togetherjs-default\">Nudge them</a>\r\n        <a href=\"#\" class=\"togetherjs-follow togetherjs-person-url togetherjs-primary\">Join them</a>\r\n      </div>\r\n      <!-- Displayed when the peer is at your same URL: -->\r\n      <div class=\"togetherjs-same-url\" style=\"display: none\">\r\n        <span class=\"togetherjs-person-name\"></span> is on the same page as you.\r\n      </div>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- The chat screen: -->\r\n  <div id=\"togetherjs-chat\" class=\"togetherjs-window\" data-bind-to=\"#togetherjs-chat-button\"\r\n       style=\"display: none\">\r\n    <header> Chat </header>\r\n    <section class=\"togetherjs-subtitle\">\r\n      <div id=\"togetherjs-chat-participants\" data-toggles=\"#togetherjs-chat-no-participants\" style=\"display: none\">\r\n        <span id=\"togetherjs-chat-participant-list\"></span>\r\n        &amp; You\r\n      </div>\r\n      <div id=\"togetherjs-chat-no-participants\" data-toggles=\"#togetherjs-chat-participants\">\r\n        No one else is here.\r\n      </div>\r\n    </section>\r\n\r\n    <div style=\"display: none\">\r\n\r\n      <!-- Template for one message: -->\r\n      <div id=\"togetherjs-template-chat-message\" class=\"togetherjs-chat-item togetherjs-chat-message\">\r\n        <div class=\"togetherjs-person\"></div>\r\n        <div class=\"togetherjs-timestamp\"><span class=\"togetherjs-time\">HH:MM</span> <span class=\"togetherjs-ampm\">AM/PM</span></div>\r\n        <div class=\"togetherjs-person-name-abbrev\"></div>\r\n        <div class=\"togetherjs-chat-content togetherjs-sub-content\"></div>\r\n      </div>\r\n\r\n      <!-- Template for when a person leaves: -->\r\n      <div id=\"togetherjs-template-chat-left\" class=\"togetherjs-chat-item togetherjs-chat-left-item\">\r\n        <div class=\"togetherjs-person\"></div>\r\n        <div class=\"togetherjs-ifnot-declinedJoin\">\r\n          <div class=\"togetherjs-inline-text\"><span class=\"togetherjs-person-name\"></span> left the session.</div>\r\n        </div>\r\n        <div class=\"togetherjs-if-declinedJoin\">\r\n          <div class=\"togetherjs-inline-text\"><span class=\"togetherjs-person-name\"></span> declined to join the session.</div>\r\n        </div>\r\n        <div class=\"togetherjs-clear\"></div>\r\n      </div>\r\n\r\n      <!-- Template when a person joins the session: -->\r\n      <div id=\"togetherjs-template-chat-joined\" class=\"togetherjs-chat-item togetherjs-chat-join-item\">\r\n        <div class=\"togetherjs-person\"></div>\r\n        <div class=\"togetherjs-inline-text\"><span class=\"togetherjs-person-name\"></span> joined the session.</div>\r\n        <div class=\"togetherjs-clear\"></div>\r\n      </div>\r\n\r\n      <!-- Template for system-derived messages: -->\r\n      <div id=\"togetherjs-template-chat-system\" class=\"togetherjs-chat-item\">\r\n        <span class=\"togetherjs-chat-content togetherjs-sub-content\"></span>\r\n      </div>\r\n\r\n      <!-- Template when a person joins the session: -->\r\n      <!-- <div id=\"togetherjs-template-chat-joined\" class=\"togetherjs-chat-item togetherjs-chat-join-item\">\r\n        <div class=\"togetherjs-person\"></div>\r\n        <div class=\"togetherjs-inline-text\"><span class=\"togetherjs-person-name\"></span> joined the session.</div>\r\n        <div class=\"togetherjs-clear\"></div>\r\n      </div> -->\r\n\r\n      <!-- Template for when someone goes to a new URL: -->\r\n      <div id=\"togetherjs-template-url-change\" class=\"togetherjs-chat-item togetherjs-chat-url-change\">\r\n        <div class=\"togetherjs-person\"></div>\r\n        <div class=\"togetherjs-inline-text\">\r\n          <div class=\"togetherjs-if-sameUrl\">\r\n            <span class=\"togetherjs-person-name\"></span>\r\n            is on the same page as you.\r\n          </div>\r\n          <div class=\"togetherjs-ifnot-sameUrl\">\r\n            <span class=\"togetherjs-person-name\"></span>\r\n            has gone to: <a href=\"#\" class=\"togetherjs-person-url togetherjs-person-url-title\" target=\"_self\"></a>\r\n            <section class=\"togetherjs-buttons togetherjs-buttons-notification-diff-url\">\r\n              <!-- Displayed when the peer is at a different URL: -->\r\n              <div class=\"togetherjs-different-url togetherjs-notification-diff-url\">\r\n                <a class=\"togetherjs-nudge togetherjs-default\">Nudge them</a>\r\n                <a href=\"#\" class=\"togetherjs-follow togetherjs-person-url togetherjs-primary\">Join them</a>\r\n              </div>\r\n            </section>\r\n\r\n            <!-- <div>\r\n              <a class=\"togetherjs-nudge togetherjs-secondary\">Nudge them</a>\r\n              <a href=\"\" class=\"togetherjs-person-url togetherjs-follow togetherjs-primary\">Join them</a>\r\n            </div> -->\r\n\r\n          </div>\r\n        </div>\r\n        <div class=\"togetherjs-clear\"></div>\r\n      </div>\r\n    </div>\r\n\r\n    <section id=\"togetherjs-chat-messages\">\r\n      <!-- FIX ME// need to have some dialogue that says something like - There are no chats yet! -->\r\n    </section>\r\n    <section id=\"togetherjs-chat-input-box\">\r\n      <textarea id=\"togetherjs-chat-input\" placeholder=\"Type your message here\"></textarea>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- this is a kind of warning popped up when you (successfully) start RTC: -->\r\n  <div id=\"togetherjs-rtc-info\" class=\"togetherjs-window\"\r\n       data-bind-to=\"#togetherjs-audio-button\"\r\n       style=\"display: none\">\r\n\r\n    <header> Audio Chat </header>\r\n    <section>\r\n      <p>\r\n        Activate your <strong>browser microphone</strong> near your URL bar above.\r\n      </p>\r\n      <p>\r\n        Talking on your microphone through your web browser is an experimental feature.\r\n      </p>\r\n      <p>\r\n        Read more about Audio Chat <a href=\"https://github.com/mozilla/togetherjs/wiki/About-Audio-Chat-and-WebRTC\" target=\"_blank\">here</a>.\r\n      </p>\r\n    </section>\r\n\r\n    <section class=\"togetherjs-buttons\">\r\n      <label for=\"togetherjs-rtc-info-dismiss\" style=\"display: inline;\">\r\n        <input class=\"togetherjs-dont-show-again\" id=\"togetherjs-rtc-info-dismiss\" type=\"checkbox\">\r\n        Don't show again.\r\n      </label>\r\n      <button class=\"togetherjs-default togetherjs-dismiss\" type=\"button\">Close</button>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- this is popped up when you hit the audio button, but RTC isn't\r\n  supported: -->\r\n  <div id=\"togetherjs-rtc-not-supported\" class=\"togetherjs-window\"\r\n       data-bind-to=\"#togetherjs-audio-button\"\r\n       style=\"display: none\">\r\n    <header> Audio Chat </header>\r\n\r\n    <section>\r\n      <p>Audio chat requires you to use a <a href='https://github.com/mozilla/togetherjs/wiki/About-Audio-Chat-and-WebRTC' target='_blank'>newer browser</a>!</p>\r\n      <p>\r\n        Live audio chat requires a newer (or different) browser than you're using.\r\n      </p>\r\n      <p>\r\n        See <a href='https://github.com/mozilla/togetherjs/wiki/About-Audio-Chat-and-WebRTC' target='_blank'>this page</a>for more information and a list of supported browsers.\r\n      </p>\r\n    </section>\r\n\r\n    <section class=\"togetherjs-buttons\">\r\n      <div class=\"togetherjs-rtc-dialog-btn\">\r\n        <button class=\"togetherjs-default togetherjs-dismiss\" type=\"button\">Close</button>\r\n      </div>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- The popup when a chat message comes in and the #togetherjs-chat window isn't open -->\r\n  <div id=\"togetherjs-chat-notifier\" class=\"togetherjs-notification\"\r\n       data-bind-to=\"#togetherjs-chat-button\"\r\n       style=\"display: none\">\r\n    <img src=\"http://localhost:8080/togetherjs/images/notification-togetherjs-logo.png\" class=\"togetherjs-notification-logo\" alt=\"\">\r\n    <img src=\"http://localhost:8080/togetherjs/images/notification-btn-close.png\" class=\"togetherjs-notification-closebtn togetherjs-dismiss\" alt=\"[close]\">\r\n    <section id=\"togetherjs-chat-notifier-message\">\r\n    </section>\r\n  </div>\r\n\r\n  <!-- The menu when you click on the profile: -->\r\n  <div id=\"togetherjs-menu\" class=\"togetherjs-menu\" style=\"display: none\">\r\n    <div class=\"togetherjs-menu-item togetherjs-menu-disabled\" id=\"togetherjs-menu-profile\">\r\n      <img id=\"togetherjs-menu-avatar\">\r\n      <span class=\"togetherjs-person-name-self\" id=\"togetherjs-self-name-display\" data-toggles=\"#togetherjs-menu .togetherjs-self-name\">[nickname]</span>\r\n      <input class=\"togetherjs-self-name\" type=\"text\" data-toggles=\"#togetherjs-self-name-display\" style=\"display: none\" placeholder=\"Enter your name\">\r\n    </div>\r\n    <div class=\"togetherjs-menu-hr-avatar\"></div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-update-name\"><img src=\"http://localhost:8080/togetherjs/images/button-pencil.png\" alt=\"\"> Update your name</div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-update-avatar\"><img src=\"http://localhost:8080/togetherjs/images/btn-menu-change-avatar.png\" alt=\"\"> Change avatar</div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-update-color\"><span class=\"togetherjs-person-bgcolor-self\"></span> Pick profile color</div>\r\n    <div class=\"togetherjs-hr\"></div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-help\">Help</div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-feedback\">Feedback</div>\r\n    <div id=\"togetherjs-invite\" style=\"display: none\">\r\n      <div class=\"togetherjs-hr\"></div>\r\n      <div id=\"togetherjs-invite-users\"></div>\r\n      <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-refresh-invite\">Refresh users</div>\r\n      <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-invite-anyone\">Invite anyone</div>\r\n    </div>\r\n    <div class=\"togetherjs-hr\"></div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-end\"><img src=\"http://localhost:8080/togetherjs/images/button-end-session.png\" alt=\"\"> End <span class=\"togetherjs-tool-name\">TogetherJS</span></div>\r\n  </div>\r\n\r\n  <!-- template for one person in the invite-users list -->\r\n  <div style=\"display: none\">\r\n    <div id=\"togetherjs-template-invite-user-item\" class=\"togetherjs-menu-item\">\r\n      <!-- FIXME: should include avatar in some way -->\r\n      <span class=\"togetherjs-person-name\"></span>\r\n    </div>\r\n  </div>\r\n\r\n  <!-- A window version of #togetherjs-menu, for use on mobile -->\r\n  <div id=\"togetherjs-menu-window\" class=\"togetherjs-window\" style=\"display: none\">\r\n    <header>Settings and Profile</header>\r\n    <section>\r\n    <div class=\"togetherjs-menu-item\">\r\n      <img class=\"togetherjs-menu-avatar\">\r\n      <span class=\"togetherjs-person-name-self\" id=\"togetherjs-self-name-display\"></span>\r\n    </div>\r\n    <div class=\"togetherjs-menu-hr-avatar\"></div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-update-name-button\"><img src=\"http://localhost:8080/togetherjs/images/button-pencil.png\" alt=\"\"> Update your name</div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-update-avatar-button\"><img src=\"http://localhost:8080/togetherjs/images/btn-menu-change-avatar.png\" alt=\"\"> Change avatar</div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-update-color-button\"><span class=\"togetherjs-person-bgcolor-self\"></span> Pick profile color</div>\r\n    <div class=\"togetherjs-hr\"></div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-help-button\">Help</div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-feedback-button\">Feedback</div>\r\n    <div class=\"togetherjs-hr\"></div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-end-button\"><img src=\"http://localhost:8080/togetherjs/images/button-end-session.png\" alt=\"\"> End TOOL_NAME</div>\r\n    </section>\r\n    <section class=\"togetherjs-buttons\">\r\n      <button class=\"togetherjs-dismiss togetherjs-primary\">OK</button>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- The name editor, for use on mobile -->\r\n  <div id=\"togetherjs-edit-name-window\" class=\"togetherjs-window\" style=\"display: none\">\r\n    <header>Update Name</header>\r\n    <section>\r\n      <div>\r\n        <input class=\"togetherjs-self-name\" type=\"text\" placeholder=\"Enter your name\">\r\n      </div>\r\n    </section>\r\n    <section class=\"togetherjs-buttons\">\r\n      <button class=\"togetherjs-dismiss togetherjs-primary\">OK</button>\r\n    </section>\r\n  </div>\r\n\r\n  <div class=\"togetherjs-menu\" id=\"togetherjs-pick-color\" style=\"display: none\">\r\n    <div class=\"togetherjs-triangle-up\"><img src=\"http://localhost:8080/togetherjs/images/icn-triangle-up.png\"></div>\r\n    <div style=\"display: none\">\r\n      <div id=\"togetherjs-template-swatch\" class=\"togetherjs-swatch\">\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n  <!-- Invisible elements that handle the RTC audio: -->\r\n  <audio id=\"togetherjs-audio-element\"></audio>\r\n  <audio id=\"togetherjs-local-audio\" muted=\"true\" volume=\"0.3\"></audio>\r\n  <audio id=\"togetherjs-notification\" src=\"http://localhost:8080/togetherjs/images/notification.ogg\"></audio>\r\n\r\n  <!-- The intro screen for someone who joins a session the first time: -->\r\n  <div id=\"togetherjs-intro\" class=\"togetherjs-modal\" style=\"display: none\">\r\n    <header>Join TOOL_NAME session?</header>\r\n    <section>\r\n      <p>Your friend has asked you to join their TOOL_SITE_LINK browser session to collaborate in real-time!</p>\r\n      <p>Would you like to join their session?</p>\r\n    </section>\r\n\r\n    <section class=\"togetherjs-buttons\">\r\n      <button class=\"togetherjs-destructive togetherjs-modal-dont-join\">No, don't join</button>\r\n      <button class=\"togetherjs-primary togetherjs-dismiss\">Yes, join session</button>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- Shown when a web browser is completely incapable of running TogetherJS: -->\r\n  <div id=\"togetherjs-browser-broken\" class=\"togetherjs-modal\" style=\"display: none\">\r\n    <header> Sorry </header>\r\n\r\n    <section>\r\n      <p>\r\n        We're sorry, TOOL_NAME doesn't work with this browser.  Please <a href='https://github.com/mozilla/togetherjs/wiki/Supported-Browsers#supported-browsers'>upgrade to a supported browser</a> to try TOOL_NAME.\r\n      </p>\r\n\r\n      <p id=\"togetherjs-browser-broken-is-ie\" style=\"display: none\">\r\n        We need your help fixing TogetherJS on Internet Explorer!  Here are a list of IE <a href=\"https://github.com/mozilla/togetherjs/issues?labels=IE&milestone=&page=1&state=open\" target=\"_blank\">GitHub issues</a> we need fixed that you can work on.\r\n        Internet Explorer <a href=\"https://github.com/mozilla/togetherjs/wiki/Supported-Browsers#internet-explorer\">is currently not supported</a>.  If you do want to try out TogetherJS, we'd suggest using Firefox or Chrome.\r\n      </p>\r\n    </section>\r\n\r\n    <section class=\"togetherjs-buttons\">\r\n      <button class=\"togetherjs-dismiss togetherjs-primary\">End TOOL_NAME</button>\r\n    </section>\r\n\r\n  </div>\r\n\r\n  <!-- Shown when the browser has WebSockets, but is IE (i.e., IE10) -->\r\n  <div id=\"togetherjs-browser-unsupported\" class=\"togetherjs-modal\" style=\"display: none\">\r\n    <header> Unsupported Browser </header>\r\n\r\n    <section>\r\n      <p>\r\n        We need your help fixing TogetherJS on Internet Explorer!  Here are a list of IE <a href=\"https://github.com/mozilla/togetherjs/issues?labels=IE&milestone=&page=1&state=open\" target=\"_blank\">GitHub issues</a> we need fixed that you can work on.\r\n        Internet Explorer <a href=\"https://github.com/mozilla/togetherjs/wiki/Supported-Browsers#internet-explorer\">is currently not supported</a>.  If you do want to try out TogetherJS, we'd suggest using Firefox or Chrome.\r\n      </p>\r\n\r\n      <p>You can continue to try to use TOOL_NAME, but you are likely to hit lots of bugs.  So be warned.</p>\r\n\r\n    </section>\r\n\r\n    <section class=\"togetherjs-buttons\">\r\n      <button class=\"togetherjs-dismiss togetherjs-primary\">End TOOL_NAME</button>\r\n      <button class=\"togetherjs-dismiss togetherjs-secondary togetherjs-browser-unsupported-anyway\">Try TOOL_NAME Anyway</button>\r\n    </section>\r\n\r\n  </div>\r\n\r\n  <div id=\"togetherjs-confirm-end\" class=\"togetherjs-modal\" style=\"display: none\">\r\n    <header> End session? </header>\r\n    <section>\r\n      <p>\r\n        Are you sure you'd like to end your TOOL_NAME session?\r\n      </p>\r\n    </section>\r\n    <section class=\"togetherjs-buttons\">\r\n      <button class=\"togetherjs-cancel togetherjs-dismiss\">Cancel</button>\r\n      <span class=\"togetherjs-alt-text\">or</span>\r\n      <button id=\"togetherjs-end-session\" class=\"togetherjs-destructive\">End session</button>\r\n    </section>\r\n  </div>\r\n\r\n  <div id=\"togetherjs-feedback-form\" class=\"togetherjs-modal\" style=\"display: none;\">\r\n    <header> Feedback </header>\r\n    <iframe src=\"https://docs.google.com/a/mozilla.com/forms/d/1lVE7JyRo_tjakN0mLG1Cd9X9vseBX9wci153z9JcNEs/viewform?embedded=true\" width=\"400\" height=\"300\" frameborder=\"0\" marginheight=\"0\" marginwidth=\"0\">Loading form...</iframe>\r\n    <!-- <p><button class=\"togetherjs-modal-close\">Close</button></p> -->\r\n  </div>\r\n\r\n  <div style=\"display: none\">\r\n    <!-- This is when you join a session and the other person has already changed to another URL: -->\r\n    <div id=\"togetherjs-template-url-change\" class=\"togetherjs-modal\">\r\n      <header> Following to new URL... </header>\r\n      <section>\r\n        <div class=\"togetherjs-person\"></div>\r\n        Following\r\n        <span class=\"togetherjs-person-name\"></span>\r\n        to <a href=\"\" class=\"togetherjs-person-url togetherjs-person-url-title\"></a>\r\n      </section>\r\n    </div>\r\n\r\n    <!-- This is when someone invites you to their session: -->\r\n    <div id=\"togetherjs-template-invite\" class=\"togetherjs-chat-item\">\r\n      <div class=\"togetherjs-person\"></div>\r\n      <div>\r\n        <span class=\"togetherjs-person-name\"></span>\r\n        has invited <strong class=\"togetherjs-if-forEveryone\">anyone</strong>\r\n        <strong class=\"togetherjs-ifnot-forEveryone\">you</strong>\r\n        to <a href=\"\" data-togetherjs-subattr-href=\"href\" class=\"togetherjs-sub-hrefTitle\" target=\"_blank\"></a>\r\n      </div>\r\n    </div>\r\n\r\n  </div>\r\n\r\n  <!-- The pointer at the side of a window: -->\r\n  <div id=\"togetherjs-window-pointer-right\" style=\"display: none\"></div>\r\n  <div id=\"togetherjs-window-pointer-left\" style=\"display: none\"></div>\r\n\r\n  <!-- The element that overlaps the background of the page during a modal dialog: -->\r\n  <div id=\"togetherjs-modal-background\" style=\"display: none\"></div>\r\n\r\n  <!-- Some miscellaneous templates -->\r\n  <div style=\"display: none\">\r\n\r\n    <!-- This is the cursor: -->\r\n    <div id=\"togetherjs-template-cursor\" class=\"togetherjs-cursor togetherjs\">\r\n      <!-- Note: images/cursor.svg is a copy of this (for editing): -->\r\n      <!-- crossbrowser svg dropshadow http://demosthenes.info/blog/600/Creating-a-True-CrossBrowser-Drop-Shadow- -->\r\n      <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\r\n      \t width=\"15px\" height=\"22.838px\" viewBox=\"96.344 146.692 15 22.838\" enable-background=\"new 96.344 146.692 15 22.838\"\r\n      \t xml:space=\"preserve\">\r\n      <path fill=\"#231F20\" d=\"M98.984,146.692c2.167,1.322,1.624,6.067,3.773,7.298c-0.072-0.488,2.512-0.931,3.097,0\r\n      \tc0.503,0.337,1.104-0.846,2.653,0.443c0.555,0.593,3.258,2.179,1.001,8.851c-0.446,1.316,2.854,0.135,1.169,2.619\r\n      \tc-3.748,5.521-9.455,2.787-9.062,1.746c1.06-2.809-6.889-4.885-4.97-9.896c0.834-2.559,2.898,0.653,2.923,0.29\r\n      \tc-0.434-1.07-2.608-5.541-2.923-6.985C96.587,150.793,95.342,147.033,98.984,146.692z\"/>\r\n      </svg>\r\n      <!-- <img class=\"togetherjs-cursor-img\" src=\"http://localhost:8080/togetherjs/images/cursor.svg\"> -->\r\n      <span class=\"togetherjs-cursor-container\">\r\n        <span class=\"togetherjs-cursor-name\"></span>\r\n        <span style=\"display:none\" class=\"togetherjs-cursor-typing\" id=\"togetherjs-cursor-typebox\">\r\n          <span class=\"togetherjs-typing-ellipse-one\">&#9679;</span><span class=\"togetherjs-typing-ellipse-two\">&#9679;</span><span class=\"togetherjs-typing-ellipse-three\">&#9679;</span>\r\n        </span>\r\n        <!-- Displayed when the cursor is below the screen: -->\r\n        <span class=\"togetherjs-cursor-down\">\r\n\r\n        </span>\r\n        <!-- Displayed when the cursor is above the screen: -->\r\n        <span class=\"togetherjs-cursor-up\">\r\n\r\n        </span>\r\n      </span>\r\n    </div>\r\n\r\n    <!-- This is the element that goes around focused form elements: -->\r\n    <div id=\"togetherjs-template-focus\">\r\n      <div class=\"togetherjs-focus togetherjs-person-bordercolor\"></div>\r\n    </div>\r\n\r\n    <!-- This is a click: -->\r\n    <div id=\"togetherjs-template-click\" class=\"togetherjs-click togetherjs\">\r\n    </div>\r\n  </div>\r\n</div>\r\n",
+    "interface": "<% /*\r\n   This is basically all the markup and interface for TogetherJS.\r\n   Note all links should be like http://localhost:8080/togetherjs/*\r\n   these links are rewritten with the location where TogetherJS was deployed.\r\n\r\n   This file is inlined into togetherjs/templates.js\r\n*/ %>\r\n<div id=\"togetherjs-container\" class=\"togetherjs\">\r\n\r\n  <!-- This is the main set of buttons: -->\r\n  <div id=\"togetherjs-dock\" class=\"togetherjs-dock-right\">\r\n    <div id=\"togetherjs-dock-anchor\" title=\"Move the dock\">\r\n      <span id=\"togetherjs-dock-anchor-horizontal\">\r\n        <img src=\"http://localhost:8080/togetherjs/images/icn-handle-circle@2x.png\" alt=\"drag\">\r\n      </span>\r\n      <span id=\"togetherjs-dock-anchor-vertical\">\r\n        <img src=\"http://localhost:8080/togetherjs/images/icn-handle-circle@2x.png\" alt=\"drag\">\r\n      </span>\r\n    </div>\r\n    <div id=\"togetherjs-buttons\">\r\n      <div style=\"display: none\">\r\n        <button id=\"togetherjs-template-dock-person\" class=\"togetherjs-button togetherjs-dock-person\">\r\n          <div class=\"togetherjs-tooltip togetherjs-dock-person-tooltip\">\r\n            <span class=\"togetherjs-person-name\"></span>\r\n            <span class=\"togetherjs-person-tooltip-arrow-r\"></span>\r\n          </div>\r\n          <div class=\"togetherjs-person togetherjs-person-status-overlay\"></div>\r\n        </button>\r\n      </div>\r\n      <button id=\"togetherjs-profile-button\" class=\"togetherjs-button\" title=\"This is you\">\r\n        <div class=\"togetherjs-person togetherjs-person-self\"></div>\r\n        <div id=\"togetherjs-profile-arrow\"></div>\r\n      </button>\r\n      <button id=\"togetherjs-share-button\" class=\"togetherjs-button\" title=\"Add a friend\"></button>\r\n      <button id=\"togetherjs-audio-button\" class=\"togetherjs-button\" title=\"Turn on microphone\">\r\n        <span id=\"togetherjs-audio-unavailable\" class=\"togetherjs-audio-set\" data-toggles=\".togetherjs-audio-set\">\r\n        </span>\r\n        <span id=\"togetherjs-audio-ready\" class=\"togetherjs-audio-set\" data-toggles=\".togetherjs-audio-set\" style=\"display: none\">\r\n        </span>\r\n        <span id=\"togetherjs-audio-outgoing\" class=\"togetherjs-audio-set\" data-toggles=\".togetherjs-audio-set\" style=\"display: none\">\r\n        </span>\r\n        <span id=\"togetherjs-audio-incoming\" class=\"togetherjs-audio-set\" data-toggles=\".togetherjs-audio-set\" style=\"display: none\">\r\n        </span>\r\n        <span id=\"togetherjs-audio-active\" class=\"togetherjs-audio-set\" data-toggles=\".togetherjs-audio-set\" style=\"display: none\">\r\n        </span>\r\n        <span id=\"togetherjs-audio-muted\" class=\"togetherjs-audio-set\" data-toggles=\".togetherjs-audio-set\" style=\"display: none\">\r\n        </span>\r\n        <span id=\"togetherjs-audio-error\" class=\"togetherjs-audio-set\" data-toggles=\".togetherjs-audio-set\" style=\"display: none\">\r\n        </span>\r\n      </button>\r\n      <button id=\"togetherjs-chat-button\" class=\"togetherjs-button\" title=\"Chat\"></button>\r\n      <div id=\"togetherjs-dock-participants\"></div>\r\n    </div>\r\n  </div>\r\n\r\n  <!-- The window for editing the avatar: -->\r\n  <div id=\"togetherjs-avatar-edit\" class=\"togetherjs-modal\"\r\n       style=\"display: none\">\r\n    <header> Update avatar </header>\r\n    <section>\r\n      <div class=\"togetherjs-avatar-preview togetherjs-person togetherjs-person-self\"></div>\r\n      <div id=\"togetherjs-avatar-buttons\">\r\n        <input type=\"file\" class=\"togetherjs-upload-avatar\">\r\n        <!--<button id=\"togetherjs-upload-avatar\" class=\"togetherjs-primary\">Upload a picture</button>-->\r\n        <!--<button id=\"togetherjs-camera-avatar\" class=\"togetherjs-default\">Take a picture</button>-->\r\n      </div>\r\n    </section>\r\n    <section class=\"togetherjs-buttons\">\r\n      <button class=\"togetherjs-cancel togetherjs-dismiss\">Cancel</button>\r\n      <span class=\"togetherjs-alt-text\">or</span>\r\n      <button class=\"togetherjs-avatar-save togetherjs-primary\">Save</button>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- The window for sharing the link: -->\r\n  <div id=\"togetherjs-share\" class=\"togetherjs-window\"\r\n       data-bind-to=\"#togetherjs-share-button\" style=\"display: none\">\r\n    <header> Invite a friend </header>\r\n    <section>\r\n      <div class=\"togetherjs-not-mobile\">\r\n        <p>Copy and paste this link over IM or email:</p>\r\n        <input type=\"text\" class=\"togetherjs-share-link\">\r\n      </div>\r\n      <div class=\"togetherjs-only-mobile\">\r\n        <p>Copy and paste this link over IM or email:</p>\r\n        <input type=\"text\" class=\"togetherjs-share-link\">\r\n        <!-- <a class=\"togetherjs-share-link\" href=\"#\">Press your thumb here.</a> -->\r\n      </div>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- Participant Full List view template: -->\r\n  <div id=\"togetherjs-participantlist\" class=\"togetherjs-window\"\r\n       data-bind-to=\"#togetherjs-participantlist-button\" style=\"display: none\">\r\n    <header> Participants </header>\r\n    <section>\r\n      <div class=\"togetherjs-not-mobile\">\r\n        <ul>\r\n          <li id=\"togetherjs-participant-item\">\r\n            <img class=\"togetherjs-person togetherjs-person-small\" src=\"http://localhost:8080/togetherjs/images/btn-menu-change-avatar.png\">\r\n            <span class=\"tj-name togetherjs-person-name\">NAME</span>\r\n            <span class=\"tj-status\">&#9679;</span>\r\n            <p class=\"tj-urllocation\">Currently at: <a class=\"togetherjs-person-url togetherjs-person-url-title\" href=\"\">http://www.location.comwww.location.comwww.location.comasdfsafd</a></p>\r\n            <p class=\"tj-follow\">Follow:\r\n              <label class=\"togetherjs-follow-question\" for=\"togetherjs-person-status-follow\">\r\n                <input type=\"checkbox\" id=\"togetherjs-person-status-follow\">\r\n              </label>\r\n            </p>\r\n            <section class=\"togetherjs-buttons\">\r\n              <!-- Displayed when the peer is at a different URL: -->\r\n              <div class=\"togetherjs-different-url\">\r\n                <a class=\"togetherjs-nudge togetherjs-default tj-btn-sm\">Nudge them</a>\r\n                <a href=\"#\" class=\"togetherjs-follow togetherjs-person-url togetherjs-primary tj-btn-sm\">Join them</a>\r\n              </div>\r\n              <!-- Displayed when the peer is at your same URL: -->\r\n              <div class=\"togetherjs-same-url\" style=\"display: none\">\r\n                <span class=\"togetherjs-person-name\"></span> is on the same page as you.\r\n              </div>\r\n            </section>\r\n          </li>\r\n        </ul>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- Participant detail template: -->\r\n  <div id=\"togetherjs-template-participant-window\" class=\"togetherjs-window\" style=\"display: none\">\r\n    <header><div class=\"togetherjs-person togetherjs-person-small\"></div><span class=\"togetherjs-person-name\"></span></header>\r\n\r\n    <section class=\"togetherjs-participant-window-main\">\r\n      <p class=\"togetherjs-participant-window-row\"><strong>Role:</strong>\r\n        <span class=\"togetherjs-person-role\"></span>\r\n      </p>\r\n\r\n      <p class=\"togetherjs-participant-window-row\"><strong>Currently at:</strong>\r\n        <a class=\"togetherjs-person-url togetherjs-person-url-title\"></a>\r\n      </p>\r\n\r\n      <p class=\"togetherjs-participant-window-row\"><strong>Status:</strong>\r\n        <span class=\"togetherjs-person-status\"></span>\r\n      </p>\r\n\r\n      <p class=\"togetherjs-participant-window-row\"><strong class=\"togetherjs-float-left\">Follow this participant:</strong>\r\n        <label class=\"togetherjs-follow-question togetherjs-float-left\" for=\"togetherjs-person-status-follow\">\r\n          <input type=\"checkbox\" id=\"togetherjs-person-status-follow\">\r\n        </label>\r\n        <span class=\"togetherjs-clear\"></span>\r\n      </p>\r\n\r\n    </section>\r\n\r\n    <section class=\"togetherjs-buttons\">\r\n      <!-- Displayed when the peer is at a different URL: -->\r\n      <div class=\"togetherjs-different-url\">\r\n        <a class=\"togetherjs-nudge togetherjs-default\">Nudge them</a>\r\n        <a href=\"#\" class=\"togetherjs-follow togetherjs-person-url togetherjs-primary\">Join them</a>\r\n      </div>\r\n      <!-- Displayed when the peer is at your same URL: -->\r\n      <div class=\"togetherjs-same-url\" style=\"display: none\">\r\n        <span class=\"togetherjs-person-name\"></span> is on the same page as you.\r\n      </div>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- The chat screen: -->\r\n  <div id=\"togetherjs-chat\" class=\"togetherjs-window\" data-bind-to=\"#togetherjs-chat-button\"\r\n       style=\"display: none\">\r\n    <header> Chat </header>\r\n    <section class=\"togetherjs-subtitle\">\r\n      <div id=\"togetherjs-chat-participants\" data-toggles=\"#togetherjs-chat-no-participants\" style=\"display: none\">\r\n        <span id=\"togetherjs-chat-participant-list\"></span>\r\n        &amp; You\r\n      </div>\r\n      <div id=\"togetherjs-chat-no-participants\" data-toggles=\"#togetherjs-chat-participants\">\r\n        No one else is here.\r\n      </div>\r\n    </section>\r\n\r\n    <div style=\"display: none\">\r\n\r\n      <!-- Template for one message: -->\r\n      <div id=\"togetherjs-template-chat-message\" class=\"togetherjs-chat-item togetherjs-chat-message\">\r\n        <div class=\"togetherjs-person\"></div>\r\n        <div class=\"togetherjs-timestamp\"><span class=\"togetherjs-time\">HH:MM</span> <span class=\"togetherjs-ampm\">AM/PM</span></div>\r\n        <div class=\"togetherjs-person-name-abbrev\"></div>\r\n        <div class=\"togetherjs-chat-content togetherjs-sub-content\"></div>\r\n      </div>\r\n\r\n      <!-- Template for when a person leaves: -->\r\n      <div id=\"togetherjs-template-chat-left\" class=\"togetherjs-chat-item togetherjs-chat-left-item\">\r\n        <div class=\"togetherjs-person\"></div>\r\n        <div class=\"togetherjs-ifnot-declinedJoin\">\r\n          <div class=\"togetherjs-inline-text\"><span class=\"togetherjs-person-name\"></span> left the session.</div>\r\n        </div>\r\n        <div class=\"togetherjs-if-declinedJoin\">\r\n          <div class=\"togetherjs-inline-text\"><span class=\"togetherjs-person-name\"></span> declined to join the session.</div>\r\n        </div>\r\n        <div class=\"togetherjs-clear\"></div>\r\n      </div>\r\n\r\n      <!-- Template when a person joins the session: -->\r\n      <div id=\"togetherjs-template-chat-joined\" class=\"togetherjs-chat-item togetherjs-chat-join-item\">\r\n        <div class=\"togetherjs-person\"></div>\r\n        <div class=\"togetherjs-inline-text\"><span class=\"togetherjs-person-name\"></span> joined the session.</div>\r\n        <div class=\"togetherjs-clear\"></div>\r\n      </div>\r\n\r\n      <!-- Template for system-derived messages: -->\r\n      <div id=\"togetherjs-template-chat-system\" class=\"togetherjs-chat-item\">\r\n        <span class=\"togetherjs-chat-content togetherjs-sub-content\"></span>\r\n      </div>\r\n\r\n      <!-- Template when a person joins the session: -->\r\n      <!-- <div id=\"togetherjs-template-chat-joined\" class=\"togetherjs-chat-item togetherjs-chat-join-item\">\r\n        <div class=\"togetherjs-person\"></div>\r\n        <div class=\"togetherjs-inline-text\"><span class=\"togetherjs-person-name\"></span> joined the session.</div>\r\n        <div class=\"togetherjs-clear\"></div>\r\n      </div> -->\r\n\r\n      <!-- Template for when someone goes to a new URL: -->\r\n      <div id=\"togetherjs-template-url-change\" class=\"togetherjs-chat-item togetherjs-chat-url-change\">\r\n        <div class=\"togetherjs-person\"></div>\r\n        <div class=\"togetherjs-inline-text\">\r\n          <div class=\"togetherjs-if-sameUrl\">\r\n            <span class=\"togetherjs-person-name\"></span>\r\n            is on the same page as you.\r\n          </div>\r\n          <div class=\"togetherjs-ifnot-sameUrl\">\r\n            <span class=\"togetherjs-person-name\"></span>\r\n            has gone to: <a href=\"#\" class=\"togetherjs-person-url togetherjs-person-url-title\" target=\"_self\"></a>\r\n            <section class=\"togetherjs-buttons togetherjs-buttons-notification-diff-url\">\r\n              <!-- Displayed when the peer is at a different URL: -->\r\n              <div class=\"togetherjs-different-url togetherjs-notification-diff-url\">\r\n                <a class=\"togetherjs-nudge togetherjs-default\">Nudge them</a>\r\n                <a href=\"#\" class=\"togetherjs-follow togetherjs-person-url togetherjs-primary\">Join them</a>\r\n              </div>\r\n            </section>\r\n\r\n            <!-- <div>\r\n              <a class=\"togetherjs-nudge togetherjs-secondary\">Nudge them</a>\r\n              <a href=\"\" class=\"togetherjs-person-url togetherjs-follow togetherjs-primary\">Join them</a>\r\n            </div> -->\r\n\r\n          </div>\r\n        </div>\r\n        <div class=\"togetherjs-clear\"></div>\r\n      </div>\r\n    </div>\r\n\r\n    <section id=\"togetherjs-chat-messages\">\r\n      <!-- FIX ME// need to have some dialogue that says something like - There are no chats yet! -->\r\n    </section>\r\n    <section id=\"togetherjs-chat-input-box\">\r\n      <textarea id=\"togetherjs-chat-input\" placeholder=\"Type your message here\"></textarea>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- this is a kind of warning popped up when you (successfully) start RTC: -->\r\n  <div id=\"togetherjs-rtc-info\" class=\"togetherjs-window\"\r\n       data-bind-to=\"#togetherjs-audio-button\"\r\n       style=\"display: none\">\r\n\r\n    <header> Audio Chat </header>\r\n    <section>\r\n      <p>\r\n        Activate your <strong>browser microphone</strong> near your URL bar above.\r\n      </p>\r\n      <p>\r\n        Talking on your microphone through your web browser is an experimental feature.\r\n      </p>\r\n      <p>\r\n        Read more about Audio Chat <a href=\"https://github.com/mozilla/togetherjs/wiki/About-Audio-Chat-and-WebRTC\" target=\"_blank\">here</a>.\r\n      </p>\r\n    </section>\r\n\r\n    <section class=\"togetherjs-buttons\">\r\n      <label for=\"togetherjs-rtc-info-dismiss\" style=\"display: inline;\">\r\n        <input class=\"togetherjs-dont-show-again\" id=\"togetherjs-rtc-info-dismiss\" type=\"checkbox\">\r\n        Don't show again.\r\n      </label>\r\n      <button class=\"togetherjs-default togetherjs-dismiss\" type=\"button\">Close</button>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- this is popped up when you hit the audio button, but RTC isn't\r\n  supported: -->\r\n  <div id=\"togetherjs-rtc-not-supported\" class=\"togetherjs-window\"\r\n       data-bind-to=\"#togetherjs-audio-button\"\r\n       style=\"display: none\">\r\n    <header> Audio Chat </header>\r\n\r\n    <section>\r\n      <p>Audio chat requires you to use a <a href='https://github.com/mozilla/togetherjs/wiki/About-Audio-Chat-and-WebRTC' target='_blank'>newer browser</a>!</p>\r\n      <p>\r\n        Live audio chat requires a newer (or different) browser than you're using.\r\n      </p>\r\n      <p>\r\n        See <a href='https://github.com/mozilla/togetherjs/wiki/About-Audio-Chat-and-WebRTC' target='_blank'>this page</a>for more information and a list of supported browsers.\r\n      </p>\r\n    </section>\r\n\r\n    <section class=\"togetherjs-buttons\">\r\n      <div class=\"togetherjs-rtc-dialog-btn\">\r\n        <button class=\"togetherjs-default togetherjs-dismiss\" type=\"button\">Close</button>\r\n      </div>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- The popup when a chat message comes in and the #togetherjs-chat window isn't open -->\r\n  <div id=\"togetherjs-chat-notifier\" class=\"togetherjs-notification\"\r\n       data-bind-to=\"#togetherjs-chat-button\"\r\n       style=\"display: none\">\r\n    <img src=\"http://localhost:8080/togetherjs/images/notification-togetherjs-logo.png\" class=\"togetherjs-notification-logo\" alt=\"\">\r\n    <img src=\"http://localhost:8080/togetherjs/images/notification-btn-close.png\" class=\"togetherjs-notification-closebtn togetherjs-dismiss\" alt=\"[close]\">\r\n    <section id=\"togetherjs-chat-notifier-message\">\r\n    </section>\r\n  </div>\r\n\r\n  <!-- The menu when you click on the profile: -->\r\n  <div id=\"togetherjs-menu\" class=\"togetherjs-menu\" style=\"display: none\">\r\n    <div class=\"togetherjs-menu-item togetherjs-menu-disabled\" id=\"togetherjs-menu-profile\">\r\n      <img id=\"togetherjs-menu-avatar\">\r\n      <span class=\"togetherjs-person-name-self\" id=\"togetherjs-self-name-display\" data-toggles=\"#togetherjs-menu .togetherjs-self-name\">[nickname]</span>\r\n      <input class=\"togetherjs-self-name\" type=\"text\" data-toggles=\"#togetherjs-self-name-display\" style=\"display: none\" placeholder=\"Enter your name\">\r\n    </div>\r\n    <div class=\"togetherjs-menu-hr-avatar\"></div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-update-name\"><img src=\"http://localhost:8080/togetherjs/images/button-pencil.png\" alt=\"\"> Update your name</div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-update-avatar\"><img src=\"http://localhost:8080/togetherjs/images/btn-menu-change-avatar.png\" alt=\"\"> Change avatar</div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-update-color\"><span class=\"togetherjs-person-bgcolor-self\"></span> Pick profile color</div>\r\n    <div class=\"togetherjs-hr\"></div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-help\">Help</div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-feedback\">Feedback</div>\r\n    <div id=\"togetherjs-invite\" style=\"display: none\">\r\n      <div class=\"togetherjs-hr\"></div>\r\n      <div id=\"togetherjs-invite-users\"></div>\r\n      <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-refresh-invite\">Refresh users</div>\r\n      <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-invite-anyone\">Invite anyone</div>\r\n    </div>\r\n    <div class=\"togetherjs-hr\"></div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-end\"><img src=\"http://localhost:8080/togetherjs/images/button-end-session.png\" alt=\"\"> End <span class=\"togetherjs-tool-name\">TogetherJS</span></div>\r\n  </div>\r\n\r\n  <!-- template for one person in the invite-users list -->\r\n  <div style=\"display: none\">\r\n    <div id=\"togetherjs-template-invite-user-item\" class=\"togetherjs-menu-item\">\r\n      <!-- TODO: : should include avatar in some way -->\r\n      <span class=\"togetherjs-person-name\"></span>\r\n    </div>\r\n  </div>\r\n\r\n  <!-- A window version of #togetherjs-menu, for use on mobile -->\r\n  <div id=\"togetherjs-menu-window\" class=\"togetherjs-window\" style=\"display: none\">\r\n    <header>Settings and Profile</header>\r\n    <section>\r\n    <div class=\"togetherjs-menu-item\">\r\n      <img class=\"togetherjs-menu-avatar\">\r\n      <span class=\"togetherjs-person-name-self\" id=\"togetherjs-self-name-display\"></span>\r\n    </div>\r\n    <div class=\"togetherjs-menu-hr-avatar\"></div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-update-name-button\"><img src=\"http://localhost:8080/togetherjs/images/button-pencil.png\" alt=\"\"> Update your name</div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-update-avatar-button\"><img src=\"http://localhost:8080/togetherjs/images/btn-menu-change-avatar.png\" alt=\"\"> Change avatar</div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-update-color-button\"><span class=\"togetherjs-person-bgcolor-self\"></span> Pick profile color</div>\r\n    <div class=\"togetherjs-hr\"></div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-help-button\">Help</div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-feedback-button\">Feedback</div>\r\n    <div class=\"togetherjs-hr\"></div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-end-button\"><img src=\"http://localhost:8080/togetherjs/images/button-end-session.png\" alt=\"\"> End TOOL_NAME</div>\r\n    </section>\r\n    <section class=\"togetherjs-buttons\">\r\n      <button class=\"togetherjs-dismiss togetherjs-primary\">OK</button>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- The name editor, for use on mobile -->\r\n  <div id=\"togetherjs-edit-name-window\" class=\"togetherjs-window\" style=\"display: none\">\r\n    <header>Update Name</header>\r\n    <section>\r\n      <div>\r\n        <input class=\"togetherjs-self-name\" type=\"text\" placeholder=\"Enter your name\">\r\n      </div>\r\n    </section>\r\n    <section class=\"togetherjs-buttons\">\r\n      <button class=\"togetherjs-dismiss togetherjs-primary\">OK</button>\r\n    </section>\r\n  </div>\r\n\r\n  <div class=\"togetherjs-menu\" id=\"togetherjs-pick-color\" style=\"display: none\">\r\n    <div class=\"togetherjs-triangle-up\"><img src=\"http://localhost:8080/togetherjs/images/icn-triangle-up.png\"></div>\r\n    <div style=\"display: none\">\r\n      <div id=\"togetherjs-template-swatch\" class=\"togetherjs-swatch\">\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n  <!-- Invisible elements that handle the RTC audio: -->\r\n  <audio id=\"togetherjs-audio-element\"></audio>\r\n  <audio id=\"togetherjs-local-audio\" muted=\"true\" volume=\"0.3\"></audio>\r\n  <audio id=\"togetherjs-notification\" src=\"http://localhost:8080/togetherjs/images/notification.ogg\"></audio>\r\n\r\n  <!-- The intro screen for someone who joins a session the first time: -->\r\n  <div id=\"togetherjs-intro\" class=\"togetherjs-modal\" style=\"display: none\">\r\n    <header>Join TOOL_NAME session?</header>\r\n    <section>\r\n      <p>Your friend has asked you to join their TOOL_SITE_LINK browser session to collaborate in real-time!</p>\r\n      <p>Would you like to join their session?</p>\r\n    </section>\r\n\r\n    <section class=\"togetherjs-buttons\">\r\n      <button class=\"togetherjs-destructive togetherjs-modal-dont-join\">No, don't join</button>\r\n      <button class=\"togetherjs-primary togetherjs-dismiss\">Yes, join session</button>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- Shown when a web browser is completely incapable of running TogetherJS: -->\r\n  <div id=\"togetherjs-browser-broken\" class=\"togetherjs-modal\" style=\"display: none\">\r\n    <header> Sorry </header>\r\n\r\n    <section>\r\n      <p>\r\n        We're sorry, TOOL_NAME doesn't work with this browser.  Please <a href='https://github.com/mozilla/togetherjs/wiki/Supported-Browsers#supported-browsers'>upgrade to a supported browser</a> to try TOOL_NAME.\r\n      </p>\r\n\r\n      <p id=\"togetherjs-browser-broken-is-ie\" style=\"display: none\">\r\n        We need your help fixing TogetherJS on Internet Explorer!  Here are a list of IE <a href=\"https://github.com/mozilla/togetherjs/issues?labels=IE&milestone=&page=1&state=open\" target=\"_blank\">GitHub issues</a> we need fixed that you can work on.\r\n        Internet Explorer <a href=\"https://github.com/mozilla/togetherjs/wiki/Supported-Browsers#internet-explorer\">is currently not supported</a>.  If you do want to try out TogetherJS, we'd suggest using Firefox or Chrome.\r\n      </p>\r\n    </section>\r\n\r\n    <section class=\"togetherjs-buttons\">\r\n      <button class=\"togetherjs-dismiss togetherjs-primary\">End TOOL_NAME</button>\r\n    </section>\r\n\r\n  </div>\r\n\r\n  <!-- Shown when the browser has WebSockets, but is IE (i.e., IE10) -->\r\n  <div id=\"togetherjs-browser-unsupported\" class=\"togetherjs-modal\" style=\"display: none\">\r\n    <header> Unsupported Browser </header>\r\n\r\n    <section>\r\n      <p>\r\n        We need your help fixing TogetherJS on Internet Explorer!  Here are a list of IE <a href=\"https://github.com/mozilla/togetherjs/issues?labels=IE&milestone=&page=1&state=open\" target=\"_blank\">GitHub issues</a> we need fixed that you can work on.\r\n        Internet Explorer <a href=\"https://github.com/mozilla/togetherjs/wiki/Supported-Browsers#internet-explorer\">is currently not supported</a>.  If you do want to try out TogetherJS, we'd suggest using Firefox or Chrome.\r\n      </p>\r\n\r\n      <p>You can continue to try to use TOOL_NAME, but you are likely to hit lots of bugs.  So be warned.</p>\r\n\r\n    </section>\r\n\r\n    <section class=\"togetherjs-buttons\">\r\n      <button class=\"togetherjs-dismiss togetherjs-primary\">End TOOL_NAME</button>\r\n      <button class=\"togetherjs-dismiss togetherjs-secondary togetherjs-browser-unsupported-anyway\">Try TOOL_NAME Anyway</button>\r\n    </section>\r\n\r\n  </div>\r\n\r\n  <div id=\"togetherjs-confirm-end\" class=\"togetherjs-modal\" style=\"display: none\">\r\n    <header> End session? </header>\r\n    <section>\r\n      <p>\r\n        Are you sure you'd like to end your TOOL_NAME session?\r\n      </p>\r\n    </section>\r\n    <section class=\"togetherjs-buttons\">\r\n      <button class=\"togetherjs-cancel togetherjs-dismiss\">Cancel</button>\r\n      <span class=\"togetherjs-alt-text\">or</span>\r\n      <button id=\"togetherjs-end-session\" class=\"togetherjs-destructive\">End session</button>\r\n    </section>\r\n  </div>\r\n\r\n  <div id=\"togetherjs-feedback-form\" class=\"togetherjs-modal\" style=\"display: none;\">\r\n    <header> Feedback </header>\r\n    <iframe src=\"https://docs.google.com/a/mozilla.com/forms/d/1lVE7JyRo_tjakN0mLG1Cd9X9vseBX9wci153z9JcNEs/viewform?embedded=true\" width=\"400\" height=\"300\" frameborder=\"0\" marginheight=\"0\" marginwidth=\"0\">Loading form...</iframe>\r\n    <!-- <p><button class=\"togetherjs-modal-close\">Close</button></p> -->\r\n  </div>\r\n\r\n  <div style=\"display: none\">\r\n    <!-- This is when you join a session and the other person has already changed to another URL: -->\r\n    <div id=\"togetherjs-template-url-change\" class=\"togetherjs-modal\">\r\n      <header> Following to new URL... </header>\r\n      <section>\r\n        <div class=\"togetherjs-person\"></div>\r\n        Following\r\n        <span class=\"togetherjs-person-name\"></span>\r\n        to <a href=\"\" class=\"togetherjs-person-url togetherjs-person-url-title\"></a>\r\n      </section>\r\n    </div>\r\n\r\n    <!-- This is when someone invites you to their session: -->\r\n    <div id=\"togetherjs-template-invite\" class=\"togetherjs-chat-item\">\r\n      <div class=\"togetherjs-person\"></div>\r\n      <div>\r\n        <span class=\"togetherjs-person-name\"></span>\r\n        has invited <strong class=\"togetherjs-if-forEveryone\">anyone</strong>\r\n        <strong class=\"togetherjs-ifnot-forEveryone\">you</strong>\r\n        to <a href=\"\" data-togetherjs-subattr-href=\"href\" class=\"togetherjs-sub-hrefTitle\" target=\"_blank\"></a>\r\n      </div>\r\n    </div>\r\n\r\n  </div>\r\n\r\n  <!-- The pointer at the side of a window: -->\r\n  <div id=\"togetherjs-window-pointer-right\" style=\"display: none\"></div>\r\n  <div id=\"togetherjs-window-pointer-left\" style=\"display: none\"></div>\r\n\r\n  <!-- The element that overlaps the background of the page during a modal dialog: -->\r\n  <div id=\"togetherjs-modal-background\" style=\"display: none\"></div>\r\n\r\n  <!-- Some miscellaneous templates -->\r\n  <div style=\"display: none\">\r\n\r\n    <!-- This is the cursor: -->\r\n    <div id=\"togetherjs-template-cursor\" class=\"togetherjs-cursor togetherjs\">\r\n      <!-- Note: images/cursor.svg is a copy of this (for editing): -->\r\n      <!-- crossbrowser svg dropshadow http://demosthenes.info/blog/600/Creating-a-True-CrossBrowser-Drop-Shadow- -->\r\n      <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\r\n      \t width=\"15px\" height=\"22.838px\" viewBox=\"96.344 146.692 15 22.838\" enable-background=\"new 96.344 146.692 15 22.838\"\r\n      \t xml:space=\"preserve\">\r\n      <path fill=\"#231F20\" d=\"M98.984,146.692c2.167,1.322,1.624,6.067,3.773,7.298c-0.072-0.488,2.512-0.931,3.097,0\r\n      \tc0.503,0.337,1.104-0.846,2.653,0.443c0.555,0.593,3.258,2.179,1.001,8.851c-0.446,1.316,2.854,0.135,1.169,2.619\r\n      \tc-3.748,5.521-9.455,2.787-9.062,1.746c1.06-2.809-6.889-4.885-4.97-9.896c0.834-2.559,2.898,0.653,2.923,0.29\r\n      \tc-0.434-1.07-2.608-5.541-2.923-6.985C96.587,150.793,95.342,147.033,98.984,146.692z\"/>\r\n      </svg>\r\n      <!-- <img class=\"togetherjs-cursor-img\" src=\"http://localhost:8080/togetherjs/images/cursor.svg\"> -->\r\n      <span class=\"togetherjs-cursor-container\">\r\n        <span class=\"togetherjs-cursor-name\"></span>\r\n        <span style=\"display:none\" class=\"togetherjs-cursor-typing\" id=\"togetherjs-cursor-typebox\">\r\n          <span class=\"togetherjs-typing-ellipse-one\">&#9679;</span><span class=\"togetherjs-typing-ellipse-two\">&#9679;</span><span class=\"togetherjs-typing-ellipse-three\">&#9679;</span>\r\n        </span>\r\n        <!-- Displayed when the cursor is below the screen: -->\r\n        <span class=\"togetherjs-cursor-down\">\r\n\r\n        </span>\r\n        <!-- Displayed when the cursor is above the screen: -->\r\n        <span class=\"togetherjs-cursor-up\">\r\n\r\n        </span>\r\n      </span>\r\n    </div>\r\n\r\n    <!-- This is the element that goes around focused form elements: -->\r\n    <div id=\"togetherjs-template-focus\">\r\n      <div class=\"togetherjs-focus togetherjs-person-bordercolor\"></div>\r\n    </div>\r\n\r\n    <!-- This is a click: -->\r\n    <div id=\"togetherjs-template-click\" class=\"togetherjs-click togetherjs\">\r\n    </div>\r\n  </div>\r\n</div>\r\n",
     walkthrough: "<!--\r\n    Any elements with .togetherjs-walkthrough-firsttime will only be\r\n    displayed on during the first-time experience.  Any elements with\r\n    .togetherjs-walkthrough-not-firsttime will only be displayed when\r\n    the walkthrough is accessed through the Help menu.\r\n\r\n    Note you *cannot* use <section class=\"togetherjs-walkthrough-slide\r\n    togetherjs-walkthrough-firsttime\">: the number of sections must be the\r\n    same regardless.\r\n  -->\r\n<div id=\"togetherjs-walkthrough\" class=\"togetherjs-modal togetherjs-modal-wide\">\r\n  <header>You're using TOOL_NAME!<button class=\"togetherjs-close\"></button></header>\r\n\r\n  <div id=\"togetherjs-walkthrough-previous\"></div>\r\n  <div id=\"togetherjs-walkthrough-next\"></div>\r\n\r\n  <section class=\"togetherjs-walkthrough-slide\">\r\n    <p class=\"togetherjs-walkthrough-main-image\"><img src=\"http://localhost:8080/togetherjs/images/walkthrough-images-intro.png\"></p>\r\n\t<p>TOOL_NAME is a service for your website that makes it easy to collaborate in real-time on SITE_NAME </p>\r\n  </section>\r\n\r\n  <section class=\"togetherjs-walkthrough-slide\">\r\n    <div class=\"togetherjs-walkthrough-firsttime\">\r\n      <div class=\"togetherjs-walkthrough-main-image\">\r\n        <div class=\"togetherjs-walkthrough-avatar-section\">\r\n          <div class=\"togetherjs-avatar-preview togetherjs-person togetherjs-person-self\"></div>\r\n          <div class=\"togetherjs-avatar-upload-input\"><input type=\"file\" class=\"togetherjs-upload-avatar\"></div>\r\n        </div>\r\n        <input class=\"togetherjs-self-name\" type=\"text\" placeholder=\"Enter your name\">\r\n        <div class=\"togetherjs-swatch togetherjs-person-bgcolor-self\"></div>\r\n        <div class=\"togetherjs-save-settings\">\r\n          <button class=\"togetherjs-avatar-save togetherjs-primary\">\r\n            <span id=\"togetherjs-avatar-when-unsaved\">\"\"Save\"\"</span>\r\n            <span id=\"togetherjs-avatar-when-saved\" style=\"display: none\">Saved!</span>\r\n          </button>\r\n        </div>\r\n      </div>\r\n      <p>Set up your avatar, name and user color above.  If you'd like to update it later, you can click your Profile button.</p>\r\n    </div>\r\n    <div class=\"togetherjs-walkthrough-not-firsttime\">\r\n      <p class=\"togetherjs-walkthrough-main-image\"><img src=\"http://localhost:8080/togetherjs/images/walkthrough-images-profile.png\"></p>\r\n      <p>Change your avatar, name and user color using the Profile button.</p>\r\n    </div>\r\n  </section>\r\n\r\n  <section class=\"togetherjs-walkthrough-slide\">\r\n    <p class=\"togetherjs-walkthrough-main-image togetherjs-ifnot-creator\"><img src=\"http://localhost:8080/togetherjs/images/walkthrough-images-invite.png\">\r\n    </p>\r\n    <p class=\"togetherjs-ifnot-creator\">You can invite more friends to the session by sending the invite link in the TOOL_NAME dock.</p>\r\n    <p class=\"togetherjs-walkthrough-main-image togetherjs-if-creator\">\r\n      <span class=\"togetherjs-walkthrough-sendlink\">\r\n        Copy and paste this link into IM or email to invite friends.\r\n      </span>\r\n      <input type=\"text\" class=\"togetherjs-share-link\">\r\n    </p>\r\n    <p class=\"togetherjs-if-creator\">Send the above link to a friend so they can join your session!  You can find this invite link on the TOOL_NAME dock as well.</p>\r\n  </section>\r\n\r\n  <section class=\"togetherjs-walkthrough-slide\">\r\n    <p class=\"togetherjs-walkthrough-main-image\"><img src=\"http://localhost:8080/togetherjs/images/walkthrough-images-participant.png\"></p>\r\n    <p>Friends who join your TOOL_NAME session will appear here.  You can click their avatars to see more.</p>\r\n  </section>\r\n\r\n  <section class=\"togetherjs-walkthrough-slide\">\r\n    <p class=\"togetherjs-walkthrough-main-image\"><img src=\"http://localhost:8080/togetherjs/images/walkthrough-images-chat.png\"></p>\r\n    <p>When your friends join you in your TOOL_NAME session, you can chat with them here!</p>\r\n  </section>\r\n\r\n  <section class=\"togetherjs-walkthrough-slide\">\r\n    <p class=\"togetherjs-walkthrough-main-image\"><img src=\"http://localhost:8080/togetherjs/images/walkthrough-images-rtc.png\"></p>\r\n    <p>If your browser supports it, click the microphone icon to begin a audio chat. Learn more about this experimental feature <a href=\"https://github.com/mozilla/togetherjs/wiki/About-Audio-Chat-and-WebRTC\" target=\"_blank\">here</a>.</p>\r\n  </section>\r\n\r\n  <section class=\"togetherjs-walkthrough-slide\">\r\n    <p class=\"togetherjs-walkthrough-main-image\"><img src=\"http://localhost:8080/togetherjs/images/walkthrough-images-logo.png\"></p>\r\n    <p>Alright, you're ready to use TOOL_NAME. Now start collaborating on SITE_NAME!</p>\r\n  </section>\r\n\r\n  <div style=\"display: none\">\r\n    <!-- There is one of these created for each slide: -->\r\n    <span id=\"togetherjs-template-walkthrough-slide-progress\" class=\"togetherjs-walkthrough-slide-progress\">&#9679;</span>\r\n  </div>\r\n  <section id=\"togetherjs-walkthrough-progress\">\r\n  </section>\r\n\r\n  <section class=\"togetherjs-buttons\">\r\n    <button class=\"togetherjs-primary togetherjs-dismiss\">I'm ready!</button>\r\n  </section>\r\n\r\n</div><!-- /.togetherjs-modal -->\r\n",
     names: "Friendly Fox, Brilliant Beaver, Observant Owl, Gregarious Giraffe, Wild Wolf, Silent Seal, Wacky Whale, Curious Cat, Intelligent Iguana"
   };
@@ -10406,7 +10406,7 @@ define('templates-en-US',[], function () {
 
 define('templates-ru',[], function () {
   return {
-    "interface": "<% /*\r\n   This is basically all the markup and interface for TogetherJS.\r\n   Note all links should be like http://localhost:8080/togetherjs/*\r\n   these links are rewritten with the location where TogetherJS was deployed.\r\n\r\n   This file is inlined into togetherjs/templates.js\r\n*/ %>\r\n<div id=\"togetherjs-container\" class=\"togetherjs\">\r\n\r\n  <!-- This is the main set of buttons: -->\r\n  <div id=\"togetherjs-dock\" class=\"togetherjs-dock-right\">\r\n    <div id=\"togetherjs-dock-anchor\" title=\"Передвинуть панель\">\r\n      <span id=\"togetherjs-dock-anchor-horizontal\">\r\n        <img src=\"http://localhost:8080/togetherjs/images/icn-handle-circle@2x.png\" alt=\"drag\">\r\n      </span>\r\n      <span id=\"togetherjs-dock-anchor-vertical\">\r\n        <img src=\"http://localhost:8080/togetherjs/images/icn-handle-circle@2x.png\" alt=\"drag\">\r\n      </span>\r\n    </div>\r\n    <div id=\"togetherjs-buttons\">\r\n      <div style=\"display: none\">\r\n        <button id=\"togetherjs-template-dock-person\" class=\"togetherjs-button togetherjs-dock-person\">\r\n          <div class=\"togetherjs-tooltip togetherjs-dock-person-tooltip\">\r\n            <span class=\"togetherjs-person-name\"></span>\r\n            <span class=\"togetherjs-person-tooltip-arrow-r\"></span>\r\n          </div>\r\n          <div class=\"togetherjs-person togetherjs-person-status-overlay\"></div>\r\n        </button>\r\n      </div>\r\n      <button id=\"togetherjs-profile-button\" class=\"togetherjs-button\" title=\"Это Вы\">\r\n        <div class=\"togetherjs-person togetherjs-person-self\"></div>\r\n        <div id=\"togetherjs-profile-arrow\"></div>\r\n      </button>\r\n      <button id=\"togetherjs-share-button\" class=\"togetherjs-button\" title=\"Добавить друга\"></button>\r\n      <button id=\"togetherjs-audio-button\" class=\"togetherjs-button\" title=\"Включить микрофон\">\r\n        <span id=\"togetherjs-audio-unavailable\" class=\"togetherjs-audio-set\" data-toggles=\".togetherjs-audio-set\">\r\n        </span>\r\n        <span id=\"togetherjs-audio-ready\" class=\"togetherjs-audio-set\" data-toggles=\".togetherjs-audio-set\" style=\"display: none\">\r\n        </span>\r\n        <span id=\"togetherjs-audio-outgoing\" class=\"togetherjs-audio-set\" data-toggles=\".togetherjs-audio-set\" style=\"display: none\">\r\n        </span>\r\n        <span id=\"togetherjs-audio-incoming\" class=\"togetherjs-audio-set\" data-toggles=\".togetherjs-audio-set\" style=\"display: none\">\r\n        </span>\r\n        <span id=\"togetherjs-audio-active\" class=\"togetherjs-audio-set\" data-toggles=\".togetherjs-audio-set\" style=\"display: none\">\r\n        </span>\r\n        <span id=\"togetherjs-audio-muted\" class=\"togetherjs-audio-set\" data-toggles=\".togetherjs-audio-set\" style=\"display: none\">\r\n        </span>\r\n        <span id=\"togetherjs-audio-error\" class=\"togetherjs-audio-set\" data-toggles=\".togetherjs-audio-set\" style=\"display: none\">\r\n        </span>\r\n      </button>\r\n      <button id=\"togetherjs-chat-button\" class=\"togetherjs-button\" title=\"Чат\"></button>\r\n      <div id=\"togetherjs-dock-participants\"></div>\r\n    </div>\r\n  </div>\r\n\r\n  <!-- The window for editing the avatar: -->\r\n  <div id=\"togetherjs-avatar-edit\" class=\"togetherjs-modal\"\r\n       style=\"display: none\">\r\n    <header> Обновить аватар </header>\r\n    <section>\r\n      <div class=\"togetherjs-avatar-preview togetherjs-person togetherjs-person-self\"></div>\r\n      <div id=\"togetherjs-avatar-buttons\">\r\n        <input type=\"file\" class=\"togetherjs-upload-avatar\">\r\n        <!--<button id=\"togetherjs-upload-avatar\" class=\"togetherjs-primary\">Upload a picture</button>-->\r\n        <!--<button id=\"togetherjs-camera-avatar\" class=\"togetherjs-default\">Take a picture</button>-->\r\n      </div>\r\n    </section>\r\n    <section class=\"togetherjs-buttons\">\r\n      <button class=\"togetherjs-cancel togetherjs-dismiss\">Отмена</button>\r\n      <span class=\"togetherjs-alt-text\">или</span>\r\n      <button class=\"togetherjs-avatar-save togetherjs-primary\">Сохранить</button>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- The window for sharing the link: -->\r\n  <div id=\"togetherjs-share\" class=\"togetherjs-window\"\r\n       data-bind-to=\"#togetherjs-share-button\" style=\"display: none\">\r\n    <header> Пригласить друга </header>\r\n    <section>\r\n      <div class=\"togetherjs-not-mobile\">\r\n        <p>Скопируйте эту ссылку и приклейте её в IM или в имейл:</p>\r\n        <input type=\"text\" class=\"togetherjs-share-link\">\r\n      </div>\r\n      <div class=\"togetherjs-only-mobile\">\r\n        <p>Скопируйте эту ссылку и приклейте её в IM или в имейл:</p>\r\n        <input type=\"text\" class=\"togetherjs-share-link\">\r\n        <!-- <a class=\"togetherjs-share-link\" href=\"#\">Press your thumb here.</a> -->\r\n      </div>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- Participant Full List view template: -->\r\n  <div id=\"togetherjs-participantlist\" class=\"togetherjs-window\"\r\n       data-bind-to=\"#togetherjs-participantlist-button\" style=\"display: none\">\r\n    <header> Участники </header>\r\n    <section>\r\n      <div class=\"togetherjs-not-mobile\">\r\n        <ul>\r\n          <li id=\"togetherjs-participant-item\">\r\n            <img class=\"togetherjs-person togetherjs-person-small\" src=\"http://localhost:8080/togetherjs/images/btn-menu-change-avatar.png\">\r\n            <span class=\"tj-name togetherjs-person-name\">NAME</span>\r\n            <span class=\"tj-status\">&#9679;</span>\r\n            <p class=\"tj-urllocation\">Сейчас на: <a class=\"togetherjs-person-url togetherjs-person-url-title\" href=\"\">http://www.location.comwww.location.comwww.location.comasdfsafd</a></p>\r\n            <p class=\"tj-follow\">Последовать:\r\n              <label class=\"togetherjs-follow-question\" for=\"togetherjs-person-status-follow\">\r\n                <input type=\"checkbox\" id=\"togetherjs-person-status-follow\">\r\n              </label>\r\n            </p>\r\n            <section class=\"togetherjs-buttons\">\r\n              <!-- Displayed when the peer is at a different URL: -->\r\n              <div class=\"togetherjs-different-url\">\r\n                <a class=\"togetherjs-nudge togetherjs-default tj-btn-sm\">Толкнуть друга</a>\r\n                <a href=\"#\" class=\"togetherjs-follow togetherjs-person-url togetherjs-primary tj-btn-sm\">Присоединиться к нему</a>\r\n              </div>\r\n              <!-- Displayed when the peer is at your same URL: -->\r\n              <div class=\"togetherjs-same-url\" style=\"display: none\">\r\n                <span class=\"togetherjs-person-name\"></span> с Вами на одной странице.\r\n              </div>\r\n            </section>\r\n          </li>\r\n        </ul>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- Participant detail template: -->\r\n  <div id=\"togetherjs-template-participant-window\" class=\"togetherjs-window\" style=\"display: none\">\r\n    <header><div class=\"togetherjs-person togetherjs-person-small\"></div><span class=\"togetherjs-person-name\"></span></header>\r\n\r\n    <section class=\"togetherjs-participant-window-main\">\r\n      <p class=\"togetherjs-participant-window-row\"><strong>Роль:</strong>\r\n        <span class=\"togetherjs-person-role\"></span>\r\n      </p>\r\n\r\n      <p class=\"togetherjs-participant-window-row\"><strong>Сейчас на:</strong>\r\n        <a class=\"togetherjs-person-url togetherjs-person-url-title\"></a>\r\n      </p>\r\n\r\n      <p class=\"togetherjs-participant-window-row\"><strong>Статус:</strong>\r\n        <span class=\"togetherjs-person-status\"></span>\r\n      </p>\r\n\r\n      <p class=\"togetherjs-participant-window-row\"><strong class=\"togetherjs-float-left\">Следовать за этим участником:</strong>\r\n        <label class=\"togetherjs-follow-question togetherjs-float-left\" for=\"togetherjs-person-status-follow\">\r\n          <input type=\"checkbox\" id=\"togetherjs-person-status-follow\">\r\n        </label>\r\n        <span class=\"togetherjs-clear\"></span>\r\n      </p>\r\n\r\n    </section>\r\n\r\n    <section class=\"togetherjs-buttons\">\r\n      <!-- Displayed when the peer is at a different URL: -->\r\n      <div class=\"togetherjs-different-url\">\r\n        <a class=\"togetherjs-nudge togetherjs-default\">Толкнуть друга</a>\r\n        <a href=\"#\" class=\"togetherjs-follow togetherjs-person-url togetherjs-primary\">Присоединиться к нему</a>\r\n      </div>\r\n      <!-- Displayed when the peer is at your same URL: -->\r\n      <div class=\"togetherjs-same-url\" style=\"display: none\">\r\n        <span class=\"togetherjs-person-name\"></span> с Вами на одной странице.\r\n      </div>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- The chat screen: -->\r\n  <div id=\"togetherjs-chat\" class=\"togetherjs-window\" data-bind-to=\"#togetherjs-chat-button\"\r\n       style=\"display: none\">\r\n    <header> Чат </header>\r\n    <section class=\"togetherjs-subtitle\">\r\n      <div id=\"togetherjs-chat-participants\" data-toggles=\"#togetherjs-chat-no-participants\" style=\"display: none\">\r\n        <span id=\"togetherjs-chat-participant-list\"></span>\r\n        &amp; Вы\r\n      </div>\r\n      <div id=\"togetherjs-chat-no-participants\" data-toggles=\"#togetherjs-chat-participants\">\r\n        Здесь больше никого нет.\r\n      </div>\r\n    </section>\r\n\r\n    <div style=\"display: none\">\r\n\r\n      <!-- Template for one message: -->\r\n      <div id=\"togetherjs-template-chat-message\" class=\"togetherjs-chat-item togetherjs-chat-message\">\r\n        <div class=\"togetherjs-person\"></div>\r\n        <div class=\"togetherjs-timestamp\"><span class=\"togetherjs-time\">HH:MM</span> <span class=\"togetherjs-ampm\">AM/PM</span></div>\r\n        <div class=\"togetherjs-person-name-abbrev\"></div>\r\n        <div class=\"togetherjs-chat-content togetherjs-sub-content\"></div>\r\n      </div>\r\n\r\n      <!-- Template for when a person leaves: -->\r\n      <div id=\"togetherjs-template-chat-left\" class=\"togetherjs-chat-item togetherjs-chat-left-item\">\r\n        <div class=\"togetherjs-person\"></div>\r\n        <div class=\"togetherjs-ifnot-declinedJoin\">\r\n          <div class=\"togetherjs-inline-text\"><span class=\"togetherjs-person-name\"></span> покинул сеанс.</div>\r\n        </div>\r\n        <div class=\"togetherjs-if-declinedJoin\">\r\n          <div class=\"togetherjs-inline-text\"><span class=\"togetherjs-person-name\"></span> отказался присоединиться к сеансу.</div>\r\n        </div>\r\n        <div class=\"togetherjs-clear\"></div>\r\n      </div>\r\n\r\n      <!-- Template when a person joins the session: -->\r\n      <div id=\"togetherjs-template-chat-joined\" class=\"togetherjs-chat-item togetherjs-chat-join-item\">\r\n        <div class=\"togetherjs-person\"></div>\r\n        <div class=\"togetherjs-inline-text\"><span class=\"togetherjs-person-name\"></span> присоединился к сеансу.</div>\r\n        <div class=\"togetherjs-clear\"></div>\r\n      </div>\r\n\r\n      <!-- Template for system-derived messages: -->\r\n      <div id=\"togetherjs-template-chat-system\" class=\"togetherjs-chat-item\">\r\n        <span class=\"togetherjs-chat-content togetherjs-sub-content\"></span>\r\n      </div>\r\n\r\n      <!-- Template when a person joins the session: -->\r\n      <!-- <div id=\"togetherjs-template-chat-joined\" class=\"togetherjs-chat-item togetherjs-chat-join-item\">\r\n        <div class=\"togetherjs-person\"></div>\r\n        <div class=\"togetherjs-inline-text\"><span class=\"togetherjs-person-name\"></span> joined the session.</div>\r\n        <div class=\"togetherjs-clear\"></div>\r\n      </div> -->\r\n\r\n      <!-- Template for when someone goes to a new URL: -->\r\n      <div id=\"togetherjs-template-url-change\" class=\"togetherjs-chat-item togetherjs-chat-url-change\">\r\n        <div class=\"togetherjs-person\"></div>\r\n        <div class=\"togetherjs-inline-text\">\r\n          <div class=\"togetherjs-if-sameUrl\">\r\n            <span class=\"togetherjs-person-name\"></span>\r\n            с Вами на одной странице.\r\n          </div>\r\n          <div class=\"togetherjs-ifnot-sameUrl\">\r\n            <span class=\"togetherjs-person-name\"></span>\r\n            отправился на: <a href=\"#\" class=\"togetherjs-person-url togetherjs-person-url-title\" target=\"_self\"></a>\r\n            <section class=\"togetherjs-buttons togetherjs-buttons-notification-diff-url\">\r\n              <!-- Displayed when the peer is at a different URL: -->\r\n              <div class=\"togetherjs-different-url togetherjs-notification-diff-url\">\r\n                <a class=\"togetherjs-nudge togetherjs-default\">Толкнуть друга</a>\r\n                <a href=\"#\" class=\"togetherjs-follow togetherjs-person-url togetherjs-primary\">Присоединиться к нему</a>\r\n              </div>\r\n            </section>\r\n\r\n            <!-- <div>\r\n              <a class=\"togetherjs-nudge togetherjs-secondary\">Nudge them</a>\r\n              <a href=\"\" class=\"togetherjs-person-url togetherjs-follow togetherjs-primary\">Join them</a>\r\n            </div> -->\r\n\r\n          </div>\r\n        </div>\r\n        <div class=\"togetherjs-clear\"></div>\r\n      </div>\r\n    </div>\r\n\r\n    <section id=\"togetherjs-chat-messages\">\r\n      <!-- FIX ME// need to have some dialogue that says something like - There are no chats yet! -->\r\n    </section>\r\n    <section id=\"togetherjs-chat-input-box\">\r\n      <textarea id=\"togetherjs-chat-input\" placeholder=\"Напечатайте своё сообщение здесь\"></textarea>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- this is a kind of warning popped up when you (successfully) start RTC: -->\r\n  <div id=\"togetherjs-rtc-info\" class=\"togetherjs-window\"\r\n       data-bind-to=\"#togetherjs-audio-button\"\r\n       style=\"display: none\">\r\n\r\n    <header> Аудио-чат </header>\r\n    <section>\r\n      <p>\r\n        Включите <strong>микрофон браузера</strong> возле адресной строки вверху.\r\n      </p>\r\n      <p>\r\n        Разговор по микрофону через веб-браузер - экспериментальное свойство.\r\n      </p>\r\n      <p>\r\n        Почитайте больше об аудио-чате <a href=\"https://github.com/mozilla/togetherjs/wiki/About-Audio-Chat-and-WebRTC\" target=\"_blank\">здесь</a>.\r\n      </p>\r\n    </section>\r\n\r\n    <section class=\"togetherjs-buttons\">\r\n      <label for=\"togetherjs-rtc-info-dismiss\" style=\"display: inline;\">\r\n        <input class=\"togetherjs-dont-show-again\" id=\"togetherjs-rtc-info-dismiss\" type=\"checkbox\">\r\n        Больше не показывать.\r\n      </label>\r\n      <button class=\"togetherjs-default togetherjs-dismiss\" type=\"button\">Закрыть</button>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- this is popped up when you hit the audio button, but RTC isn't\r\n  supported: -->\r\n  <div id=\"togetherjs-rtc-not-supported\" class=\"togetherjs-window\"\r\n       data-bind-to=\"#togetherjs-audio-button\"\r\n       style=\"display: none\">\r\n    <header> Аудио-чат </header>\r\n\r\n    <section>\r\n      <p>Аудио-чат требует, чтобы Вы использовали<a href='https://github.com/mozilla/togetherjs/wiki/About-Audio-Chat-and-WebRTC' target='_blank'>браузер поновее</a>!</p>\r\n      <p>\r\n        Для живого аудио-чата требуется более новый (или другой) браузер, чем тот, который Вы используете.\r\n      </p>\r\n      <p>\r\n        Посмотрите на <a href='https://github.com/mozilla/togetherjs/wiki/About-Audio-Chat-and-WebRTC' target='_blank'>'этой странице'</a> дополнительную информацию и список поддерживаемых браузеров.\r\n      </p>\r\n    </section>\r\n\r\n    <section class=\"togetherjs-buttons\">\r\n      <div class=\"togetherjs-rtc-dialog-btn\">\r\n        <button class=\"togetherjs-default togetherjs-dismiss\" type=\"button\">Закрыть</button>\r\n      </div>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- The popup when a chat message comes in and the #togetherjs-chat window isn't open -->\r\n  <div id=\"togetherjs-chat-notifier\" class=\"togetherjs-notification\"\r\n       data-bind-to=\"#togetherjs-chat-button\"\r\n       style=\"display: none\">\r\n    <img src=\"http://localhost:8080/togetherjs/images/notification-togetherjs-logo.png\" class=\"togetherjs-notification-logo\" alt=\"\">\r\n    <img src=\"http://localhost:8080/togetherjs/images/notification-btn-close.png\" class=\"togetherjs-notification-closebtn togetherjs-dismiss\" alt=\"[close]\">\r\n    <section id=\"togetherjs-chat-notifier-message\">\r\n    </section>\r\n  </div>\r\n\r\n  <!-- The menu when you click on the profile: -->\r\n  <div id=\"togetherjs-menu\" class=\"togetherjs-menu\" style=\"display: none\">\r\n    <div class=\"togetherjs-menu-item togetherjs-menu-disabled\" id=\"togetherjs-menu-profile\">\r\n      <img id=\"togetherjs-menu-avatar\">\r\n      <span class=\"togetherjs-person-name-self\" id=\"togetherjs-self-name-display\" data-toggles=\"#togetherjs-menu .togetherjs-self-name\">[nickname]</span>\r\n      <input class=\"togetherjs-self-name\" type=\"text\" data-toggles=\"#togetherjs-self-name-display\" style=\"display: none\" placeholder=\"Введите своё имя\">\r\n    </div>\r\n    <div class=\"togetherjs-menu-hr-avatar\"></div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-update-name\"><img src=\"http://localhost:8080/togetherjs/images/button-pencil.png\" alt=\"\"> Обновить своё имя</div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-update-avatar\"><img src=\"http://localhost:8080/togetherjs/images/btn-menu-change-avatar.png\" alt=\"\"> Изменить аватар</div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-update-color\"><span class=\"togetherjs-person-bgcolor-self\"></span> Выбрать цвет профиля</div>\r\n    <div class=\"togetherjs-hr\"></div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-help\">Помощь</div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-feedback\">Отзывы и предложения</div>\r\n    <div id=\"togetherjs-invite\" style=\"display: none\">\r\n      <div class=\"togetherjs-hr\"></div>\r\n      <div id=\"togetherjs-invite-users\"></div>\r\n      <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-refresh-invite\">Refresh users</div>\r\n      <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-invite-anyone\">Пригласить кого-нибудь</div>\r\n    </div>\r\n    <div class=\"togetherjs-hr\"></div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-end\"><img src=\"http://localhost:8080/togetherjs/images/button-end-session.png\" alt=\"\"> Закончить <span class=\"togetherjs-tool-name\">TogetherJS</span></div>\r\n  </div>\r\n\r\n  <!-- template for one person in the invite-users list -->\r\n  <div style=\"display: none\">\r\n    <div id=\"togetherjs-template-invite-user-item\" class=\"togetherjs-menu-item\">\r\n      <!-- FIXME: should include avatar in some way -->\r\n      <span class=\"togetherjs-person-name\"></span>\r\n    </div>\r\n  </div>\r\n\r\n  <!-- A window version of #togetherjs-menu, for use on mobile -->\r\n  <div id=\"togetherjs-menu-window\" class=\"togetherjs-window\" style=\"display: none\">\r\n    <header>Установки и профиль</header>\r\n    <section>\r\n    <div class=\"togetherjs-menu-item\">\r\n      <img class=\"togetherjs-menu-avatar\">\r\n      <span class=\"togetherjs-person-name-self\" id=\"togetherjs-self-name-display\"></span>\r\n    </div>\r\n    <div class=\"togetherjs-menu-hr-avatar\"></div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-update-name-button\"><img src=\"http://localhost:8080/togetherjs/images/button-pencil.png\" alt=\"\"> Обновить своё имя</div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-update-avatar-button\"><img src=\"http://localhost:8080/togetherjs/images/btn-menu-change-avatar.png\" alt=\"\"> Изменить аватар</div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-update-color-button\"><span class=\"togetherjs-person-bgcolor-self\"></span> Выбрать цвет профиля</div>\r\n    <div class=\"togetherjs-hr\"></div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-help-button\">Помощь</div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-feedback-button\">Отзывы и предложения</div>\r\n    <div class=\"togetherjs-hr\"></div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-end-button\"><img src=\"http://localhost:8080/togetherjs/images/button-end-session.png\" alt=\"\"> Закончить TOOL_NAME</div>\r\n    </section>\r\n    <section class=\"togetherjs-buttons\">\r\n      <button class=\"togetherjs-dismiss togetherjs-primary\">Хорошо</button>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- The name editor, for use on mobile -->\r\n  <div id=\"togetherjs-edit-name-window\" class=\"togetherjs-window\" style=\"display: none\">\r\n    <header>Обновить имя</header>\r\n    <section>\r\n      <div>\r\n        <input class=\"togetherjs-self-name\" type=\"text\" placeholder=\"Введите своё имя\">\r\n      </div>\r\n    </section>\r\n    <section class=\"togetherjs-buttons\">\r\n      <button class=\"togetherjs-dismiss togetherjs-primary\">Хорошо</button>\r\n    </section>\r\n  </div>\r\n\r\n  <div class=\"togetherjs-menu\" id=\"togetherjs-pick-color\" style=\"display: none\">\r\n    <div class=\"togetherjs-triangle-up\"><img src=\"http://localhost:8080/togetherjs/images/icn-triangle-up.png\"></div>\r\n    <div style=\"display: none\">\r\n      <div id=\"togetherjs-template-swatch\" class=\"togetherjs-swatch\">\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n  <!-- Invisible elements that handle the RTC audio: -->\r\n  <audio id=\"togetherjs-audio-element\"></audio>\r\n  <audio id=\"togetherjs-local-audio\" muted=\"true\" volume=\"0.3\"></audio>\r\n  <audio id=\"togetherjs-notification\" src=\"http://localhost:8080/togetherjs/images/notification.ogg\"></audio>\r\n\r\n  <!-- The intro screen for someone who joins a session the first time: -->\r\n  <div id=\"togetherjs-intro\" class=\"togetherjs-modal\" style=\"display: none\">\r\n    <header>Присоединиться к сеансу TOOL_NAME?</header>\r\n    <section>\r\n      <p>Ваш друг просит Вас присоединиться к его TOOL_SITE_LINK браузер-сеансу, чтобы сотрудничать с Вами в реальном времени!</p>\r\n      <p>Хотели бы Вы присоединиться к его сеансу?</p>\r\n    </section>\r\n\r\n    <section class=\"togetherjs-buttons\">\r\n      <button class=\"togetherjs-destructive togetherjs-modal-dont-join\">Нет, не присоединяться</button>\r\n      <button class=\"togetherjs-primary togetherjs-dismiss\">Да, присоединиться к сеансу</button>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- Shown when a web browser is completely incapable of running TogetherJS: -->\r\n  <div id=\"togetherjs-browser-broken\" class=\"togetherjs-modal\" style=\"display: none\">\r\n    <header> Извините </header>\r\n\r\n    <section>\r\n      <p>\r\n        Извините, TOOL_NAME не работает на этом браузере. Просьба <a href='https://github.com/mozilla/togetherjs/wiki/Supported-Browsers#supported-browsers'>обновиться до поддерживаемого браузера</a>, чтобы попробовать TOOL_NAME.\r\n      </p>\r\n\r\n      <p id=\"togetherjs-browser-broken-is-ie\" style=\"display: none\">\r\n        Нам нужна Ваша помощь в починке TogetherJS на Internet Explorer!  Вот список <a href=\"https://github.com/mozilla/togetherjs/issues?labels=IE&milestone=&page=1&state=open\" target=\"_blank\">ошибок на GitHub</a>, которые нам нужно починить, и над которыми Вы можете поработать.\r\n        Internet Explorer <a href=\"https://github.com/mozilla/togetherjs/wiki/Supported-Browsers#internet-explorer\"> в настоящее время не поддерживается</a>.  Если Вы действительно хотите испытать TogetherJS, советуем Вам использовать Firefox или Chrome.\r\n      </p>\r\n    </section>\r\n\r\n    <section class=\"togetherjs-buttons\">\r\n      <button class=\"togetherjs-dismiss togetherjs-primary\">Закончить TOOL_NAME</button>\r\n    </section>\r\n\r\n  </div>\r\n\r\n  <!-- Shown when the browser has WebSockets, but is IE (i.e., IE10) -->\r\n  <div id=\"togetherjs-browser-unsupported\" class=\"togetherjs-modal\" style=\"display: none\">\r\n    <header> Браузер не поддерживается </header>\r\n\r\n    <section>\r\n      <p>\r\n        Нам нужна Ваша помощь в починке TogetherJS на Internet Explorer!  Вот список <a href=\"https://github.com/mozilla/togetherjs/issues?labels=IE&milestone=&page=1&state=open\" target=\"_blank\">ошибок на GitHub</a>, которые нам нужно починить, и над которыми Вы можете поработать.\r\n        Internet Explorer <a href=\"https://github.com/mozilla/togetherjs/wiki/Supported-Browsers#internet-explorer\"> в настоящее время не поддерживается</a>.  Если Вы действительно хотите испытать TogetherJS, советуем Вам использовать Firefox или Chrome.\r\n      </p>\r\n\r\n      <p>Вы можете продолжать пробовать использовать TOOL_NAME, но скорее всего Вы получите массу ошибок. Мы Вас предупредили.</p>\r\n\r\n    </section>\r\n\r\n    <section class=\"togetherjs-buttons\">\r\n      <button class=\"togetherjs-dismiss togetherjs-primary\">Закончить TOOL_NAME</button>\r\n      <button class=\"togetherjs-dismiss togetherjs-secondary togetherjs-browser-unsupported-anyway\">Всё равно попробовать TOOL_NAME</button>\r\n    </section>\r\n\r\n  </div>\r\n\r\n  <div id=\"togetherjs-confirm-end\" class=\"togetherjs-modal\" style=\"display: none\">\r\n    <header> Закончить сеанс? </header>\r\n    <section>\r\n      <p>\r\n        Вы уверены, что хотите завершить свой сеанс TOOL_NAME?\r\n      </p>\r\n    </section>\r\n    <section class=\"togetherjs-buttons\">\r\n      <button class=\"togetherjs-cancel togetherjs-dismiss\">Отмена</button>\r\n      <span class=\"togetherjs-alt-text\">или</span>\r\n      <button id=\"togetherjs-end-session\" class=\"togetherjs-destructive\">Закончить сеанс</button>\r\n    </section>\r\n  </div>\r\n\r\n  <div id=\"togetherjs-feedback-form\" class=\"togetherjs-modal\" style=\"display: none;\">\r\n    <header> Отзывы и предложения </header>\r\n    <iframe src=\"https://docs.google.com/a/mozilla.com/forms/d/1lVE7JyRo_tjakN0mLG1Cd9X9vseBX9wci153z9JcNEs/viewform?embedded=true\" width=\"400\" height=\"300\" frameborder=\"0\" marginheight=\"0\" marginwidth=\"0\">Загружаю форму ...</iframe>\r\n    <!-- <p><button class=\"togetherjs-modal-close\">Close</button></p> -->\r\n  </div>\r\n\r\n  <div style=\"display: none\">\r\n    <!-- This is when you join a session and the other person has already changed to another URL: -->\r\n    <div id=\"togetherjs-template-url-change\" class=\"togetherjs-modal\">\r\n      <header> Следую на новый URL... </header>\r\n      <section>\r\n        <div class=\"togetherjs-person\"></div>\r\n        Следую\r\n        <span class=\"togetherjs-person-name\"></span>\r\n        на <a href=\"\" class=\"togetherjs-person-url togetherjs-person-url-title\"></a>\r\n      </section>\r\n    </div>\r\n\r\n    <!-- This is when someone invites you to their session: -->\r\n    <div id=\"togetherjs-template-invite\" class=\"togetherjs-chat-item\">\r\n      <div class=\"togetherjs-person\"></div>\r\n      <div>\r\n        <span class=\"togetherjs-person-name\"></span>\r\n        пригласил <strong class=\"togetherjs-if-forEveryone\">кого-либо</strong>\r\n        <strong class=\"togetherjs-ifnot-forEveryone\">Вас</strong>\r\n        на <a href=\"\" data-togetherjs-subattr-href=\"href\" class=\"togetherjs-sub-hrefTitle\" target=\"_blank\"></a>\r\n      </div>\r\n    </div>\r\n\r\n  </div>\r\n\r\n  <!-- The pointer at the side of a window: -->\r\n  <div id=\"togetherjs-window-pointer-right\" style=\"display: none\"></div>\r\n  <div id=\"togetherjs-window-pointer-left\" style=\"display: none\"></div>\r\n\r\n  <!-- The element that overlaps the background of the page during a modal dialog: -->\r\n  <div id=\"togetherjs-modal-background\" style=\"display: none\"></div>\r\n\r\n  <!-- Some miscellaneous templates -->\r\n  <div style=\"display: none\">\r\n\r\n    <!-- This is the cursor: -->\r\n    <div id=\"togetherjs-template-cursor\" class=\"togetherjs-cursor togetherjs\">\r\n      <!-- Note: images/cursor.svg is a copy of this (for editing): -->\r\n      <!-- crossbrowser svg dropshadow http://demosthenes.info/blog/600/Creating-a-True-CrossBrowser-Drop-Shadow- -->\r\n      <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\r\n      \t width=\"15px\" height=\"22.838px\" viewBox=\"96.344 146.692 15 22.838\" enable-background=\"new 96.344 146.692 15 22.838\"\r\n      \t xml:space=\"preserve\">\r\n      <path fill=\"#231F20\" d=\"M98.984,146.692c2.167,1.322,1.624,6.067,3.773,7.298c-0.072-0.488,2.512-0.931,3.097,0\r\n      \tc0.503,0.337,1.104-0.846,2.653,0.443c0.555,0.593,3.258,2.179,1.001,8.851c-0.446,1.316,2.854,0.135,1.169,2.619\r\n      \tc-3.748,5.521-9.455,2.787-9.062,1.746c1.06-2.809-6.889-4.885-4.97-9.896c0.834-2.559,2.898,0.653,2.923,0.29\r\n      \tc-0.434-1.07-2.608-5.541-2.923-6.985C96.587,150.793,95.342,147.033,98.984,146.692z\"/>\r\n      </svg>\r\n      <!-- <img class=\"togetherjs-cursor-img\" src=\"http://localhost:8080/togetherjs/images/cursor.svg\"> -->\r\n      <span class=\"togetherjs-cursor-container\">\r\n        <span class=\"togetherjs-cursor-name\"></span>\r\n        <span style=\"display:none\" class=\"togetherjs-cursor-typing\" id=\"togetherjs-cursor-typebox\">\r\n          <span class=\"togetherjs-typing-ellipse-one\">&#9679;</span><span class=\"togetherjs-typing-ellipse-two\">&#9679;</span><span class=\"togetherjs-typing-ellipse-three\">&#9679;</span>\r\n        </span>\r\n        <!-- Displayed when the cursor is below the screen: -->\r\n        <span class=\"togetherjs-cursor-down\">\r\n\r\n        </span>\r\n        <!-- Displayed when the cursor is above the screen: -->\r\n        <span class=\"togetherjs-cursor-up\">\r\n\r\n        </span>\r\n      </span>\r\n    </div>\r\n\r\n    <!-- This is the element that goes around focused form elements: -->\r\n    <div id=\"togetherjs-template-focus\">\r\n      <div class=\"togetherjs-focus togetherjs-person-bordercolor\"></div>\r\n    </div>\r\n\r\n    <!-- This is a click: -->\r\n    <div id=\"togetherjs-template-click\" class=\"togetherjs-click togetherjs\">\r\n    </div>\r\n  </div>\r\n</div>\r\n",
+    "interface": "<% /*\r\n   This is basically all the markup and interface for TogetherJS.\r\n   Note all links should be like http://localhost:8080/togetherjs/*\r\n   these links are rewritten with the location where TogetherJS was deployed.\r\n\r\n   This file is inlined into togetherjs/templates.js\r\n*/ %>\r\n<div id=\"togetherjs-container\" class=\"togetherjs\">\r\n\r\n  <!-- This is the main set of buttons: -->\r\n  <div id=\"togetherjs-dock\" class=\"togetherjs-dock-right\">\r\n    <div id=\"togetherjs-dock-anchor\" title=\"Передвинуть панель\">\r\n      <span id=\"togetherjs-dock-anchor-horizontal\">\r\n        <img src=\"http://localhost:8080/togetherjs/images/icn-handle-circle@2x.png\" alt=\"drag\">\r\n      </span>\r\n      <span id=\"togetherjs-dock-anchor-vertical\">\r\n        <img src=\"http://localhost:8080/togetherjs/images/icn-handle-circle@2x.png\" alt=\"drag\">\r\n      </span>\r\n    </div>\r\n    <div id=\"togetherjs-buttons\">\r\n      <div style=\"display: none\">\r\n        <button id=\"togetherjs-template-dock-person\" class=\"togetherjs-button togetherjs-dock-person\">\r\n          <div class=\"togetherjs-tooltip togetherjs-dock-person-tooltip\">\r\n            <span class=\"togetherjs-person-name\"></span>\r\n            <span class=\"togetherjs-person-tooltip-arrow-r\"></span>\r\n          </div>\r\n          <div class=\"togetherjs-person togetherjs-person-status-overlay\"></div>\r\n        </button>\r\n      </div>\r\n      <button id=\"togetherjs-profile-button\" class=\"togetherjs-button\" title=\"Это Вы\">\r\n        <div class=\"togetherjs-person togetherjs-person-self\"></div>\r\n        <div id=\"togetherjs-profile-arrow\"></div>\r\n      </button>\r\n      <button id=\"togetherjs-share-button\" class=\"togetherjs-button\" title=\"Добавить друга\"></button>\r\n      <button id=\"togetherjs-audio-button\" class=\"togetherjs-button\" title=\"Включить микрофон\">\r\n        <span id=\"togetherjs-audio-unavailable\" class=\"togetherjs-audio-set\" data-toggles=\".togetherjs-audio-set\">\r\n        </span>\r\n        <span id=\"togetherjs-audio-ready\" class=\"togetherjs-audio-set\" data-toggles=\".togetherjs-audio-set\" style=\"display: none\">\r\n        </span>\r\n        <span id=\"togetherjs-audio-outgoing\" class=\"togetherjs-audio-set\" data-toggles=\".togetherjs-audio-set\" style=\"display: none\">\r\n        </span>\r\n        <span id=\"togetherjs-audio-incoming\" class=\"togetherjs-audio-set\" data-toggles=\".togetherjs-audio-set\" style=\"display: none\">\r\n        </span>\r\n        <span id=\"togetherjs-audio-active\" class=\"togetherjs-audio-set\" data-toggles=\".togetherjs-audio-set\" style=\"display: none\">\r\n        </span>\r\n        <span id=\"togetherjs-audio-muted\" class=\"togetherjs-audio-set\" data-toggles=\".togetherjs-audio-set\" style=\"display: none\">\r\n        </span>\r\n        <span id=\"togetherjs-audio-error\" class=\"togetherjs-audio-set\" data-toggles=\".togetherjs-audio-set\" style=\"display: none\">\r\n        </span>\r\n      </button>\r\n      <button id=\"togetherjs-chat-button\" class=\"togetherjs-button\" title=\"Чат\"></button>\r\n      <div id=\"togetherjs-dock-participants\"></div>\r\n    </div>\r\n  </div>\r\n\r\n  <!-- The window for editing the avatar: -->\r\n  <div id=\"togetherjs-avatar-edit\" class=\"togetherjs-modal\"\r\n       style=\"display: none\">\r\n    <header> Обновить аватар </header>\r\n    <section>\r\n      <div class=\"togetherjs-avatar-preview togetherjs-person togetherjs-person-self\"></div>\r\n      <div id=\"togetherjs-avatar-buttons\">\r\n        <input type=\"file\" class=\"togetherjs-upload-avatar\">\r\n        <!--<button id=\"togetherjs-upload-avatar\" class=\"togetherjs-primary\">Upload a picture</button>-->\r\n        <!--<button id=\"togetherjs-camera-avatar\" class=\"togetherjs-default\">Take a picture</button>-->\r\n      </div>\r\n    </section>\r\n    <section class=\"togetherjs-buttons\">\r\n      <button class=\"togetherjs-cancel togetherjs-dismiss\">Отмена</button>\r\n      <span class=\"togetherjs-alt-text\">или</span>\r\n      <button class=\"togetherjs-avatar-save togetherjs-primary\">Сохранить</button>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- The window for sharing the link: -->\r\n  <div id=\"togetherjs-share\" class=\"togetherjs-window\"\r\n       data-bind-to=\"#togetherjs-share-button\" style=\"display: none\">\r\n    <header> Пригласить друга </header>\r\n    <section>\r\n      <div class=\"togetherjs-not-mobile\">\r\n        <p>Скопируйте эту ссылку и приклейте её в IM или в имейл:</p>\r\n        <input type=\"text\" class=\"togetherjs-share-link\">\r\n      </div>\r\n      <div class=\"togetherjs-only-mobile\">\r\n        <p>Скопируйте эту ссылку и приклейте её в IM или в имейл:</p>\r\n        <input type=\"text\" class=\"togetherjs-share-link\">\r\n        <!-- <a class=\"togetherjs-share-link\" href=\"#\">Press your thumb here.</a> -->\r\n      </div>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- Participant Full List view template: -->\r\n  <div id=\"togetherjs-participantlist\" class=\"togetherjs-window\"\r\n       data-bind-to=\"#togetherjs-participantlist-button\" style=\"display: none\">\r\n    <header> Участники </header>\r\n    <section>\r\n      <div class=\"togetherjs-not-mobile\">\r\n        <ul>\r\n          <li id=\"togetherjs-participant-item\">\r\n            <img class=\"togetherjs-person togetherjs-person-small\" src=\"http://localhost:8080/togetherjs/images/btn-menu-change-avatar.png\">\r\n            <span class=\"tj-name togetherjs-person-name\">NAME</span>\r\n            <span class=\"tj-status\">&#9679;</span>\r\n            <p class=\"tj-urllocation\">Сейчас на: <a class=\"togetherjs-person-url togetherjs-person-url-title\" href=\"\">http://www.location.comwww.location.comwww.location.comasdfsafd</a></p>\r\n            <p class=\"tj-follow\">Последовать:\r\n              <label class=\"togetherjs-follow-question\" for=\"togetherjs-person-status-follow\">\r\n                <input type=\"checkbox\" id=\"togetherjs-person-status-follow\">\r\n              </label>\r\n            </p>\r\n            <section class=\"togetherjs-buttons\">\r\n              <!-- Displayed when the peer is at a different URL: -->\r\n              <div class=\"togetherjs-different-url\">\r\n                <a class=\"togetherjs-nudge togetherjs-default tj-btn-sm\">Толкнуть друга</a>\r\n                <a href=\"#\" class=\"togetherjs-follow togetherjs-person-url togetherjs-primary tj-btn-sm\">Присоединиться к нему</a>\r\n              </div>\r\n              <!-- Displayed when the peer is at your same URL: -->\r\n              <div class=\"togetherjs-same-url\" style=\"display: none\">\r\n                <span class=\"togetherjs-person-name\"></span> с Вами на одной странице.\r\n              </div>\r\n            </section>\r\n          </li>\r\n        </ul>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- Participant detail template: -->\r\n  <div id=\"togetherjs-template-participant-window\" class=\"togetherjs-window\" style=\"display: none\">\r\n    <header><div class=\"togetherjs-person togetherjs-person-small\"></div><span class=\"togetherjs-person-name\"></span></header>\r\n\r\n    <section class=\"togetherjs-participant-window-main\">\r\n      <p class=\"togetherjs-participant-window-row\"><strong>Роль:</strong>\r\n        <span class=\"togetherjs-person-role\"></span>\r\n      </p>\r\n\r\n      <p class=\"togetherjs-participant-window-row\"><strong>Сейчас на:</strong>\r\n        <a class=\"togetherjs-person-url togetherjs-person-url-title\"></a>\r\n      </p>\r\n\r\n      <p class=\"togetherjs-participant-window-row\"><strong>Статус:</strong>\r\n        <span class=\"togetherjs-person-status\"></span>\r\n      </p>\r\n\r\n      <p class=\"togetherjs-participant-window-row\"><strong class=\"togetherjs-float-left\">Следовать за этим участником:</strong>\r\n        <label class=\"togetherjs-follow-question togetherjs-float-left\" for=\"togetherjs-person-status-follow\">\r\n          <input type=\"checkbox\" id=\"togetherjs-person-status-follow\">\r\n        </label>\r\n        <span class=\"togetherjs-clear\"></span>\r\n      </p>\r\n\r\n    </section>\r\n\r\n    <section class=\"togetherjs-buttons\">\r\n      <!-- Displayed when the peer is at a different URL: -->\r\n      <div class=\"togetherjs-different-url\">\r\n        <a class=\"togetherjs-nudge togetherjs-default\">Толкнуть друга</a>\r\n        <a href=\"#\" class=\"togetherjs-follow togetherjs-person-url togetherjs-primary\">Присоединиться к нему</a>\r\n      </div>\r\n      <!-- Displayed when the peer is at your same URL: -->\r\n      <div class=\"togetherjs-same-url\" style=\"display: none\">\r\n        <span class=\"togetherjs-person-name\"></span> с Вами на одной странице.\r\n      </div>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- The chat screen: -->\r\n  <div id=\"togetherjs-chat\" class=\"togetherjs-window\" data-bind-to=\"#togetherjs-chat-button\"\r\n       style=\"display: none\">\r\n    <header> Чат </header>\r\n    <section class=\"togetherjs-subtitle\">\r\n      <div id=\"togetherjs-chat-participants\" data-toggles=\"#togetherjs-chat-no-participants\" style=\"display: none\">\r\n        <span id=\"togetherjs-chat-participant-list\"></span>\r\n        &amp; Вы\r\n      </div>\r\n      <div id=\"togetherjs-chat-no-participants\" data-toggles=\"#togetherjs-chat-participants\">\r\n        Здесь больше никого нет.\r\n      </div>\r\n    </section>\r\n\r\n    <div style=\"display: none\">\r\n\r\n      <!-- Template for one message: -->\r\n      <div id=\"togetherjs-template-chat-message\" class=\"togetherjs-chat-item togetherjs-chat-message\">\r\n        <div class=\"togetherjs-person\"></div>\r\n        <div class=\"togetherjs-timestamp\"><span class=\"togetherjs-time\">HH:MM</span> <span class=\"togetherjs-ampm\">AM/PM</span></div>\r\n        <div class=\"togetherjs-person-name-abbrev\"></div>\r\n        <div class=\"togetherjs-chat-content togetherjs-sub-content\"></div>\r\n      </div>\r\n\r\n      <!-- Template for when a person leaves: -->\r\n      <div id=\"togetherjs-template-chat-left\" class=\"togetherjs-chat-item togetherjs-chat-left-item\">\r\n        <div class=\"togetherjs-person\"></div>\r\n        <div class=\"togetherjs-ifnot-declinedJoin\">\r\n          <div class=\"togetherjs-inline-text\"><span class=\"togetherjs-person-name\"></span> покинул сеанс.</div>\r\n        </div>\r\n        <div class=\"togetherjs-if-declinedJoin\">\r\n          <div class=\"togetherjs-inline-text\"><span class=\"togetherjs-person-name\"></span> отказался присоединиться к сеансу.</div>\r\n        </div>\r\n        <div class=\"togetherjs-clear\"></div>\r\n      </div>\r\n\r\n      <!-- Template when a person joins the session: -->\r\n      <div id=\"togetherjs-template-chat-joined\" class=\"togetherjs-chat-item togetherjs-chat-join-item\">\r\n        <div class=\"togetherjs-person\"></div>\r\n        <div class=\"togetherjs-inline-text\"><span class=\"togetherjs-person-name\"></span> присоединился к сеансу.</div>\r\n        <div class=\"togetherjs-clear\"></div>\r\n      </div>\r\n\r\n      <!-- Template for system-derived messages: -->\r\n      <div id=\"togetherjs-template-chat-system\" class=\"togetherjs-chat-item\">\r\n        <span class=\"togetherjs-chat-content togetherjs-sub-content\"></span>\r\n      </div>\r\n\r\n      <!-- Template when a person joins the session: -->\r\n      <!-- <div id=\"togetherjs-template-chat-joined\" class=\"togetherjs-chat-item togetherjs-chat-join-item\">\r\n        <div class=\"togetherjs-person\"></div>\r\n        <div class=\"togetherjs-inline-text\"><span class=\"togetherjs-person-name\"></span> joined the session.</div>\r\n        <div class=\"togetherjs-clear\"></div>\r\n      </div> -->\r\n\r\n      <!-- Template for when someone goes to a new URL: -->\r\n      <div id=\"togetherjs-template-url-change\" class=\"togetherjs-chat-item togetherjs-chat-url-change\">\r\n        <div class=\"togetherjs-person\"></div>\r\n        <div class=\"togetherjs-inline-text\">\r\n          <div class=\"togetherjs-if-sameUrl\">\r\n            <span class=\"togetherjs-person-name\"></span>\r\n            с Вами на одной странице.\r\n          </div>\r\n          <div class=\"togetherjs-ifnot-sameUrl\">\r\n            <span class=\"togetherjs-person-name\"></span>\r\n            отправился на: <a href=\"#\" class=\"togetherjs-person-url togetherjs-person-url-title\" target=\"_self\"></a>\r\n            <section class=\"togetherjs-buttons togetherjs-buttons-notification-diff-url\">\r\n              <!-- Displayed when the peer is at a different URL: -->\r\n              <div class=\"togetherjs-different-url togetherjs-notification-diff-url\">\r\n                <a class=\"togetherjs-nudge togetherjs-default\">Толкнуть друга</a>\r\n                <a href=\"#\" class=\"togetherjs-follow togetherjs-person-url togetherjs-primary\">Присоединиться к нему</a>\r\n              </div>\r\n            </section>\r\n\r\n            <!-- <div>\r\n              <a class=\"togetherjs-nudge togetherjs-secondary\">Nudge them</a>\r\n              <a href=\"\" class=\"togetherjs-person-url togetherjs-follow togetherjs-primary\">Join them</a>\r\n            </div> -->\r\n\r\n          </div>\r\n        </div>\r\n        <div class=\"togetherjs-clear\"></div>\r\n      </div>\r\n    </div>\r\n\r\n    <section id=\"togetherjs-chat-messages\">\r\n      <!-- FIX ME// need to have some dialogue that says something like - There are no chats yet! -->\r\n    </section>\r\n    <section id=\"togetherjs-chat-input-box\">\r\n      <textarea id=\"togetherjs-chat-input\" placeholder=\"Напечатайте своё сообщение здесь\"></textarea>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- this is a kind of warning popped up when you (successfully) start RTC: -->\r\n  <div id=\"togetherjs-rtc-info\" class=\"togetherjs-window\"\r\n       data-bind-to=\"#togetherjs-audio-button\"\r\n       style=\"display: none\">\r\n\r\n    <header> Аудио-чат </header>\r\n    <section>\r\n      <p>\r\n        Включите <strong>микрофон браузера</strong> возле адресной строки вверху.\r\n      </p>\r\n      <p>\r\n        Разговор по микрофону через веб-браузер - экспериментальное свойство.\r\n      </p>\r\n      <p>\r\n        Почитайте больше об аудио-чате <a href=\"https://github.com/mozilla/togetherjs/wiki/About-Audio-Chat-and-WebRTC\" target=\"_blank\">здесь</a>.\r\n      </p>\r\n    </section>\r\n\r\n    <section class=\"togetherjs-buttons\">\r\n      <label for=\"togetherjs-rtc-info-dismiss\" style=\"display: inline;\">\r\n        <input class=\"togetherjs-dont-show-again\" id=\"togetherjs-rtc-info-dismiss\" type=\"checkbox\">\r\n        Больше не показывать.\r\n      </label>\r\n      <button class=\"togetherjs-default togetherjs-dismiss\" type=\"button\">Закрыть</button>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- this is popped up when you hit the audio button, but RTC isn't\r\n  supported: -->\r\n  <div id=\"togetherjs-rtc-not-supported\" class=\"togetherjs-window\"\r\n       data-bind-to=\"#togetherjs-audio-button\"\r\n       style=\"display: none\">\r\n    <header> Аудио-чат </header>\r\n\r\n    <section>\r\n      <p>Аудио-чат требует, чтобы Вы использовали<a href='https://github.com/mozilla/togetherjs/wiki/About-Audio-Chat-and-WebRTC' target='_blank'>браузер поновее</a>!</p>\r\n      <p>\r\n        Для живого аудио-чата требуется более новый (или другой) браузер, чем тот, который Вы используете.\r\n      </p>\r\n      <p>\r\n        Посмотрите на <a href='https://github.com/mozilla/togetherjs/wiki/About-Audio-Chat-and-WebRTC' target='_blank'>'этой странице'</a> дополнительную информацию и список поддерживаемых браузеров.\r\n      </p>\r\n    </section>\r\n\r\n    <section class=\"togetherjs-buttons\">\r\n      <div class=\"togetherjs-rtc-dialog-btn\">\r\n        <button class=\"togetherjs-default togetherjs-dismiss\" type=\"button\">Закрыть</button>\r\n      </div>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- The popup when a chat message comes in and the #togetherjs-chat window isn't open -->\r\n  <div id=\"togetherjs-chat-notifier\" class=\"togetherjs-notification\"\r\n       data-bind-to=\"#togetherjs-chat-button\"\r\n       style=\"display: none\">\r\n    <img src=\"http://localhost:8080/togetherjs/images/notification-togetherjs-logo.png\" class=\"togetherjs-notification-logo\" alt=\"\">\r\n    <img src=\"http://localhost:8080/togetherjs/images/notification-btn-close.png\" class=\"togetherjs-notification-closebtn togetherjs-dismiss\" alt=\"[close]\">\r\n    <section id=\"togetherjs-chat-notifier-message\">\r\n    </section>\r\n  </div>\r\n\r\n  <!-- The menu when you click on the profile: -->\r\n  <div id=\"togetherjs-menu\" class=\"togetherjs-menu\" style=\"display: none\">\r\n    <div class=\"togetherjs-menu-item togetherjs-menu-disabled\" id=\"togetherjs-menu-profile\">\r\n      <img id=\"togetherjs-menu-avatar\">\r\n      <span class=\"togetherjs-person-name-self\" id=\"togetherjs-self-name-display\" data-toggles=\"#togetherjs-menu .togetherjs-self-name\">[nickname]</span>\r\n      <input class=\"togetherjs-self-name\" type=\"text\" data-toggles=\"#togetherjs-self-name-display\" style=\"display: none\" placeholder=\"Введите своё имя\">\r\n    </div>\r\n    <div class=\"togetherjs-menu-hr-avatar\"></div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-update-name\"><img src=\"http://localhost:8080/togetherjs/images/button-pencil.png\" alt=\"\"> Обновить своё имя</div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-update-avatar\"><img src=\"http://localhost:8080/togetherjs/images/btn-menu-change-avatar.png\" alt=\"\"> Изменить аватар</div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-update-color\"><span class=\"togetherjs-person-bgcolor-self\"></span> Выбрать цвет профиля</div>\r\n    <div class=\"togetherjs-hr\"></div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-help\">Помощь</div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-feedback\">Отзывы и предложения</div>\r\n    <div id=\"togetherjs-invite\" style=\"display: none\">\r\n      <div class=\"togetherjs-hr\"></div>\r\n      <div id=\"togetherjs-invite-users\"></div>\r\n      <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-refresh-invite\">Refresh users</div>\r\n      <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-invite-anyone\">Пригласить кого-нибудь</div>\r\n    </div>\r\n    <div class=\"togetherjs-hr\"></div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-end\"><img src=\"http://localhost:8080/togetherjs/images/button-end-session.png\" alt=\"\"> Закончить <span class=\"togetherjs-tool-name\">TogetherJS</span></div>\r\n  </div>\r\n\r\n  <!-- template for one person in the invite-users list -->\r\n  <div style=\"display: none\">\r\n    <div id=\"togetherjs-template-invite-user-item\" class=\"togetherjs-menu-item\">\r\n      <!-- TODO: : should include avatar in some way -->\r\n      <span class=\"togetherjs-person-name\"></span>\r\n    </div>\r\n  </div>\r\n\r\n  <!-- A window version of #togetherjs-menu, for use on mobile -->\r\n  <div id=\"togetherjs-menu-window\" class=\"togetherjs-window\" style=\"display: none\">\r\n    <header>Установки и профиль</header>\r\n    <section>\r\n    <div class=\"togetherjs-menu-item\">\r\n      <img class=\"togetherjs-menu-avatar\">\r\n      <span class=\"togetherjs-person-name-self\" id=\"togetherjs-self-name-display\"></span>\r\n    </div>\r\n    <div class=\"togetherjs-menu-hr-avatar\"></div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-update-name-button\"><img src=\"http://localhost:8080/togetherjs/images/button-pencil.png\" alt=\"\"> Обновить своё имя</div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-update-avatar-button\"><img src=\"http://localhost:8080/togetherjs/images/btn-menu-change-avatar.png\" alt=\"\"> Изменить аватар</div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-update-color-button\"><span class=\"togetherjs-person-bgcolor-self\"></span> Выбрать цвет профиля</div>\r\n    <div class=\"togetherjs-hr\"></div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-help-button\">Помощь</div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-feedback-button\">Отзывы и предложения</div>\r\n    <div class=\"togetherjs-hr\"></div>\r\n    <div class=\"togetherjs-menu-item\" id=\"togetherjs-menu-end-button\"><img src=\"http://localhost:8080/togetherjs/images/button-end-session.png\" alt=\"\"> Закончить TOOL_NAME</div>\r\n    </section>\r\n    <section class=\"togetherjs-buttons\">\r\n      <button class=\"togetherjs-dismiss togetherjs-primary\">Хорошо</button>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- The name editor, for use on mobile -->\r\n  <div id=\"togetherjs-edit-name-window\" class=\"togetherjs-window\" style=\"display: none\">\r\n    <header>Обновить имя</header>\r\n    <section>\r\n      <div>\r\n        <input class=\"togetherjs-self-name\" type=\"text\" placeholder=\"Введите своё имя\">\r\n      </div>\r\n    </section>\r\n    <section class=\"togetherjs-buttons\">\r\n      <button class=\"togetherjs-dismiss togetherjs-primary\">Хорошо</button>\r\n    </section>\r\n  </div>\r\n\r\n  <div class=\"togetherjs-menu\" id=\"togetherjs-pick-color\" style=\"display: none\">\r\n    <div class=\"togetherjs-triangle-up\"><img src=\"http://localhost:8080/togetherjs/images/icn-triangle-up.png\"></div>\r\n    <div style=\"display: none\">\r\n      <div id=\"togetherjs-template-swatch\" class=\"togetherjs-swatch\">\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n  <!-- Invisible elements that handle the RTC audio: -->\r\n  <audio id=\"togetherjs-audio-element\"></audio>\r\n  <audio id=\"togetherjs-local-audio\" muted=\"true\" volume=\"0.3\"></audio>\r\n  <audio id=\"togetherjs-notification\" src=\"http://localhost:8080/togetherjs/images/notification.ogg\"></audio>\r\n\r\n  <!-- The intro screen for someone who joins a session the first time: -->\r\n  <div id=\"togetherjs-intro\" class=\"togetherjs-modal\" style=\"display: none\">\r\n    <header>Присоединиться к сеансу TOOL_NAME?</header>\r\n    <section>\r\n      <p>Ваш друг просит Вас присоединиться к его TOOL_SITE_LINK браузер-сеансу, чтобы сотрудничать с Вами в реальном времени!</p>\r\n      <p>Хотели бы Вы присоединиться к его сеансу?</p>\r\n    </section>\r\n\r\n    <section class=\"togetherjs-buttons\">\r\n      <button class=\"togetherjs-destructive togetherjs-modal-dont-join\">Нет, не присоединяться</button>\r\n      <button class=\"togetherjs-primary togetherjs-dismiss\">Да, присоединиться к сеансу</button>\r\n    </section>\r\n  </div>\r\n\r\n  <!-- Shown when a web browser is completely incapable of running TogetherJS: -->\r\n  <div id=\"togetherjs-browser-broken\" class=\"togetherjs-modal\" style=\"display: none\">\r\n    <header> Извините </header>\r\n\r\n    <section>\r\n      <p>\r\n        Извините, TOOL_NAME не работает на этом браузере. Просьба <a href='https://github.com/mozilla/togetherjs/wiki/Supported-Browsers#supported-browsers'>обновиться до поддерживаемого браузера</a>, чтобы попробовать TOOL_NAME.\r\n      </p>\r\n\r\n      <p id=\"togetherjs-browser-broken-is-ie\" style=\"display: none\">\r\n        Нам нужна Ваша помощь в починке TogetherJS на Internet Explorer!  Вот список <a href=\"https://github.com/mozilla/togetherjs/issues?labels=IE&milestone=&page=1&state=open\" target=\"_blank\">ошибок на GitHub</a>, которые нам нужно починить, и над которыми Вы можете поработать.\r\n        Internet Explorer <a href=\"https://github.com/mozilla/togetherjs/wiki/Supported-Browsers#internet-explorer\"> в настоящее время не поддерживается</a>.  Если Вы действительно хотите испытать TogetherJS, советуем Вам использовать Firefox или Chrome.\r\n      </p>\r\n    </section>\r\n\r\n    <section class=\"togetherjs-buttons\">\r\n      <button class=\"togetherjs-dismiss togetherjs-primary\">Закончить TOOL_NAME</button>\r\n    </section>\r\n\r\n  </div>\r\n\r\n  <!-- Shown when the browser has WebSockets, but is IE (i.e., IE10) -->\r\n  <div id=\"togetherjs-browser-unsupported\" class=\"togetherjs-modal\" style=\"display: none\">\r\n    <header> Браузер не поддерживается </header>\r\n\r\n    <section>\r\n      <p>\r\n        Нам нужна Ваша помощь в починке TogetherJS на Internet Explorer!  Вот список <a href=\"https://github.com/mozilla/togetherjs/issues?labels=IE&milestone=&page=1&state=open\" target=\"_blank\">ошибок на GitHub</a>, которые нам нужно починить, и над которыми Вы можете поработать.\r\n        Internet Explorer <a href=\"https://github.com/mozilla/togetherjs/wiki/Supported-Browsers#internet-explorer\"> в настоящее время не поддерживается</a>.  Если Вы действительно хотите испытать TogetherJS, советуем Вам использовать Firefox или Chrome.\r\n      </p>\r\n\r\n      <p>Вы можете продолжать пробовать использовать TOOL_NAME, но скорее всего Вы получите массу ошибок. Мы Вас предупредили.</p>\r\n\r\n    </section>\r\n\r\n    <section class=\"togetherjs-buttons\">\r\n      <button class=\"togetherjs-dismiss togetherjs-primary\">Закончить TOOL_NAME</button>\r\n      <button class=\"togetherjs-dismiss togetherjs-secondary togetherjs-browser-unsupported-anyway\">Всё равно попробовать TOOL_NAME</button>\r\n    </section>\r\n\r\n  </div>\r\n\r\n  <div id=\"togetherjs-confirm-end\" class=\"togetherjs-modal\" style=\"display: none\">\r\n    <header> Закончить сеанс? </header>\r\n    <section>\r\n      <p>\r\n        Вы уверены, что хотите завершить свой сеанс TOOL_NAME?\r\n      </p>\r\n    </section>\r\n    <section class=\"togetherjs-buttons\">\r\n      <button class=\"togetherjs-cancel togetherjs-dismiss\">Отмена</button>\r\n      <span class=\"togetherjs-alt-text\">или</span>\r\n      <button id=\"togetherjs-end-session\" class=\"togetherjs-destructive\">Закончить сеанс</button>\r\n    </section>\r\n  </div>\r\n\r\n  <div id=\"togetherjs-feedback-form\" class=\"togetherjs-modal\" style=\"display: none;\">\r\n    <header> Отзывы и предложения </header>\r\n    <iframe src=\"https://docs.google.com/a/mozilla.com/forms/d/1lVE7JyRo_tjakN0mLG1Cd9X9vseBX9wci153z9JcNEs/viewform?embedded=true\" width=\"400\" height=\"300\" frameborder=\"0\" marginheight=\"0\" marginwidth=\"0\">Загружаю форму ...</iframe>\r\n    <!-- <p><button class=\"togetherjs-modal-close\">Close</button></p> -->\r\n  </div>\r\n\r\n  <div style=\"display: none\">\r\n    <!-- This is when you join a session and the other person has already changed to another URL: -->\r\n    <div id=\"togetherjs-template-url-change\" class=\"togetherjs-modal\">\r\n      <header> Следую на новый URL... </header>\r\n      <section>\r\n        <div class=\"togetherjs-person\"></div>\r\n        Следую\r\n        <span class=\"togetherjs-person-name\"></span>\r\n        на <a href=\"\" class=\"togetherjs-person-url togetherjs-person-url-title\"></a>\r\n      </section>\r\n    </div>\r\n\r\n    <!-- This is when someone invites you to their session: -->\r\n    <div id=\"togetherjs-template-invite\" class=\"togetherjs-chat-item\">\r\n      <div class=\"togetherjs-person\"></div>\r\n      <div>\r\n        <span class=\"togetherjs-person-name\"></span>\r\n        пригласил <strong class=\"togetherjs-if-forEveryone\">кого-либо</strong>\r\n        <strong class=\"togetherjs-ifnot-forEveryone\">Вас</strong>\r\n        на <a href=\"\" data-togetherjs-subattr-href=\"href\" class=\"togetherjs-sub-hrefTitle\" target=\"_blank\"></a>\r\n      </div>\r\n    </div>\r\n\r\n  </div>\r\n\r\n  <!-- The pointer at the side of a window: -->\r\n  <div id=\"togetherjs-window-pointer-right\" style=\"display: none\"></div>\r\n  <div id=\"togetherjs-window-pointer-left\" style=\"display: none\"></div>\r\n\r\n  <!-- The element that overlaps the background of the page during a modal dialog: -->\r\n  <div id=\"togetherjs-modal-background\" style=\"display: none\"></div>\r\n\r\n  <!-- Some miscellaneous templates -->\r\n  <div style=\"display: none\">\r\n\r\n    <!-- This is the cursor: -->\r\n    <div id=\"togetherjs-template-cursor\" class=\"togetherjs-cursor togetherjs\">\r\n      <!-- Note: images/cursor.svg is a copy of this (for editing): -->\r\n      <!-- crossbrowser svg dropshadow http://demosthenes.info/blog/600/Creating-a-True-CrossBrowser-Drop-Shadow- -->\r\n      <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"\r\n      \t width=\"15px\" height=\"22.838px\" viewBox=\"96.344 146.692 15 22.838\" enable-background=\"new 96.344 146.692 15 22.838\"\r\n      \t xml:space=\"preserve\">\r\n      <path fill=\"#231F20\" d=\"M98.984,146.692c2.167,1.322,1.624,6.067,3.773,7.298c-0.072-0.488,2.512-0.931,3.097,0\r\n      \tc0.503,0.337,1.104-0.846,2.653,0.443c0.555,0.593,3.258,2.179,1.001,8.851c-0.446,1.316,2.854,0.135,1.169,2.619\r\n      \tc-3.748,5.521-9.455,2.787-9.062,1.746c1.06-2.809-6.889-4.885-4.97-9.896c0.834-2.559,2.898,0.653,2.923,0.29\r\n      \tc-0.434-1.07-2.608-5.541-2.923-6.985C96.587,150.793,95.342,147.033,98.984,146.692z\"/>\r\n      </svg>\r\n      <!-- <img class=\"togetherjs-cursor-img\" src=\"http://localhost:8080/togetherjs/images/cursor.svg\"> -->\r\n      <span class=\"togetherjs-cursor-container\">\r\n        <span class=\"togetherjs-cursor-name\"></span>\r\n        <span style=\"display:none\" class=\"togetherjs-cursor-typing\" id=\"togetherjs-cursor-typebox\">\r\n          <span class=\"togetherjs-typing-ellipse-one\">&#9679;</span><span class=\"togetherjs-typing-ellipse-two\">&#9679;</span><span class=\"togetherjs-typing-ellipse-three\">&#9679;</span>\r\n        </span>\r\n        <!-- Displayed when the cursor is below the screen: -->\r\n        <span class=\"togetherjs-cursor-down\">\r\n\r\n        </span>\r\n        <!-- Displayed when the cursor is above the screen: -->\r\n        <span class=\"togetherjs-cursor-up\">\r\n\r\n        </span>\r\n      </span>\r\n    </div>\r\n\r\n    <!-- This is the element that goes around focused form elements: -->\r\n    <div id=\"togetherjs-template-focus\">\r\n      <div class=\"togetherjs-focus togetherjs-person-bordercolor\"></div>\r\n    </div>\r\n\r\n    <!-- This is a click: -->\r\n    <div id=\"togetherjs-template-click\" class=\"togetherjs-click togetherjs\">\r\n    </div>\r\n  </div>\r\n</div>\r\n",
     walkthrough: "<!--\r\n    Any elements with .togetherjs-walkthrough-firsttime will only be\r\n    displayed on during the first-time experience.  Any elements with\r\n    .togetherjs-walkthrough-not-firsttime will only be displayed when\r\n    the walkthrough is accessed through the Help menu.\r\n\r\n    Note you *cannot* use <section class=\"togetherjs-walkthrough-slide\r\n    togetherjs-walkthrough-firsttime\">: the number of sections must be the\r\n    same regardless.\r\n  -->\r\n<div id=\"togetherjs-walkthrough\" class=\"togetherjs-modal togetherjs-modal-wide\">\r\n  <header>Вы используете TOOL_NAME!<button class=\"togetherjs-close\"></button></header>\r\n\r\n  <div id=\"togetherjs-walkthrough-previous\"></div>\r\n  <div id=\"togetherjs-walkthrough-next\"></div>\r\n\r\n  <section class=\"togetherjs-walkthrough-slide\">\r\n    <p class=\"togetherjs-walkthrough-main-image\"><img src=\"http://localhost:8080/togetherjs/images/walkthrough-images-intro.png\"></p>\r\n\t<p>TOOL_NAME - это служба для Вашего сайта, которая помогает Вам сотрудничать с другими в реальном времени на сайте SITE_NAME </p>\r\n  </section>\r\n\r\n  <section class=\"togetherjs-walkthrough-slide\">\r\n    <div class=\"togetherjs-walkthrough-firsttime\">\r\n      <div class=\"togetherjs-walkthrough-main-image\">\r\n        <div class=\"togetherjs-walkthrough-avatar-section\">\r\n          <div class=\"togetherjs-avatar-preview togetherjs-person togetherjs-person-self\"></div>\r\n          <div class=\"togetherjs-avatar-upload-input\"><input type=\"file\" class=\"togetherjs-upload-avatar\"></div>\r\n        </div>\r\n        <input class=\"togetherjs-self-name\" type=\"text\" placeholder=\"Введите своё имя\">\r\n        <div class=\"togetherjs-swatch togetherjs-person-bgcolor-self\"></div>\r\n        <div class=\"togetherjs-save-settings\">\r\n          <button class=\"togetherjs-avatar-save togetherjs-primary\">\r\n            <span id=\"togetherjs-avatar-when-unsaved\">\"\"Сохранить\"\"</span>\r\n            <span id=\"togetherjs-avatar-when-saved\" style=\"display: none\">Сохранено!</span>\r\n          </button>\r\n        </div>\r\n      </div>\r\n      <p>Задайте свои аватар, имя и пользовательский цвет вверху. При желании изменить их позднее, щёлкните по кнопке Профиль.</p>\r\n    </div>\r\n    <div class=\"togetherjs-walkthrough-not-firsttime\">\r\n      <p class=\"togetherjs-walkthrough-main-image\"><img src=\"http://localhost:8080/togetherjs/images/walkthrough-images-profile.png\"></p>\r\n      <p>Вы можете изменить свои аватар, имя и пользовательский цвет, используя кнопку Профиль.</p>\r\n    </div>\r\n  </section>\r\n\r\n  <section class=\"togetherjs-walkthrough-slide\">\r\n    <p class=\"togetherjs-walkthrough-main-image togetherjs-ifnot-creator\"><img src=\"http://localhost:8080/togetherjs/images/walkthrough-images-invite.png\">\r\n    </p>\r\n    <p class=\"togetherjs-ifnot-creator\">Вы можете пригласить ещё друзей на Ваш сеанс, послав им ссылку с приглашением на панели TOOL_NAME.</p>\r\n    <p class=\"togetherjs-walkthrough-main-image togetherjs-if-creator\">\r\n      <span class=\"togetherjs-walkthrough-sendlink\">\r\n        Скопируйте и приклейте эту ссылку в IM или в имейл, чтобы пригласить друзей.<br>\r\n      </span>\r\n      <input type=\"text\" class=\"togetherjs-share-link\">\r\n    </p>\r\n    <p class=\"togetherjs-if-creator\">Пошлите другу ссылку вверху, чтобы он мог присоединиться к Вашему сеансу! Вы также можете найти эту ссылку с приглашением на панели TOOL_NAME.</p>\r\n  </section>\r\n\r\n  <section class=\"togetherjs-walkthrough-slide\">\r\n    <p class=\"togetherjs-walkthrough-main-image\"><img src=\"http://localhost:8080/togetherjs/images/walkthrough-images-participant.png\"></p>\r\n    <p>Друзья, которые присоединятся к Вашему сеансу TOOL_NAME, появятся здесь. Вы можете щёлкнуть по аватару друга, чтобы увидеть больше информации.</p>\r\n  </section>\r\n\r\n  <section class=\"togetherjs-walkthrough-slide\">\r\n    <p class=\"togetherjs-walkthrough-main-image\"><img src=\"http://localhost:8080/togetherjs/images/walkthrough-images-chat.png\"></p>\r\n    <p>Когда Ваши друзья присоединятся к Вашему сеансу TOOL_NAME, Вы сможете общаться с ними здесь!</p>\r\n  </section>\r\n\r\n  <section class=\"togetherjs-walkthrough-slide\">\r\n    <p class=\"togetherjs-walkthrough-main-image\"><img src=\"http://localhost:8080/togetherjs/images/walkthrough-images-rtc.png\"></p>\r\n    <p>Если Ваш браузер поддерживает аудио-чат, Вы можете запустить его нажатием на иконку микрофона. Узнайте побольше об этой экспериментальной функции <a href=\"https://github.com/mozilla/togetherjs/wiki/About-Audio-Chat-and-WebRTC\" target=\"_blank\">здесь</a>.</p>\r\n  </section>\r\n\r\n  <section class=\"togetherjs-walkthrough-slide\">\r\n    <p class=\"togetherjs-walkthrough-main-image\"><img src=\"http://localhost:8080/togetherjs/images/walkthrough-images-logo.png\"></p>\r\n    <p>Ну вот Вы и готовы использовать TOOL_NAME. Теперь начинайте сотрудничать на сайте SITE_NAME!</p>\r\n  </section>\r\n\r\n  <div style=\"display: none\">\r\n    <!-- There is one of these created for each slide: -->\r\n    <span id=\"togetherjs-template-walkthrough-slide-progress\" class=\"togetherjs-walkthrough-slide-progress\">&#9679;</span>\r\n  </div>\r\n  <section id=\"togetherjs-walkthrough-progress\">\r\n  </section>\r\n\r\n  <section class=\"togetherjs-buttons\">\r\n    <button class=\"togetherjs-primary togetherjs-dismiss\">Я готов!</button>\r\n  </section>\r\n\r\n</div><!-- /.togetherjs-modal -->\r\n",
     names: "Лысый Лис, Большой Бобёр, Умная Сова, Жирный Жираф, Серый Волк, Толстый Тюлень, Рыба-кит, Кисьян Котяра, Известная Игуана"
   };

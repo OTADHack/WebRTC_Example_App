@@ -150,7 +150,7 @@ define(["jquery", "util", "session", "elementFinder", "eventMaker", "templating"
     },
 
     _change: function (e) {
-      // FIXME: I should have an internal .send() function that automatically
+      //TODO: I should have an internal .send() function that automatically
       // asserts !inRemoteUpdate, among other things
       if (inRemoteUpdate) {
         return;
@@ -267,7 +267,7 @@ define(["jquery", "util", "session", "elementFinder", "eventMaker", "templating"
       assert(CKEDITOR);
       assert(CKEDITOR.dom.element.get(this.element));
       this._change = this._change.bind(this);
-      // FIXME: change event is available since CKEditor 4.2
+      //TODO: change event is available since CKEditor 4.2
       this._editor().on("change", this._change);
     },
     tracked: function (el) {
@@ -278,7 +278,7 @@ define(["jquery", "util", "session", "elementFinder", "eventMaker", "templating"
     },
 
     update: function (msg) {
-      //FIXME: use setHtml instead of setData to avoid frame reloading overhead
+      //TODO: use setHtml instead of setData to avoid frame reloading overhead
       this._editor().editable().setHtml(msg.value);
     },
 
@@ -465,7 +465,7 @@ define(["jquery", "util", "session", "elementFinder", "eventMaker", "templating"
     for (var i=0; i<liveTrackers.length; i++) {
       var tracker = liveTrackers[i];
       if (tracker.tracked(el)) {
-        //FIXME: assert statement below throws an exception when data is submitted to the hub too fast
+        //TODO: assert statement below throws an exception when data is submitted to the hub too fast
         //in other words, name == tracker.trackerName instead of name == tracker when someone types too fast in the tracked editor
         //commenting out this assert statement solves the problem
         assert((! name) || name == tracker.trackerName, "Expected to map to a tracker type", name, "but got", tracker.trackerName);
@@ -717,7 +717,7 @@ define(["jquery", "util", "session", "elementFinder", "eventMaker", "templating"
         return;
       }
     }
-    // FIXME: need to figure out when to ignore inits
+    //TODO: need to figure out when to ignore inits
     msg.updates.forEach(function (update) {
       var el;
       try {

@@ -17,7 +17,7 @@ var http = require('http');
 var parseUrl = require('url').parse;
 var fs = require('fs');
 
-// FIXME: not sure what logger to use
+//TODO: not sure what logger to use
 //var logger = require('../../lib/logger');
 
 // LOG_LEVEL values:
@@ -219,7 +219,7 @@ var wsServer = new WebSocketServer({
     // and the default of 64Kb was exceeded; raised to 1Mb
     maxReceivedFrameSize: 0x100000,
     // Using autoaccept because the origin is somewhat dynamic
-    // FIXME: make this smarter?
+    //TODO: make this smarter?
     autoAcceptConnections: false
 });
 
@@ -248,7 +248,7 @@ wsServer.on('request', function(request) {
     return;
   }
 
-  // FIXME: we should use a protocol here instead of null, but I can't
+  //TODO: we should use a protocol here instead of null, but I can't
   // get it to work.  "Protocol" is what the two clients are using
   // this channel for (we don't bother to specify this)
   var connection = request.accept(null, request.origin);

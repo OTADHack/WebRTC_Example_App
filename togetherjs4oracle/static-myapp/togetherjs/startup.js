@@ -137,7 +137,7 @@ define(["util", "require", "jquery", "windowing", "storage"], function (util, re
       }
       require(["windowing"], function (windowing) {
         windowing.show("#togetherjs-share");
-        // FIXME: no way to detect when the window is closed
+        //TODO: no way to detect when the window is closed
         // If there was a next() step then it would not work
       });
     }

@@ -19,7 +19,7 @@ pre.doctest.doctest-some-failure, pre.commenttest.doctest-some-failure, pre.test
     border: 1px solid #f00;
 }
 
-/* FIXME: it would be nice if this was more obviously styled to show that there
+/* TODO: it would be nice if this was more obviously styled to show that there
    was more content */
 pre.doctest.expand-on-failure, pre.commenttest.expand-on-failure, pre.test.expand-on-failure {
     max-height: 3em;
@@ -113,7 +113,7 @@ a.doctest-failure-link:hover {
 
 .doctest-comparison-table {
     border: 1px solid #000;
-    /* FIXME: not sure why this doesn't keep the table limited to 100% */
+    /* TODO: not sure why this doesn't keep the table limited to 100% */
     width: 100%;
 }
 

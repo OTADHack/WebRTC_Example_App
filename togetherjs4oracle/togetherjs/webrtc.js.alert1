@@ -131,14 +131,14 @@ define(["require", "jquery", "util", "session", "ui", "peers", "storage", "windo
     $accept.click(function () {
       peers.Self.update({avatar:  avatarData});
       ui.displayToggle("#togetherjs-no-avatar-edit");
-      // FIXME: these probably shouldn't be two elements:
+      //TODO: these probably shouldn't be two elements:
       $("#togetherjs-participants-other").show();
       $accept.attr("disabled", "1");
     });
 
     $cancel.click(function () {
       ui.displayToggle("#togetherjs-no-avatar-edit");
-      // FIXME: like above:
+      //TODO: like above:
       $("#togetherjs-participants-other").show();
     });
 
@@ -154,7 +154,7 @@ define(["require", "jquery", "util", "session", "ui", "peers", "storage", "windo
           $video[0].play();
         },
         function(err) {
-          // FIXME: should pop up help or something in the case of a user
+          //TODO: should pop up help or something in the case of a user
           // cancel
           console.error("getUserMedia error:", err);
         }
@@ -181,7 +181,7 @@ define(["require", "jquery", "util", "session", "ui", "peers", "storage", "windo
     $upload.on("change", function () {
       var reader = new FileReader();
       reader.onload = function () {
-        // FIXME: I don't actually know it's JPEG, but it's probably a
+        //TODO: I don't actually know it's JPEG, but it's probably a
         // good enough guess:
         var url = "data:image/jpeg;base64," + util.blobToBase64(this.result);
         convertImage(url, function (result) {
@@ -517,7 +517,7 @@ define(["require", "jquery", "util", "session", "ui", "peers", "storage", "windo
 			name = getUserName();
 		}
 		if (name && typeof name != "string") {
-			// FIXME: test for HTML safe?  Not that we require it, but
+			//TODO: test for HTML safe?  Not that we require it, but
 			// <>'s are probably a sign something is wrong.
 			console.log("Error in getUserName(): should return a string (got", name, ")");
 			name = null;
@@ -583,7 +583,7 @@ define(["require", "jquery", "util", "session", "ui", "peers", "storage", "windo
         }
       }
       audioButton("#togetherjs-audio-error");
-      // FIXME: this title doesn't seem to display?
+      //TODO: this title doesn't seem to display?
       $("#togetherjs-audio-error").attr("title", s);
     }
 
@@ -601,7 +601,7 @@ define(["require", "jquery", "util", "session", "ui", "peers", "storage", "windo
           }
         },
         function (err) {
-          // FIXME: handle cancel case
+          //TODO: handle cancel case
           if (err && err.code == 1) {
             // User cancel
             return;
@@ -640,7 +640,7 @@ define(["require", "jquery", "util", "session", "ui", "peers", "storage", "windo
         audioButton("#togetherjs-audio-active");
       };
       _connection.onstatechange = function () {
-        // FIXME: this doesn't seem to work:
+        //TODO: this doesn't seem to work:
         // Actually just doesn't work on Firefox
         console.log("state change", _connection.readyState);
         if (_connection.readyState == "closed") {
@@ -712,7 +712,7 @@ define(["require", "jquery", "util", "session", "ui", "peers", "storage", "windo
           error("Error doing RTC createOffer:", err);
         });
       } else if (! (answerSent || answerReceived)) {
-        // FIXME: I might have only needed this due to my own bugs, this might
+        //TODO: I might have only needed this due to my own bugs, this might
         // not actually time out
         var timeout = setTimeout(function () {
           if (! answerSent) {
@@ -744,9 +744,9 @@ define(["require", "jquery", "util", "session", "ui", "peers", "storage", "windo
     }
 
     function toggleMute() {
-      // FIXME: implement.  Actually, wait for this to be implementable - currently
+      //TODO: implement.  Actually, wait for this to be implementable - currently
       // muting of localStreams isn't possible
-      // FIXME: replace with hang-up?
+      //TODO: replace with hang-up?
     }
 
     session.hub.on("rtc-offer", function (msg) {
@@ -801,7 +801,7 @@ define(["require", "jquery", "util", "session", "ui", "peers", "storage", "windo
         }),
         function () {
           answerDescription = true;
-          // FIXME: I don't think this connect is ever needed?
+          //TODO: I don't think this connect is ever needed?
           connect();
         },
         function (err) {
@@ -832,7 +832,7 @@ define(["require", "jquery", "util", "session", "ui", "peers", "storage", "windo
     });
 
     session.hub.on("hello", function (msg) {
-      // FIXME: displayToggle should be set due to
+      //TODO: displayToggle should be set due to
       // _connection.onstatechange, but that's not working, so
       // instead:
       audioButton("#togetherjs-audio-ready");

@@ -4,7 +4,7 @@ var path = require('path');
 var fs = require('fs');
 var root = path.join(path.dirname(fs.realpathSync(__filename)), '..');
 
-// FIXME: Not sure this is the best way to go about this, or if we should
+//TODO: Not sure this is the best way to go about this, or if we should
 // just require("doctest")?
 var doctest = require(root + '/doctest');
 

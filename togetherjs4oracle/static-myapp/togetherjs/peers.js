@@ -142,7 +142,7 @@ define(["util", "session", "storage", "require", "templates"], function (util, s
       if (identityUpdated) {
         peers.emit("identity-updated", this);
       }
-      // FIXME: I can't decide if this is the only time we need to emit
+      //TODO: I can't decide if this is the only time we need to emit
       // this message (and not .update() or other methods)
       if (this.following) {
         session.emit("follow-peer", this);
@@ -150,7 +150,7 @@ define(["util", "session", "storage", "require", "templates"], function (util, s
     },
 
     update: function (attrs) {
-      // FIXME: should probably test that only a couple attributes are settable
+      //TODO: should probably test that only a couple attributes are settable
       // particularly status and idle
       if (attrs.idle) {
         this.idle = attrs.idle;
@@ -214,7 +214,7 @@ define(["util", "session", "storage", "require", "templates"], function (util, s
 
   });
 
-  // FIXME: I can't decide where this should actually go, seems weird
+  //TODO: I can't decide where this should actually go, seems weird
   // that it is emitted and handled in the same module
   session.on("follow-peer", function (peer) {
     if (peer.url != session.currentUrl()) {
@@ -346,11 +346,11 @@ define(["util", "session", "storage", "require", "templates"], function (util, s
               fromLoad: true
             });
             peers._SelfLoaded.resolve();
-          }).bind(this)); // FIXME: ignoring error
+          }).bind(this)); //TODO: ignoring error
       },
 
       _loadFromApp: function () {
-        // FIXME: I wonder if these should be optionally functions?
+        //TODO: I wonder if these should be optionally functions?
         // We could test typeof==function to distinguish between a getter and a concrete value
         var getUserName = TogetherJS.config.get("getUserName");
         var getUserColor = TogetherJS.config.get("getUserColor");
@@ -363,7 +363,7 @@ define(["util", "session", "storage", "require", "templates"], function (util, s
             name = getUserName();
           }
           if (name && typeof name != "string") {
-            // FIXME: test for HTML safe?  Not that we require it, but
+            //TODO: test for HTML safe?  Not that we require it, but
             // <>'s are probably a sign something is wrong.
             console.warn("Error in getUserName(): should return a string (got", name, ")");
             name = null;
@@ -376,7 +376,7 @@ define(["util", "session", "storage", "require", "templates"], function (util, s
             color = getUserColor();
           }
           if (color && typeof color != "string") {
-            // FIXME: would be nice to test for color-ness here.
+            //TODO: would be nice to test for color-ness here.
             console.warn("Error in getUserColor(): should return a string (got", color, ")");
             color = null;
           }
@@ -551,7 +551,7 @@ define(["util", "session", "storage", "require", "templates"], function (util, s
   });
 
   window.addEventListener("pagehide", function () {
-    // FIXME: not certain if this should be tab local or not:
+    //TODO: not certain if this should be tab local or not:
     storeSerialization();
   }, false);
 

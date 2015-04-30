@@ -20,13 +20,13 @@ define(["jquery", "ui", "util", "session", "elementFinder", "tinycolor", "eventM
     if (msg.sameUrl) {
       Cursor.getClient(msg.clientId).updatePosition(msg);
     } else {
-      // FIXME: This should be caught even before the cursor-update message,
+      //TODO: This should be caught even before the cursor-update message,
       // when the peer goes to another URL
       Cursor.getClient(msg.clientId).hideOtherUrl();
     }
   });
 
-  // FIXME: should check for a peer leaving and remove the cursor object
+  //TODO: should check for a peer leaving and remove the cursor object
   var Cursor = util.Class({
 
     constructor: function (clientId) {
@@ -48,7 +48,7 @@ define(["jquery", "ui", "util", "session", "elementFinder", "tinycolor", "eventM
     KEYDOWN_WAIT_TIME: 2000,
 
     updatePeer: function (peer) {
-      // FIXME: can I use peer.setElement()?
+      //TODO: can I use peer.setElement()?
       this.element.css({color: peer.color});
       var img = this.element.find("img.togetherjs-cursor-img");
       img.attr("src", makeCursor(peer.color));
@@ -62,7 +62,7 @@ define(["jquery", "ui", "util", "session", "elementFinder", "tinycolor", "eventM
       });
       var path = this.element.find("svg path");
       path.attr("fill", peer.color);
-      // FIXME: should I just remove the element?
+      //TODO: should I just remove the element?
       if (peer.status != "live") {
         //this.element.hide();
         this.element.find("svg").animate({
@@ -123,11 +123,11 @@ define(["jquery", "ui", "util", "session", "elementFinder", "tinycolor", "eventM
         return;
       }
       this.atOtherUrl = true;
-      // FIXME: should show away status better:
+      //TODO: should show away status better:
       this.element.hide();
     },
 
-    // place Cursor rotate function down here FIXME: this doesnt do anything anymore.  This is in the CSS as an animation
+    // place Cursor rotate function down here TODO: this doesnt do anything anymore.  This is in the CSS as an animation
     rotateCursorDown: function(){
       var e = $(this.element).find('svg');
         e.animate({borderSpacing: -150, opacity: 1}, {
@@ -158,7 +158,7 @@ define(["jquery", "ui", "util", "session", "elementFinder", "tinycolor", "eventM
       var height = $(window).height();
 
       if (top < wTop) {
-        // FIXME: this is a totally arbitrary number, but is meant to be big enough
+        //TODO: this is a totally arbitrary number, but is meant to be big enough
         // to keep the cursor name from being off the top of the screen.
         top = 25;
         this.setClass("togetherjs-scrolled-above");
@@ -267,7 +267,7 @@ define(["jquery", "ui", "util", "session", "elementFinder", "tinycolor", "eventM
     target = $(target);
     var offset = target.offset();
     if (! offset) {
-      // FIXME: this really is walkabout.js's problem to fire events on the
+      //TODO: this really is walkabout.js's problem to fire events on the
       // document instead of a specific element
       console.warn("Could not get offset of element:", target[0]);
       return;
@@ -342,7 +342,7 @@ define(["jquery", "ui", "util", "session", "elementFinder", "tinycolor", "eventM
     session.send(lastScrollMessage);
   }
 
-  // FIXME: do the same thing for cursor position?  And give up on the
+  //TODO: do the same thing for cursor position?  And give up on the
   // ad hoc update-on-hello?
   session.on("prepare-hello", function (helloMessage) {
     if (lastScrollMessage) {
@@ -412,7 +412,7 @@ define(["jquery", "ui", "util", "session", "elementFinder", "tinycolor", "eventM
       // This is an artificial internal event
       return;
     }
-    // FIXME: this might just be my imagination, but somehow I just
+    //TODO: this might just be my imagination, but somehow I just
     // really don't want to do anything at this stage of the event
     // handling (since I'm catching every click), and I'll just do
     // something real soon:
@@ -468,7 +468,7 @@ define(["jquery", "ui", "util", "session", "elementFinder", "tinycolor", "eventM
     // last cursor update was calculated, so we force the cursor to
     // the last location during a click:
     if (! pos.sameUrl) {
-      // FIXME: if we *could have* done a local click, but we follow along
+      //TODO: if we *could have* done a local click, but we follow along
       // later, we'll be in different states if that click was important.
       // Mostly click cloning just won't work.
       return;
@@ -490,7 +490,7 @@ define(["jquery", "ui", "util", "session", "elementFinder", "tinycolor", "eventM
   });
 
   function displayClick(pos, color) {
-    // FIXME: should we hide the local click if no one else is going to see it?
+    //TODO: should we hide the local click if no one else is going to see it?
     // That means tracking who might be able to see our screen.
     var element = templating.clone("click");
     $(document.body).append(element);
@@ -517,7 +517,7 @@ define(["jquery", "ui", "util", "session", "elementFinder", "tinycolor", "eventM
         return;
       }
       lastKeydown = now;
-      // FIXME: is event.target interesting here?  That is, *what* the
+      //TODO: is event.target interesting here?  That is, *what* the
       // user is typing into, not just that the user is typing?  Also
       // I'm assuming we don't care if the user it typing into a
       // togetherjs-related field, since chat activity is as interesting
@@ -527,7 +527,7 @@ define(["jquery", "ui", "util", "session", "elementFinder", "tinycolor", "eventM
   }
 
   session.hub.on("keydown", function (msg) {
-    // FIXME: when the cursor is hidden there's nothing to show with setKeydown().
+    //TODO: when the cursor is hidden there's nothing to show with setKeydown().
     var cursor = Cursor.getClient(msg.clientId);
     cursor.setKeydown();
   });

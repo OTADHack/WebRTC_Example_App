@@ -160,6 +160,9 @@ define(["require", "jquery", "util", "session", "ui", "peers", "storage", "windo
 	// wsc triggers this function when it receives the invite from the remote caller. 
 	function onIncomingCall(callObj, callConfig) {
 
+        if (!callConfig.hasAudio())
+          return;
+
 		// Accept the call with an alert message
 		console.log ("In onIncomingCall(). Accept the call with an alert message");
         setEventHandlers(callObj);
@@ -248,7 +251,7 @@ define(["require", "jquery", "util", "session", "ui", "peers", "storage", "windo
 			name = getUserName();
 		}
 		if (name && typeof name != "string") {
-			// FIXME: test for HTML safe?  Not that we require it, but
+			//TODO: test for HTML safe?  Not that we require it, but
 			// <>'s are probably a sign something is wrong.
 			console.log("Error in getUserName(): should return a string (got", name, ")");
 			name = null;
@@ -396,14 +399,14 @@ define(["require", "jquery", "util", "session", "ui", "peers", "storage", "windo
     $accept.click(function () {
       peers.Self.update({avatar:  avatarData});
       ui.displayToggle("#togetherjs-no-avatar-edit");
-      // FIXME: these probably shouldn't be two elements:
+      //TODO: these probably shouldn't be two elements:
       $("#togetherjs-participants-other").show();
       $accept.attr("disabled", "1");
     });
 
     $cancel.click(function () {
       ui.displayToggle("#togetherjs-no-avatar-edit");
-      // FIXME: like above:
+      //TODO: like above:
       $("#togetherjs-participants-other").show();
     });
 
@@ -419,7 +422,7 @@ define(["require", "jquery", "util", "session", "ui", "peers", "storage", "windo
           $video[0].play();
         },
         function(err) {
-          // FIXME: should pop up help or something in the case of a user
+          //TODO: should pop up help or something in the case of a user
           // cancel
           console.error("getUserMedia error:", err);
         }
@@ -446,7 +449,7 @@ define(["require", "jquery", "util", "session", "ui", "peers", "storage", "windo
     $upload.on("change", function () {
       var reader = new FileReader();
       reader.onload = function () {
-        // FIXME: I don't actually know it's JPEG, but it's probably a
+        //TODO: I don't actually know it's JPEG, but it's probably a
         // good enough guess:
         var url = "data:image/jpeg;base64," + util.blobToBase64(this.result);
         convertImage(url, function (result) {

@@ -9,12 +9,12 @@
 
   <!-- This is the main set of buttons: -->
   <div id="togetherjs-dock" class="togetherjs-dock-right">
-    <div id="togetherjs-dock-anchor" title="{{ gettext('Move the dock') }}">
+    <div id="togetherjs-dock-anchor" title="{{ gettext('Close/Open the dock') }}">
       <span id="togetherjs-dock-anchor-horizontal">
-        <img src="http://localhost:8080/togetherjs/images/icn-handle-circle@2x.png" alt="drag">
+        <img src="http://localhost:8080/togetherjs/images/togetherjs-logo-close.png" alt="toggle">
       </span>
       <span id="togetherjs-dock-anchor-vertical">
-        <img src="http://localhost:8080/togetherjs/images/icn-handle-circle@2x.png" alt="drag">
+        <img src="http://localhost:8080/togetherjs/images/togetherjs-logo-close.png" alt="toggle">
       </span>
     </div>
     <div id="togetherjs-buttons">
@@ -48,6 +48,7 @@
         <span id="togetherjs-audio-error" class="togetherjs-audio-set" data-toggles=".togetherjs-audio-set" style="display: none">
         </span>
       </button>
+      <button id="togetherjs-video-button" class="togetherjs-button" title="{{ gettext('Toggle video')}}"></button>
       <button id="togetherjs-chat-button" class="togetherjs-button" title="{{ gettext('Chat') }}"></button>
       <div id="togetherjs-dock-participants"></div>
     </div>
@@ -240,8 +241,8 @@
         </div>
         <div class="togetherjs-clear"></div>
       </div>
-    </div>
 	-->
+    </div>
 
     <section id="togetherjs-chat-messages">
       <!-- FIX ME// need to have some dialogue that says something like - There are no chats yet! -->
@@ -339,7 +340,7 @@
   <!-- template for one person in the invite-users list -->
   <div style="display: none">
     <div id="togetherjs-template-invite-user-item" class="togetherjs-menu-item">
-      <!-- FIXME: should include avatar in some way -->
+      <!-- TODO: : should include avatar in some way -->
       <span class="togetherjs-person-name"></span>
     </div>
   </div>

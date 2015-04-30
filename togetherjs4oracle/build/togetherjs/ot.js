@@ -481,7 +481,7 @@ define(["util"], function (util) {
         if (untilChange.isBefore(c)) {
           return false;
         }
-        // FIXME: not sure if this clientId check here is right.  Maybe
+        //TODO: not sure if this clientId check here is right.  Maybe
         // if untilChange.knowsAbout(c)?
         if (untilChange.knowsAboutChange(c)) {
           var result = c.delta.transpose(delta);

@@ -71,7 +71,7 @@ define(["jquery", "util", "channels"], function ($, util, channels) {
     var msg = {
       type: helloBack ? "hello-back" : "hello",
       name: "Recorder 'bot",
-      // FIXME: replace with robot:
+      //TODO: replace with robot:
       avatar: TogetherJS.baseUrl + "/togetherjs/images/robot-avatar.png",
       color: "#888888",
       rtcSupported: false,

@@ -148,7 +148,7 @@ $(function () {
     if (n === 0) {
       $help.prop("disabled", true);
       $help.attr("title", "Sorry, no one is currently available");
-      // FIXME: should grey out the invite text too
+      //TODO: should grey out the invite text too
       $("#nobody-home").show();
     }
   });

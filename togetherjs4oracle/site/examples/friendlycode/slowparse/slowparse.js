@@ -623,7 +623,7 @@ var Slowparse = (function() {
       text = text.split('').reverse().join('');
       text = text.replace(/^\s+/,"");
       text = text.replace(/^\/\*[\w\W]*?\*\/\s*/,'');
-      // FIXME: this still fails comments like this: /* ... /* ... */,
+      //TODO: this still fails comments like this: /* ... /* ... */,
       //        which is a single block. The problems is that in the
       //        reversed string this looks like /* ... */ ... */ which
       //        counts as one block plus left-over junk.
@@ -1174,7 +1174,7 @@ var Slowparse = (function() {
     // its tag name, looking for `attribute="value"` data until a
     // `>` is encountered.
     _parseEndOpenTag: function(tagName) {
-      /* FIXME: we probably don't need while() here, as the parser will
+      /* TODO: we probably don't need while() here, as the parser will
        *        either cleanly terminate or throw a ParseError anyway? */
       while (!this.stream.end()) {
         if (this.stream.eatWhile(/[A-Za-z\-]/)) {

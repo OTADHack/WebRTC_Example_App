@@ -1,6 +1,6 @@
 $(function () {
   $('.embed-submit-button').click(function() {
-    // FIXME: uncaught exception: [CannotFind #video-id-input(:nth-child(1)): container only has 0 elements in #video-id-input]
+    //TODO: uncaught exception: [CannotFind #video-id-input(:nth-child(1)): container only has 0 elements in #video-id-input]
     // I am not sure where this exception is generated. Maybe it is caused by togetherJS?
     var newVideoId = $('#video-id-input').val();
     var newSrc = '//www.youtube.com/embed/' + newVideoId;

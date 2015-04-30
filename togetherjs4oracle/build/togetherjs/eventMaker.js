@@ -6,7 +6,7 @@ define(["jquery", "util"], function ($, util) {
   var eventMaker = util.Module("eventMaker");
 
   eventMaker.performClick = function (target) {
-    // FIXME: should accept other parameters, like Ctrl/Alt/etc
+    //TODO: should accept other parameters, like Ctrl/Alt/etc
     var event = document.createEvent("MouseEvents");
     event.initMouseEvent(
       "click", // type
@@ -25,7 +25,7 @@ define(["jquery", "util"], function ($, util) {
       0, // button
       null // relatedTarget
     );
-    // FIXME: I'm not sure this custom attribute always propagates?
+    //TODO: I'm not sure this custom attribute always propagates?
     // seems okay in Firefox/Chrome, but I've had problems with
     // setting attributes on keyboard events in the past.
     event.togetherjsInternal = true;
@@ -41,8 +41,8 @@ define(["jquery", "util"], function ($, util) {
         return;
       }
     }
-    // FIXME: should do button clicks (like a form submit)
-    // FIXME: should run .onclick() as well
+    //TODO: should do button clicks (like a form submit)
+    //TODO: should run .onclick() as well
   };
 
   eventMaker.fireChange = function (target) {

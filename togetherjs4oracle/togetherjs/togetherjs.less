@@ -88,7 +88,7 @@
   display: inline-block;
   border-radius: 4px;
   text-align: center;
-  // FIXME: for some reason this effects the total space of a <a
+  //TODO: for some reason this effects the total space of a <a
   // class="togetherjs-primary/etc"> but not a <button
   // class="togetherjs-primary/etc"> :
   //padding: 3px 10px 3px;
@@ -295,7 +295,7 @@ input.togetherjs-upload-avatar {
 
   #togetherjs-chat-messages {
     overflow-y: auto;
-    /*FIXME: I'm just pulling numbers out of thin air here:*/
+    /*TODO: I'm just pulling numbers out of thin air here:*/
     height: 260px;
   }
 
@@ -360,6 +360,18 @@ input.togetherjs-upload-avatar {
     background-color: #0F81BF;
   }
 
+  #togetherjs-buttons #togetherjs-video-button{
+    background-image: url('./images/button-video.png');
+    &:hover {
+      background-image: url('./images/button-video-active.png');
+    }
+  }
+
+  #togetherjs-buttons #togetherjs-video-button.togetherjs-active {
+    background-image: url('./images/button-video-active.png') !important;
+    background-color: #0F81BF;
+  }
+
   #togetherjs-buttons #togetherjs-chat-button{
     background-image: url('./images/button-chat.png');
     &:hover {
@@ -375,7 +387,7 @@ input.togetherjs-upload-avatar {
   #togetherjs-dock-anchor {
     height: @anchor-height;
     text-align: center;
-    /* FIXME: disabling dock movement for now, cursor would be misleading: */
+    /* TODO: disabling dock movement for now, cursor would be misleading: */
     //cursor: move;
     .user-select(none);
     width: 100%;
@@ -533,7 +545,7 @@ input.togetherjs-upload-avatar {
     box-shadow: 0 2px 4px rgba(0,0,0,0.5);
   }
 
-  // FIXME: why the override?
+  //TODO: why the override?
 
   #togetherjs-feedback-form > header {
     font-weight: bold;
@@ -1140,7 +1152,7 @@ section.togetherjs-buttons .togetherjs-same-url {
   background-color: @background-color;
   box-shadow: 0 2px 4px rgba(0,0,0,0.5);
   @border-radius: 4px;
-  @long-side: (@button-size + 9px) * 4 + 64px; // actual button-size * number of buttons + expand thingy
+  @long-side: (@button-size + 21px) * 5 + 16px; // actual button-size * number of buttons + expand thingy
   @short-side: @button-size + 20px;
   /*border:1px solid #000;*/
 
@@ -1159,8 +1171,8 @@ section.togetherjs-buttons .togetherjs-same-url {
     }
 
     #togetherjs-dock-anchor-horizontal img {
-      width:31px;
-      height:7px;
+      width:20px;
+      height:20px;
       padding:0px 2px 2px 2px;
       pointer-events: none;
     }
@@ -1259,7 +1271,7 @@ section.togetherjs-buttons .togetherjs-same-url {
     cursor:pointer;
   }
 
-  /*FIXME: maybe these should use position: fixed so the cursor
+  /*TODO: maybe these should use position: fixed so the cursor
   stays stuck to the top of the screen until the appropriate time
   (when .togetherjs-scrolled-above/below is removed)?*/
   &.togetherjs-scrolled-above {
@@ -1353,7 +1365,7 @@ section.togetherjs-buttons .togetherjs-same-url {
   color: #fff;
   border-radius: 4px;
   border: 3px outset #d00;
-  /*FIXME: add gradient*/
+  /*TODO: add gradient*/
 }
 
 /* Modals */
@@ -1387,7 +1399,7 @@ section.togetherjs-buttons .togetherjs-same-url {
       width: 550px;
       margin-left: -284px;
       height: 530px;
-      // FIXME: Why isn't -35% the right number?
+      //TODO: Why isn't -35% the right number?
       // I can't for the life of me figure out why 20% is right
       margin-top: -(550px / 2);
     }
@@ -1710,7 +1722,7 @@ section.togetherjs-buttons .togetherjs-same-url {
   margin-top:25px;
   background-color: #fff;
   z-index: @z-index + 4;
-  // FIXME: shouldn't be one-off like this:
+  //TODO: shouldn't be one-off like this:
   border: 1px solid #979797;
   border-radius: 4px;
   padding: 5px;

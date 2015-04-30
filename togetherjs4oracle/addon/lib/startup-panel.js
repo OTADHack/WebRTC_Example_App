@@ -21,7 +21,7 @@ function StartupPanel(options) {
   }
   options.width = options.width || 400;
   options.height = options.height || 400;
-  // FIXME: should append this if necessary:
+  //TODO: should append this if necessary:
   options.contentScript = SCRIPT;
   this.options = options;
   var seen = ss.storage[this.name + '-seen'];

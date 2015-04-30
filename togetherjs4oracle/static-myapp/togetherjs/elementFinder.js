@@ -89,7 +89,7 @@ define(["util", "jquery"], function (util, $) {
   });
 
   elementFinder.findElement = function findElement(loc, container) {
-    // FIXME: should this all just be done with document.querySelector()?
+    //TODO: should this all just be done with document.querySelector()?
     // But no!  We can't ignore togetherjs elements with querySelector.
     // But maybe!  We *could* make togetherjs elements less obtrusive?
     container = container || document;
@@ -242,7 +242,7 @@ define(["util", "jquery"], function (util, $) {
       throw e;
     }
     var top = $(el).offset().top;
-    // FIXME: maybe here we should test for sanity, like if an element is
+    //TODO: maybe here we should test for sanity, like if an element is
     // hidden.  We can use position.absoluteTop to get a sense of where the
     // element roughly should be.  If the sanity check failed we'd use
     // absoluteTop

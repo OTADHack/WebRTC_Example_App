@@ -342,7 +342,7 @@
   <!-- template for one person in the invite-users list -->
   <div style="display: none">
     <div id="togetherjs-template-invite-user-item" class="togetherjs-menu-item">
-      <!-- FIXME: should include avatar in some way -->
+      <!-- TODO: : should include avatar in some way -->
       <span class="togetherjs-person-name"></span>
     </div>
   </div>

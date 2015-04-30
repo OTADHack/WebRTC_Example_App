@@ -264,7 +264,7 @@ define(["jquery"], function ($) {
     var margin = parseInt(this.css("marginLeft"), 10);
 
     //then animate avatar to shrink to nothing, and reset the values again
-    // FIXME this needs to animate from the CENTER
+    // TODO this needs to animate from the CENTER
     this.animate({
       marginLeft: margin + width/2,
       height: 0,
@@ -311,19 +311,19 @@ define(["jquery"], function ($) {
     this.data("animateKeyboard", null);
   };
 
-  // FIXME: not sure if this is legit, but at least the modern mobile devices we
+  //TODO: not sure if this is legit, but at least the modern mobile devices we
   // care about should have this defined:
   if (! $.browser) {
     $.browser = {};
   }
   $.browser.mobile = window.orientation !== undefined;
   if (navigator.userAgent.search(/mobile/i) != -1) {
-    // FIXME: At least on the Firefox OS simulator I need this
+    //TODO: At least on the Firefox OS simulator I need this
     $.browser.mobile = true;
   }
 
   if ($.browser.mobile && window.matchMedia && ! window.matchMedia("screen and (max-screen-width: 480px)").matches) {
-    // FIXME: for Firefox OS simulator really:
+    //TODO: for Firefox OS simulator really:
     document.body.className += " togetherjs-mobile-browser";
   }
 

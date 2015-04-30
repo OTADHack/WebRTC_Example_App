@@ -11,7 +11,7 @@ define(["jquery", "util", "peers", "windowing", "session"], function ($, util, p
     assert(template.length, "No template found with id:", templateId);
     template = template.clone();
     template.attr("id", null);
-    // FIXME: if called directly, doesn't emit new-element event:
+    //TODO: if called directly, doesn't emit new-element event:
     return template;
   };
 
@@ -19,7 +19,7 @@ define(["jquery", "util", "peers", "windowing", "session"], function ($, util, p
     var template = templating.clone(templateId);
     variables = variables || {};
     util.forEachAttr(variables, function (value, attr) {
-      // FIXME: do the substitution... somehow?
+      //TODO: do the substitution... somehow?
       var subs = template.find(".togetherjs-sub-" + attr).removeClass("togetherjs-sub-" + attr);
       if (subs.length) {
         if (typeof value == "string") {
@@ -72,7 +72,7 @@ define(["jquery", "util", "peers", "windowing", "session"], function ($, util, p
       template.find(".togetherjs-ampm").text(ampm);
     }
 
-    // FIXME: silly this is on session:
+    //TODO: silly this is on session:
     session.emit("new-element", template);
     return template;
   };

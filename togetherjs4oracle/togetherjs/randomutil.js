@@ -33,7 +33,7 @@ define(["util", "whrandom"], function (util, RandomStream) {
         }
         num -= items[a];
       }
-      // FIXME: not sure if this should ever h
+      //TODO: not sure if this should ever h
       return last;
     },
     string: function (len, chars) {

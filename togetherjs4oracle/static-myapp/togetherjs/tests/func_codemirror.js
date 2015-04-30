@@ -108,4 +108,4 @@ Hey Some more textfunction square(x) {
 }
 */
 
-// FIXME: need to test (and do) cursor adjustments.  Unless they work out automatically.
+//TODO: need to test (and do) cursor adjustments.  Unless they work out automatically.

@@ -88,7 +88,7 @@ define(["require", "jquery", "util", "session", "templates", "templating", "link
 
   // This is called before activateUI; it doesn't bind anything, but does display
   // the dock
-  // FIXME: because this module has lots of requirements we can't do
+  //TODO: because this module has lots of requirements we can't do
   // this before those requirements are loaded.  Maybe worth splitting
   // this out?  OTOH, in production we should have all the files
   // combined so there's not much problem loading those modules.
@@ -265,15 +265,15 @@ define(["require", "jquery", "util", "session", "templates", "templating", "link
     util.testExpose({submitChat: submitChat});
 
     // Moving the window:
-    // FIXME: this should probably be stickier, and not just move the window around
+    //TODO: this should probably be stickier, and not just move the window around
     // so abruptly
     var anchor = container.find("#togetherjs-dock-anchor");
     assert(anchor.length);
-    // FIXME: This is in place to temporarily disable dock dragging:
+    //TODO: This is in place to temporarily disable dock dragging:
     anchor = container.find("#togetherjs-dock-anchor-disabled");
     anchor.mousedown(function (event) {
       var iface = $("#togetherjs-dock");
-      // FIXME: switch to .offset() and pageX/Y
+      //TODO: switch to .offset() and pageX/Y
       var startPos = panelPosition();
       function selectoff() {
         return false;
@@ -282,7 +282,7 @@ define(["require", "jquery", "util", "session", "templates", "templating", "link
         var fromRight = $window.width() + window.pageXOffset - event2.pageX;
         var fromLeft = event2.pageX - window.pageXOffset;
         var fromBottom = $window.height() + window.pageYOffset - event2.pageY;
-        // FIXME: this is to temporarily disable the bottom view:
+        //TODO: this is to temporarily disable the bottom view:
         fromBottom = 10000;
 
         var pos;
@@ -306,7 +306,7 @@ define(["require", "jquery", "util", "session", "templates", "templating", "link
       // If you don't turn selection off it will still select text, and show a
       // text selection cursor:
       $(document).bind("selectstart", selectoff);
-      // FIXME: it seems like sometimes we lose the mouseup event, and it's as though
+      //TODO: it seems like sometimes we lose the mouseup event, and it's as though
       // the mouse is stuck down:
       $(document).one("mouseup", function () {
         $(document).unbind("mousemove", mousemove);
@@ -559,7 +559,7 @@ define(["require", "jquery", "util", "session", "templates", "templating", "link
       windowing.show("#togetherjs-chat");
     });
 
-    // FIXME: Don't think this makes sense
+    //TODO: Don't think this makes sense
     $(".togetherjs header.togetherjs-title").each(function (index, item) {
       var button = $('<button class="togetherjs-minimize"></button>');
       button.click(function (event) {
@@ -697,7 +697,7 @@ define(["require", "jquery", "util", "session", "templates", "templating", "link
       updateShareLink();
     });
     container.find("a.togetherjs-share-link").click(function () {
-      // FIXME: this is currently opening up Bluetooth, not sharing a link
+      //TODO: this is currently opening up Bluetooth, not sharing a link
       if (false && window.MozActivity) {
         var activity = new MozActivity({
           name: "share",
@@ -707,7 +707,7 @@ define(["require", "jquery", "util", "session", "templates", "templating", "link
           }
         });
       }
-      // FIXME: should show some help if you actually try to follow the link
+      //TODO: should show some help if you actually try to follow the link
       // like this, instead of simply suppressing it
       return false;
     });
@@ -891,7 +891,7 @@ define(["require", "jquery", "util", "session", "templates", "templating", "link
         peer: attrs.peer,
         date: date
       });
-      // FIXME: should bind the notification to the dock location
+      //TODO: should bind the notification to the dock location
       ui.chat.add(el, attrs.peer.className("join-message-"), 4000);
     },
 
@@ -903,7 +903,7 @@ define(["require", "jquery", "util", "session", "templates", "templating", "link
         date: date,
         declinedJoin: attrs.declinedJoin
       });
-      // FIXME: should bind the notification to the dock location
+      //TODO: should bind the notification to the dock location
       ui.chat.add(el, attrs.peer.className("join-message-"), 4000);
     },
 
@@ -928,14 +928,14 @@ define(["require", "jquery", "util", "session", "templates", "templating", "link
       assert(typeof attrs.url == "string");
       assert(typeof attrs.sameUrl == "boolean");
       var messageId = attrs.peer.className("url-change-");
-      // FIXME: duplicating functionality in .add():
+      //TODO: duplicating functionality in .add():
       var realId = "togetherjs-chat-" + messageId;
       var date = attrs.date || Date.now();
       var title;
-      // FIXME: strip off common domain from msg.url?  E.g., if I'm on
+      //TODO: strip off common domain from msg.url?  E.g., if I'm on
       // http://example.com/foobar, and someone goes to http://example.com/baz then
       // show only /baz
-      // FIXME: truncate long titles
+      //TODO: truncate long titles
       if (attrs.title) {
         title = attrs.title + " (" + attrs.url + ")";
       } else {
@@ -983,7 +983,7 @@ define(["require", "jquery", "util", "session", "templates", "templating", "link
       });
       if (attrs.forEveryone) {
         el.find("a").click(function () {
-          // FIXME: hacky way to do this:
+          //TODO: hacky way to do this:
           chat.submit("Followed link to " + attrs.url);
         });
       }
@@ -1138,11 +1138,11 @@ define(["require", "jquery", "util", "session", "templates", "templating", "link
       }
       container.find("." + this.peer.className("togetherjs-person-url-"))
         .attr("href", url);
-      // FIXME: should have richer status:
+      //TODO: should have richer status:
       container.find("." + this.peer.className("togetherjs-person-status-"))
         .text(this.peer.idle == "active" ? "Active" : "Inactive");
       if (this.peer.isSelf) {
-        // FIXME: these could also have consistent/reliable class names:
+        //TODO: these could also have consistent/reliable class names:
         var selfName = $(".togetherjs-self-name");
         selfName.each((function (index, el) {
           el = $(el);
@@ -1171,7 +1171,7 @@ define(["require", "jquery", "util", "session", "templates", "templating", "link
           this.followCheckbox.prop("checked", false);
         }
       }
-      // FIXME: add some style based on following?
+      //TODO: add some style based on following?
       updateChatParticipantList();
       this.updateFollow();
     }),
@@ -1204,7 +1204,7 @@ define(["require", "jquery", "util", "session", "templates", "templating", "link
     },
 
     urlNudge: function () {
-      // FIXME: do something more distinct here
+      //TODO: do something more distinct here
       this.updateUrlDisplay(true);
     },
 
@@ -1238,7 +1238,7 @@ define(["require", "jquery", "util", "session", "templates", "templating", "link
         });
       }
 
-      // FIXME: turned off for now
+      //TODO: turned off for now
       if( numberOfUsers >= 5 && false) {
         CollapsedDock();
       } else {
@@ -1275,7 +1275,7 @@ define(["require", "jquery", "util", "session", "templates", "templating", "link
           this.peer.unfollow();
         }
         // Following doesn't happen until the window is closed
-        // FIXME: should we tell the user this?
+        //TODO: should we tell the user this?
       });
       this.maybeHideDetailWindow = this.maybeHideDetailWindow.bind(this);
       session.on("hide-window", this.maybeHideDetailWindow);
@@ -1355,7 +1355,7 @@ define(["require", "jquery", "util", "session", "templates", "templating", "link
     },
 
     dockClick: function () {
-      // FIXME: scroll to person
+      //TODO: scroll to person
     },
 
     cursor: function () {
@@ -1363,7 +1363,7 @@ define(["require", "jquery", "util", "session", "templates", "templating", "link
     },
 
     destroy: function () {
-      // FIXME: should I get rid of the dockElement?
+      //TODO: should I get rid of the dockElement?
       session.off("hide-window", this.maybeHideDetailWindow);
     }
   });
@@ -1458,7 +1458,7 @@ define(["require", "jquery", "util", "session", "templates", "templating", "link
 
   function invite(clientId) {
     require(["who"], function (who) {
-      // FIXME: use the return value of this to give a signal that
+      //TODO: use the return value of this to give a signal that
       // the invite has been successfully sent:
       who.invite(inviteHubUrl(), clientId).then(function () {
         hideMenu();

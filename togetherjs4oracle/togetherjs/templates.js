@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this file,
  * You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// FIXME: maybe it would be better to dynamically assemble the first
+//TODO: maybe it would be better to dynamically assemble the first
 // argument to define() here to include the localized module:
 define(["util", "require"], function (util, require) {
   var assert = util.assert;

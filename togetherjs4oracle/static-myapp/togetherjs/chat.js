@@ -11,7 +11,7 @@ define(["require", "jquery", "util", "session", "ui", "templates", "playback", "
     ui.chat.text({
       text: msg.text,
       peer: msg.peer,
-      // FIXME: a little unsure of trusting this (maybe I should prefix it?)
+      //TODO: a little unsure of trusting this (maybe I should prefix it?)
       messageId: msg.messageId,
       notify: true
     });
@@ -23,7 +23,7 @@ define(["require", "jquery", "util", "session", "ui", "templates", "playback", "
     });
   });
 
-  // FIXME: this doesn't really belong in this module:
+  //TODO: this doesn't really belong in this module:
   session.hub.on("bye", function (msg) {
     ui.chat.leftSession({
       peer: msg.peer,

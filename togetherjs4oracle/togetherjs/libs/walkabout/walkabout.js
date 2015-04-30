@@ -2,7 +2,7 @@
 
 Walkabout = Walkabout || {};
 
-// FIXME: this shouldn't be established so early, in case jquery
+//TODO: this shouldn't be established so early, in case jquery
 // is loaded after walkabout.js
 Walkabout.jQueryAvailable = (typeof jQuery !== "undefined");
 Walkabout.$ = window.jQuery;
@@ -95,7 +95,7 @@ Walkabout.findActions = function (el, actions) {
 };
 
 Walkabout.ignoreElement = function (el) {
-  // FIXME: should probably make this pluggable as well
+  //TODO: should probably make this pluggable as well
   // Also, I should unjQueryfy .is(":visible") and put it here
   while (el) {
     if (el.getAttribute && el.getAttribute("data-walkabout-disable")) {
@@ -288,12 +288,12 @@ Walkabout.Typer = Walkabout.Class({
     e.value = start + key + end;
     // If we had a selection, we lost when typing:
     e.selectionStart = e.selectionEnd = startPos + key.length;
-    // FIXME: should probably also do keydown, keypress, in sequence
-    // FIXME: should set the right keyCode/etc value
+    //TODO: should probably also do keydown, keypress, in sequence
+    //TODO: should set the right keyCode/etc value
     var keyup = Walkabout.EventAction({
       element: e,
       type: this.kind == "type" ? "keyup" : "paste",
-      handler: null, // FIXME: figure out if there's a handler?
+      handler: null, //TODO: figure out if there's a handler?
       jQuery: Walkabout.jQueryAvailable
     });
     keyup.run();
@@ -328,7 +328,7 @@ Walkabout.Deleter = Walkabout.Class({
     } else {
       // We can delete after or before...
       var canStart = startPos > 0;
-      // FIXME: I'm off by one here I think:
+      //TODO: I'm off by one here I think:
       var canEnd = startPos < value.length;
       if (canStart && canEnd && Walkabout.random() < 0.5) {
         canStart = false;
@@ -343,12 +343,12 @@ Walkabout.Deleter = Walkabout.Class({
         e.selectionStart = e.selectionEnd = startPos;
       }
     }
-    // FIXME: should set the right keyCode/etc value:
-    // FIXME: also keydown?  Or keypress?
+    //TODO: should set the right keyCode/etc value:
+    //TODO: also keydown?  Or keypress?
     var keyup = Walkabout.EventAction({
       element: e,
       type: "keyup",
-      handler: null, // FIXME: figure out if there's a handler?
+      handler: null, //TODO: figure out if there's a handler?
       jQuery: Walkabout.jQuerySupported
     });
     keyup.run();
@@ -397,7 +397,7 @@ if (Walkabout.jQueryAvailable) {
           }
         }
       }
-      // FIXME: I think this only makes sense for keypress
+      //TODO: I think this only makes sense for keypress
       if ((matcher.shiftKey && ! event.shiftKey) ||
           (matcher.ctrlKey && ! event.ctrlKey) ||
           (matcher.altKey && ! event.altKey)) {
@@ -436,7 +436,7 @@ if (Walkabout.jQueryAvailable) {
         return;
       }
       if (! Walkabout.clickable(this)) {
-        // FIXME: not sure if this is right for all kinds of events, or just click?
+        //TODO: not sure if this is right for all kinds of events, or just click?
         return;
       }
       var events;
@@ -503,7 +503,7 @@ if (Walkabout.jQueryAvailable) {
       size = Math.floor(Walkabout.random() * size);
       return Walkabout.random.string(options, size);
     } else {
-      // FIXME: what then?  E.g., if it's an object
+      //TODO: what then?  E.g., if it's an object
       return Walkabout.$.fn.val.mock.orig.apply(this, arguments);
     }
   };
@@ -791,15 +791,15 @@ Walkabout.EventAction = Walkabout.Class({
               this.isDefaultPrevented = true;
             },
             stopPropagation: function () {
-              // FIXME: not sure what to do here
+              //TODO: not sure what to do here
             }
           };
           this.handler(event);
-          // FIXME: pay attention to isDefaultPrevented?
-          // FIXME: do default?
+          //TODO: pay attention to isDefaultPrevented?
+          //TODO: do default?
           return;
           /*
-          FIXME: this is broken on Chrome:
+          TODO: this is broken on Chrome:
 
           var mods = [];
           if (props.ctrlKey) {
@@ -964,7 +964,7 @@ Walkabout.LinkFollower = Walkabout.Class({
 Walkabout.hidden = function (el) {
   return (el.offsetWidth === 0 &&
           el.offsetHeight === 0);
-  // FIXME: jQuery also uses a display: none test on some browsers,
+  //TODO: jQuery also uses a display: none test on some browsers,
   // but this seems to be the only check for modern browsers?
 };
 
@@ -986,7 +986,7 @@ Walkabout.anyOverlap = function (overElement) {
   try {
     var overStyle = getComputedStyle(overElement);
   } catch (e) {
-    // FIXME: this is being called for the HTMLDocument element and other
+    //TODO: this is being called for the HTMLDocument element and other
     // things that can't be used with getComputedStyle
     return false;
   }
@@ -1220,7 +1220,7 @@ Walkabout.actionFinders.push(function customEvents(el, actions) {
       continue;
     }
     if (! Walkabout.clickable(o)) {
-      // FIXME: not sure if this is a good general rule
+      //TODO: not sure if this is a good general rule
       continue;
     }
     for (var eventName in handlers) {
@@ -1269,7 +1269,7 @@ Walkabout.value = function (obj) {
     options = eval("(" + options + ")");
   }
   if ((! options) && obj.tagName == "INPUT" && Walkabout._getType(obj) == "checkbox") {
-    // FIXME: need to override .checked
+    //TODO: need to override .checked
     return curValue;
   }
   if ((! options) && obj.tagName == "SELECT") {
@@ -1283,7 +1283,7 @@ Walkabout.value = function (obj) {
       options.push(option.value);
     }
   }
-  // FIXME: Should check other types too
+  //TODO: Should check other types too
   if (! options) {
     options = Walkabout.random.letters;
   }
@@ -1472,7 +1472,7 @@ Walkabout.UI = Walkabout.Class({
     if (Walkabout.options.loadPersistent) {
       var data = Walkabout.persistentData();
       // Ignore data older than 30 minutes:
-      // FIXME: should probably still load up the console even if it's old
+      //TODO: should probably still load up the console even if it's old
       if (data.startAtRemaining) {
         if ((Date.now() - data.savedAt) < 30*60*1000 ) {
           this.start();
@@ -1726,7 +1726,7 @@ Walkabout.actionFinders.push(function backFromHash(el, actions) {
     return;
   }
   if (Walkabout.hashHistory.length > 1) {
-    // FIXME: there should be a way to suppress this from happening
+    //TODO: there should be a way to suppress this from happening
     actions.push(Walkabout.Back());
   }
 });

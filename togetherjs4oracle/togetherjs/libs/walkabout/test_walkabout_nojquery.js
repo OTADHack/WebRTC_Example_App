@@ -64,7 +64,7 @@ Walkabout.addEventListener(getElement("fixture"), "click", function (event) {
 var actions = Walkabout.findActions(document);
 print(actions);
 
-// FIXME: sometimes there's a Back action, sometimes not
+//TODO: sometimes there's a Back action, sometimes not
 /* =>
 
 [
@@ -119,7 +119,7 @@ Walkabout.findActions(getElement("textinput"))[0].run();
 Walkabout.findActions(getElement("textinput"))[0].run();
 Walkabout.findActions(getElement("textinput"))[0].run();
 
-// FIXME: for some reason this isn't the same as in the jquery example
+//TODO: for some reason this isn't the same as in the jquery example
 // it generates a different order
 /* =>
 

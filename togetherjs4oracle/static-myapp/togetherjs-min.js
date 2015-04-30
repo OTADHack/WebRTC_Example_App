@@ -13,7 +13,7 @@
     // Experimental feature to echo clicks to certain elements across clients:
     cloneClicks: false,
     // Enable Mozilla or Google analytics on the page when TogetherJS is activated:
-    // FIXME: these don't seem to be working, and probably should be removed in favor
+    //TODO: these don't seem to be working, and probably should be removed in favor
     // of the hub analytics
     enableAnalytics: false,
     // The code to enable (this is defaulting to a Mozilla code):
@@ -130,7 +130,7 @@
   }
 
   var version = "unknown";
-  // FIXME: we could/should use a version from the checkout, at least
+  //TODO: we could/should use a version from the checkout, at least
   // for production
   var cacheBust = "";
   if ((! cacheBust) || cacheBust == "") {
@@ -247,13 +247,13 @@
 
 
     }
-    // FIXME: copy existing config?
-    // FIXME: do this directly in TogetherJS.config() ?
-    // FIXME: close these configs?
+    //TODO: copy existing config?
+    //TODO: do this directly in TogetherJS.config() ?
+    //TODO: close these configs?
     var ons = TogetherJS.config.get("on");
     for (attr in globalOns) {
       if (globalOns.hasOwnProperty(attr)) {
-        // FIXME: should we avoid overwriting?  Maybe use arrays?
+        //TODO: should we avoid overwriting?  Maybe use arrays?
         ons[attr] = globalOns[attr];
       }
     }
@@ -275,7 +275,7 @@
       TogetherJS.startup.reason = "started";
     }
 
-    // FIXME: maybe I should just test for TogetherJS.require:
+    //TODO: maybe I should just test for TogetherJS.require:
     if (TogetherJS._loaded) {
       var session = TogetherJS.require("session");
       addStyle();
@@ -438,7 +438,7 @@
         throw "Error: .once() called with non-callback";
       }
       var attr = "onceCallback_" + name;
-      // FIXME: maybe I should add the event name to the .once attribute:
+      //TODO: maybe I should add the event name to the .once attribute:
       if (! callback[attr]) {
         callback[attr] = function onceCallback() {
           callback.apply(this, arguments);
@@ -497,7 +497,7 @@
   /* This finalizes the unloading of TogetherJS, including unloading modules */
   TogetherJS._teardown = function () {
     var requireObject = TogetherJS._requireObject || window.require;
-    // FIXME: this doesn't clear the context for min-case
+    //TODO: this doesn't clear the context for min-case
     if (requireObject.s && requireObject.s.contexts) {
       delete requireObject.s.contexts.togetherjs;
     }
@@ -528,7 +528,7 @@
     // Experimental feature to echo clicks to certain elements across clients:
     cloneClicks: false,
     // Enable Mozilla or Google analytics on the page when TogetherJS is activated:
-    // FIXME: these don't seem to be working, and probably should be removed in favor
+    //TODO: these don't seem to be working, and probably should be removed in favor
     // of the hub analytics
     enableAnalytics: false,
     // The code to enable (this is defaulting to a Mozilla code):
@@ -582,7 +582,7 @@
     // and must be set as soon as this file is included
     lang: null
   };
-  // FIXME: there's a point at which configuration can't be updated
+  //TODO: there's a point at which configuration can't be updated
   // (e.g., hubBase after the TogetherJS has loaded).  We should keep
   // track of these and signal an error if someone attempts to
   // reconfigure too late
@@ -718,7 +718,7 @@
   };
 
   // This should contain the output of "git describe --always --dirty"
-  // FIXME: substitute this on the server (and update make-static-client)
+  //TODO: substitute this on the server (and update make-static-client)
   TogetherJS.version = version;
   TogetherJS.baseUrl = baseUrl;
 
@@ -829,7 +829,7 @@
   }
   if (window._TogetherJSShareId) {
     // A weird hack for something the addon does, to force a shareId.
-    // FIXME: probably should remove, it's a wonky feature.
+    //TODO: probably should remove, it's a wonky feature.
     TogetherJS.startup._joinShareId = window._TogetherJSShareId;
     delete window._TogetherJSShareId;
   }
@@ -848,14 +848,14 @@
       callToStart = window.TogetherJSConfig.callToStart;
     }
     if (callToStart) {
-      // FIXME: need to document this:
+      //TODO: need to document this:
       callToStart(onload);
     } else {
       onload();
     }
   }
 
-  // FIXME: can we push this up before the load event?
+  //TODO: can we push this up before the load event?
   // Do we need to wait at all?
   function onload() {
     if (TogetherJS.startup._joinShareId) {
@@ -864,7 +864,7 @@
       delete window._TogetherJSBookmarklet;
       TogetherJS();
     } else {
-      // FIXME: this doesn't respect storagePrefix:
+      //TODO: this doesn't respect storagePrefix:
       var key = "togetherjs-session.status";
       var value = sessionStorage.getItem(key);
       if (value) {
@@ -884,7 +884,7 @@
 
   conditionalActivate();
 
-  // FIXME: wait until load event to double check if this gets set?
+  //TODO: wait until load event to double check if this gets set?
   if (window.TogetherJSConfig_enableShortcut) {
     TogetherJS.listenForShortcut();
   }

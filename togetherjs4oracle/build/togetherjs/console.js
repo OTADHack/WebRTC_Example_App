@@ -15,7 +15,7 @@ define(["util"], function (util) {
 
     levels: {
       debug: 1,
-      // FIXME: I'm considering *not* wrapping console.log, and strictly keeping
+      //TODO: I'm considering *not* wrapping console.log, and strictly keeping
       // it as a debugging tool; also line numbers would be preserved
       log: 2,
       info: 3,
@@ -98,7 +98,7 @@ define(["util"], function (util) {
       try {
         throw new Error();
       } catch (e) {
-        // FIXME: trim this frame
+        //TODO: trim this frame
         var stack = e.stack;
         stack = stack.replace(/^[^\n]*\n/, "");
         this[level](stack);
@@ -109,13 +109,13 @@ define(["util"], function (util) {
     },
 
     _browserInfo: function () {
-      // FIXME: add TogetherJS version and
+      //TODO: add TogetherJS version and
       return [
         "TogetherJS base URL: " + TogetherJS.baseUrl,
         "User Agent: " + navigator.userAgent,
         "Page loaded: " + this._formatDate(TogetherJS.pageLoaded),
         "Age: " + this._formatMinutes(Date.now() - TogetherJS.pageLoaded) + " minutes",
-        // FIXME: make this right:
+        //TODO: make this right:
         //"Window: height: " + window.screen.height + " width: " + window.screen.width
         "URL: " + location.href,
         "------+------+----------------------------------------------"
@@ -148,7 +148,7 @@ define(["util"], function (util) {
         }
       }
       if (item !== null && typeof item == "object") {
-        // FIXME: this can drop lots of kinds of values, like a function or undefined
+        //TODO: this can drop lots of kinds of values, like a function or undefined
         item = JSON.stringify(item);
       }
       return item.toString();
@@ -201,7 +201,7 @@ define(["util"], function (util) {
     },
 
     submit: function (options) {
-      // FIXME: friendpaste is broken for this
+      //TODO: friendpaste is broken for this
       // (and other pastebin sites aren't really Browser-accessible)
       return util.Deferred(function (def) {
         options = options || {};

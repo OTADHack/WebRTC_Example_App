@@ -51,7 +51,7 @@ define(["jquery", "util", "peers", "session"], function ($, util, peers, session
     }
     win = $(win);
     assert(bound.length, "Cannot find binding:", bound.selector, "from:", win.selector);
-    // FIXME: hardcoding
+    //TODO: hardcoding
     var ifacePos = "right";
     //var ifacePos = panelPosition();
     var boundPos = bound.offset();
@@ -60,7 +60,7 @@ define(["jquery", "util", "peers", "session"], function ($, util, peers, session
     var windowHeight = $window.height();
     boundPos.top -= $window.scrollTop();
     boundPos.left -= $window.scrollLeft();
-    // FIXME: I appear to have to add the padding to the width to get a "true"
+    //TODO: I appear to have to add the padding to the width to get a "true"
     // width.  But it's still not entirely consistent.
     var height = win.height() + 5;
     var width = win.width() + 20;
@@ -116,7 +116,7 @@ define(["jquery", "util", "peers", "session"], function ($, util, peers, session
   });
 
   windowing.hide = function (els) {
-    // FIXME: also hide modals?
+    //TODO: also hide modals?
     els = els || ".togetherjs-window, .togetherjs-modal, .togetherjs-notification";
     els = $(els);
     els = els.filter(":visible");

@@ -78,7 +78,7 @@ function ($, util, session, elementFinder) {
       var iframes = $('iframe');
       iframes.each(function (i, iframe) {
         // if the iframe's unique id is already set, skip it
-        // FIXME: what if the user manually sets an iframe's id (i.e. "#my-youtube")?
+        //TODO: what if the user manually sets an iframe's id (i.e. "#my-youtube")?
         // maybe we should set iframes everytime togetherjs is reinitialized?
         if (($(iframe).attr("src") || "").indexOf("youtube") != -1 && !$(iframe).attr("id")) {
           $(iframe).attr("id", "youtube-player"+i);
@@ -107,7 +107,7 @@ function ($, util, session, elementFinder) {
   function publishPlayerStateChange(event) {
     var target = event.target; 
     var currentIframe = target.a;
-    // FIXME: player object retrieved from event.target has an incomplete set of essential functions
+    //TODO: player object retrieved from event.target has an incomplete set of essential functions
     // this is most likely due to a recently-introduced problem with current YouTube API as others have been reporting the same issue (12/18/`13)
     //var currentPlayer = target;
     //var currentTime = currentPlayer.getCurrentTime();

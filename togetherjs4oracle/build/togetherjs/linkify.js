@@ -1,5 +1,5 @@
 define([], function () {
-  // FIXME: this could be moved to a different module, it's pretty stand-alone
+  //TODO: this could be moved to a different module, it's pretty stand-alone
   /* Finds any links in the text of an element (or its children) and turns them
      into anchors (with target=_blank) */
   function linkify(el) {

@@ -172,7 +172,7 @@ define(["jquery", "util", "session", "storage", "require"], function ($, util, s
         storage.set("playback.logs", undefined);
         storage.set("playback.pos", undefined);
       }
-      // FIXME: should do a bye message here
+      //TODO: should do a bye message here
     }
 
   });

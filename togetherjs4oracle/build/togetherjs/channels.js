@@ -168,7 +168,7 @@ channels.WebSocketChannel = util.Class(AbstractChannel, {
       this.socket = null;
       var method = "error";
       if (event.wasClean) {
-        // FIXME: should I even log clean closes?
+        //TODO: should I even log clean closes?
         method = "log";
       }
       console[method]('WebSocket close', event.wasClean ? 'clean' : 'unclean',
@@ -237,7 +237,7 @@ channels.PostMessageChannel = util.Class(AbstractChannel, {
       win = win.contentWindow;
     }
     this.window = win;
-    // FIXME: The distinction between this.window and window seems unimportant
+    //TODO: The distinction between this.window and window seems unimportant
     // in the case of postMessage
     var w = this.window;
     // In a Content context we add the listener to the local window
@@ -347,7 +347,7 @@ channels.PostMessageIncomingChannel = util.Class(AbstractChannel, {
   _receiveMessage: function (event) {
     if (this.expectedOrigin && this.expectedOrigin != "*" &&
         event.origin != this.expectedOrigin) {
-      // FIXME: Maybe not worth mentioning?
+      //TODO: Maybe not worth mentioning?
       console.info("Expected message from", this.expectedOrigin,
                    "but got message from", event.origin);
       return;

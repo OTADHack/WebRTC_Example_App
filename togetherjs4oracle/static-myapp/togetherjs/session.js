@@ -211,7 +211,7 @@ define(["require", "util", "channels", "jquery", "storage"], function (require, 
       color: peers.Self.color,
       url: session.currentUrl(),
       urlHash: location.hash,
-      // FIXME: titles update, we should track those changes:
+      //TODO: titles update, we should track those changes:
       title: document.title,
       rtcSupported: session.RTCSupported,
       isClient: session.isClient
@@ -287,7 +287,7 @@ define(["require", "util", "channels", "jquery", "storage"], function (require, 
         }
       }
       if (! shareId) {
-        // FIXME: I'm not sure if this will ever happen, because togetherjs.js should
+        //TODO: I'm not sure if this will ever happen, because togetherjs.js should
         // handle it
         var m = /&?togetherjs=([^&]*)/.exec(hash);
         if (m) {
@@ -318,7 +318,7 @@ define(["require", "util", "channels", "jquery", "storage"], function (require, 
             console.warn("Bad value for findRoom.prefix:", JSON.stringify(findRoom.prefix));
           }
           getRoomName(findRoom.prefix, findRoom.max).then(function (shareId) {
-            // FIXME: duplicates code below:
+            //TODO: duplicates code below:
             session.clientId = session.identityId + "." + sessionId;
             storage.tab.set("status", {reason: "joined", shareId: shareId, running: true, date: Date.now(), sessionId: sessionId});
             session.isClient = true;

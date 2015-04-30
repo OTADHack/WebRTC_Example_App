@@ -418,6 +418,16 @@ input.togetherjs-upload-avatar {
   background-image: url('./images/button-mic-active.png') !important;
   background-color: #0F81BF;
 }
+.togetherjs #togetherjs-buttons #togetherjs-video-button {
+  background-image: url('./images/button-video.png');
+}
+.togetherjs #togetherjs-buttons #togetherjs-video-button:hover {
+  background-image: url('./images/button-video-active.png');
+}
+.togetherjs #togetherjs-buttons #togetherjs-video-button.togetherjs-active {
+  background-image: url('./images/button-video-active.png') !important;
+  background-color: #0F81BF;
+}
 .togetherjs #togetherjs-buttons #togetherjs-chat-button {
   background-image: url('./images/button-chat.png');
 }
@@ -431,7 +441,7 @@ input.togetherjs-upload-avatar {
 .togetherjs #togetherjs-dock-anchor {
   height: 20px;
   text-align: center;
-  /* FIXME: disabling dock movement for now, cursor would be misleading: */
+  /* TODO: disabling dock movement for now, cursor would be misleading: */
 
   -moz-user-select: none;
   -webkit-user-select: none;
@@ -636,7 +646,7 @@ input.togetherjs-upload-avatar {
 }
 .togetherjs .togetherjs-window #togetherjs-chat-messages {
   overflow-y: auto;
-  /*FIXME: I'm just pulling numbers out of thin air here:*/
+  /*TODO: I'm just pulling numbers out of thin air here:*/
 
   height: 260px;
 }
@@ -760,7 +770,7 @@ input.togetherjs-upload-avatar {
 }
 .togetherjs .togetherjs-notification #togetherjs-chat-messages {
   overflow-y: auto;
-  /*FIXME: I'm just pulling numbers out of thin air here:*/
+  /*TODO: I'm just pulling numbers out of thin air here:*/
 
   height: 260px;
 }
@@ -1208,7 +1218,7 @@ section.togetherjs-buttons .togetherjs-same-url {
   bottom: 150px;
   right: 5px;
   border-radius: 4px;
-  height: 260px;
+  height: 321px;
   width: 60px;
 }
 #togetherjs-dock.togetherjs-dock-right #togetherjs-dock-anchor-vertical {
@@ -1218,8 +1228,8 @@ section.togetherjs-buttons .togetherjs-same-url {
   display: inline;
 }
 #togetherjs-dock.togetherjs-dock-right #togetherjs-dock-anchor-horizontal img {
-  width: 31px;
-  height: 7px;
+  width: 20px;
+  height: 20px;
   padding: 0px 2px 2px 2px;
   pointer-events: none;
 }
@@ -1228,7 +1238,7 @@ section.togetherjs-buttons .togetherjs-same-url {
   bottom: 60px;
   left: 5px;
   border-radius: 0 4px 4px 0;
-  height: 214px;
+  height: 275px;
   width: 60px;
 }
 #togetherjs-dock.togetherjs-dock-left #togetherjs-dock-anchor-vertical {
@@ -1246,10 +1256,10 @@ section.togetherjs-buttons .togetherjs-same-url {
   padding: 0;
   top: 40px;
   left: 50%;
-  margin-left: -130px;
+  margin-left: -160.5px;
   border-radius: 4px 4px 0 0;
   height: 60px;
-  width: 260px;
+  width: 321px;
 }
 #togetherjs-dock.togetherjs-dock-top #togetherjs-buttons,
 #togetherjs-dock.togetherjs-dock-top #togetherjs-dock-anchor {
@@ -1308,7 +1318,7 @@ section.togetherjs-buttons .togetherjs-same-url {
   (good on all but IE: http://caniuse.com/pointer-events */
 
   pointer-events: none;
-  /*FIXME: maybe these should use position: fixed so the cursor
+  /*TODO: maybe these should use position: fixed so the cursor
   stays stuck to the top of the screen until the appropriate time
   (when .togetherjs-scrolled-above/below is removed)?*/
 
@@ -1401,7 +1411,7 @@ section.togetherjs-buttons .togetherjs-same-url {
   color: #fff;
   border-radius: 4px;
   border: 3px outset #d00;
-  /*FIXME: add gradient*/
+  /*TODO: add gradient*/
 
 }
 /* Modals */
@@ -1487,7 +1497,7 @@ section.togetherjs-buttons .togetherjs-same-url {
 }
 .togetherjs .togetherjs-modal #togetherjs-chat-messages {
   overflow-y: auto;
-  /*FIXME: I'm just pulling numbers out of thin air here:*/
+  /*TODO: I'm just pulling numbers out of thin air here:*/
 
   height: 260px;
 }

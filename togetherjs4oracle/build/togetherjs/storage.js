@@ -77,7 +77,7 @@ define(["util"], function (util) {
       return Deferred((function (def) {
         this.keys().then(function (keys) {
           keys.forEach(function (key) {
-            // FIXME: technically we're ignoring the promise returned by all
+            //TODO: technically we're ignoring the promise returned by all
             // these sets:
             promises.push(self.set(key, undefined));
           });

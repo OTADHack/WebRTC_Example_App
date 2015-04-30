@@ -207,7 +207,7 @@ define(["jquery", "jqueryPlugins"], function ($) {
         }, function () {
           deferred.rejectWith(this, arguments);
         });
-        // FIXME: doesn't pass progress through
+        //TODO: doesn't pass progress through
       } else if (result === undefined) {
         deferred.resolve();
       } else {
@@ -243,7 +243,7 @@ define(["jquery", "jqueryPlugins"], function ($) {
      Returns a promise that will resolve with the results of all the
      promises.  If any promise fails then the returned promise fails.
 
-     FIXME: if a promise has more than one return value (like with
+     TODO: if a promise has more than one return value (like with
      promise.resolve(a, b)) then the latter arguments will be lost.
      */
   util.resolveMany = function () {
